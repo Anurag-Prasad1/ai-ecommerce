@@ -1,9 +1,29 @@
-require("dotenv").config(); // 🔥 Load environment variables
+require("dotenv").config(); // Load environment variables
 
 const express = require("express");
 const connectDB = require("./config/db");
 
 const app = express();
+
+// 🔥 Middleware (VERY IMPORTANT)
+app.use(express.json());
+
+// 🔥 ROUTES
+
+// Home route
+app.get("/", (req, res) => {
+  console.log("👉 Request received at /");
+  res.send("API running with MongoDB + MVC 🚀");
+});
+
+// Products route (optional - keep for testing)
+app.get("/products", (req, res) => {
+  console.log("👉 Request received at /products");
+  res.json(["Product 1", "Product 2"]);
+});
+
+// 🔥 User Routes (MAIN PART OF DAY 4)
+app.use("/api/users", require("./routes/userRoutes"));
 
 // 🔥 Start server ONLY after DB connects
 const startServer = async () => {
@@ -19,18 +39,3 @@ const startServer = async () => {
 };
 
 startServer();
-
-
-// 🔥 ROUTES
-
-// Home route
-app.get("/", (req, res) => {
-  console.log("👉 Request received at /");   // ✅ Terminal log
-  res.send("API running with MongoDB 🚀");   // ✅ Browser response
-});
-
-// Products route
-app.get("/products", (req, res) => {
-  console.log("👉 Request received at /products");   // ✅ Terminal log
-  res.json(["Product 1", "Product 2"]);              // ✅ Browser response
-});
