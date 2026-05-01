@@ -1,18 +1,27 @@
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
-// Register user
+// 🔐 Generate JWT Token
+const generateToken = (id) => {
+  return jwt.sign({ id }, "secretkey", {
+    expiresIn: "30d",
+  });
+};
+
+// 📝 Register user
 const registerUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    // Check if all fields exist
+    // 1. Validate input
     if (!name || !email || !password) {
       return res.status(400).json({
         message: "Please fill all fields",
       });
     }
 
-    // Check if user already exists
+    // 2. Check if user already exists
     const userExists = await User.findOne({ email });
 
     if (userExists) {
@@ -21,11 +30,15 @@ const registerUser = async (req, res) => {
       });
     }
 
-    // Create user in DB
+    // 🔐 3. Hash password (NEW IMPORTANT STEP)
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    // 4. Create user with hashed password
     const user = await User.create({
       name,
       email,
-      password,
+      password: hashedPassword,
     });
 
     res.status(201).json({
@@ -41,4 +54,32 @@ const registerUser = async (req, res) => {
   }
 };
 
-module.exports = { registerUser };
+// 🔑 Login user
+const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // 1. Check user exists
+    const user = await User.findOne({ email });
+
+    // 2. Compare password
+    if (user && (await bcrypt.compare(password, user.password))) {
+      res.json({
+        message: "Login successful 🚀",
+        token: generateToken(user._id),
+      });
+    } else {
+      res.status(401).json({
+        message: "Invalid email or password",
+      });
+    }
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: "Server error",
+    });
+  }
+};
+
+module.exports = { registerUser, loginUser };
