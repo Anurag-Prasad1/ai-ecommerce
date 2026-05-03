@@ -2,11 +2,15 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
-// 🔐 Generate JWT Token
+// 🔐 Generate JWT Token (FIXED)
 const generateToken = (id) => {
-  return jwt.sign({ id }, "secretkey", {
-    expiresIn: "30d",
-  });
+  return jwt.sign(
+    { id },
+    process.env.JWT_SECRET, // ✅ Use environment variable
+    {
+      expiresIn: "30d",
+    }
+  );
 };
 
 // 📝 Register user
@@ -30,20 +34,26 @@ const registerUser = async (req, res) => {
       });
     }
 
-    // 🔐 3. Hash password (NEW IMPORTANT STEP)
+    // 3. Hash password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // 4. Create user with hashed password
+    // 4. Create user
     const user = await User.create({
       name,
       email,
       password: hashedPassword,
     });
 
+    // 5. Send response (OPTIONAL: include token here too)
     res.status(201).json({
       message: "User registered successfully",
-      user,
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+      },
+      token: generateToken(user._id), // ✅ Good practice
     });
 
   } catch (error) {
@@ -66,7 +76,12 @@ const loginUser = async (req, res) => {
     if (user && (await bcrypt.compare(password, user.password))) {
       res.json({
         message: "Login successful 🚀",
-        token: generateToken(user._id),
+        user: {
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+        },
+        token: generateToken(user._id), // ✅ Uses correct secret now
       });
     } else {
       res.status(401).json({
