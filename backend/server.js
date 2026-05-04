@@ -8,6 +8,7 @@ const app = express();
 // 🔥 Middleware (VERY IMPORTANT)
 app.use(express.json());
 
+
 // 🔥 ROUTES
 
 // Home route
@@ -16,14 +17,21 @@ app.get("/", (req, res) => {
   res.send("API running with MongoDB + MVC 🚀");
 });
 
+
 // Products route (optional - keep for testing)
 app.get("/products", (req, res) => {
   console.log("👉 Request received at /products");
   res.json(["Product 1", "Product 2"]);
 });
 
-// 🔥 User Routes (MAIN PART OF DAY 4)
+
+// 🔥 User Routes (DAY 4)
 app.use("/api/users", require("./routes/userRoutes"));
+
+
+// 🔥 Product Routes (DAY 7 - NEW ADDITION)
+app.use("/api/products", require("./routes/productRoutes"));
+
 
 // 🔥 Start server ONLY after DB connects
 const startServer = async () => {
