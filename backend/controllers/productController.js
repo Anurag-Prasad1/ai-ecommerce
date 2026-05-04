@@ -5,7 +5,7 @@ const Product = require("../models/Product");
 // @route   POST /api/products
 // @access  Private
 const createProduct = async (req, res) => {
-  const { name, price, description, image, countInStock } = req.body;
+  const { name, price, description, image, countInStock, category } = req.body;
 
   const product = await Product.create({
     name,
@@ -13,6 +13,7 @@ const createProduct = async (req, res) => {
     description,
     image,
     countInStock,
+    category,
   });
 
   res.status(201).json(product);
