@@ -5,7 +5,14 @@ const Product = require("../models/Product");
 // @route   POST /api/products
 // @access  Private
 const createProduct = async (req, res) => {
-  const { name, price, description, image, countInStock, category } = req.body;
+  const {
+    name,
+    price,
+    description,
+    image,
+    countInStock,
+    category,
+  } = req.body;
 
   const product = await Product.create({
     name,
@@ -35,9 +42,14 @@ const getProducts = async (req, res) => {
       }
     : {};
 
-  // Filter by category
+  // Filter by category (case-insensitive)
   const category = req.query.category
-    ? { category: req.query.category }
+    ? {
+        category: {
+          $regex: req.query.category,
+          $options: "i",
+        },
+      }
     : {};
 
   // Filter by price range
