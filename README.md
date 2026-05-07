@@ -4,151 +4,391 @@ A scalable backend system for an AI-powered e-commerce platform built using Node
 
 ---
 
-## 📌 Project Overview
+# 📌 Project Overview
 
-This project is designed to simulate a real-world backend architecture for an intelligent e-commerce system. It focuses on:
+This project simulates a production-level backend architecture for an intelligent e-commerce system.
 
-* Clean backend structure
-* Secure environment variable handling
-* REST API development
-* Database integration with MongoDB
+The backend currently supports:
 
----
-
-## 🛠️ Tech Stack
-
-* **Backend:** Node.js (Runtime), Express.js (Framework)
-* **Database:** MongoDB (Mongoose)
-* **Environment Management:** dotenv
-* **Version Control:** Git & GitHub
+- User Authentication (JWT)
+- Protected Routes
+- Product APIs
+- Search & Filtering
+- Pagination
+- Sorting Optimization
+- MongoDB Database Integration
+- RESTful API Structure
+- Scalable Backend Architecture
 
 ---
 
-## 📂 Project Structure
+# 🛠️ Tech Stack
 
-```
+## Backend
+
+- Node.js
+- Express.js
+
+## Database
+
+- MongoDB
+- Mongoose
+
+## Authentication & Security
+
+- JWT (JSON Web Token)
+- bcryptjs
+- dotenv
+
+## Development Tools
+
+- Nodemon
+- Git & GitHub
+- Postman
+
+---
+
+# 📂 Project Structure
+
+```bash
 ai-ecommerce/
 ├── backend/
 │   ├── config/
 │   │   └── db.js
+│   │
+│   ├── controllers/
+│   │   ├── productController.js
+│   │   └── userController.js
+│   │
+│   ├── middleware/
+│   │   └── authMiddleware.js
+│   │
+│   ├── models/
+│   │   ├── Product.js
+│   │   └── User.js
+│   │
+│   ├── routes/
+│   │   ├── productRoutes.js
+│   │   └── userRoutes.js
+│   │
+│   ├── utils/
+│   │   └── generateToken.js
+│   │
 │   ├── server.js
 │   └── package.json
+│
 ├── .env.example
 ├── .gitignore
 └── README.md
 ```
 
---- 
+---
 
-## ⚙️ Setup Instructions
+# ⚙️ Setup Instructions
 
-### 1. Clone the Repository
+## 1️⃣ Clone the Repository
 
-```
+```bash
 git clone https://github.com/Anurag-Prasad1/ai-ecommerce.git
 cd ai-ecommerce
 ```
 
 ---
 
-### 2. Install Dependencies
+## 2️⃣ Install Dependencies
 
-```
+```bash
 cd backend
 npm install
 ```
 
 ---
 
-### 3. Setup Environment Variables
+## 3️⃣ Setup Environment Variables
 
-Create a `.env` file inside the `backend` folder.
+Create a `.env` file inside the `backend/` folder.
 
-Copy from `.env.example`:
+Copy the following from `.env.example`:
 
-```
+```env
 MONGO_URI=your_mongodb_connection_string_here
+JWT_SECRET=your_jwt_secret_here
 PORT=5000
 ```
 
 ---
 
-### 4. Run the Server
+## 4️⃣ Run the Server
 
-```
-nodemon server.js
+### Development Mode
+
+```bash
+npm run dev
 ```
 
-or
+### Production Mode
 
-```
+```bash
 node server.js
 ```
 
 ---
 
-## 🌐 API Endpoints
+# 🌐 API Endpoints
 
-### Home Route
+# 🏠 Base Route
 
-```
+```http
 GET /
 ```
 
-Response:
+### Response
 
-```
-API running with MongoDB 🚀
-```
-
-### Products Route
-
-```
-GET /products
-```
-
-Response:
-
-```
-["Product 1", "Product 2"]
+```json
+{
+  "message": "API running with MongoDB 🚀"
+}
 ```
 
 ---
 
-## 🔐 Security Practices
+# 👤 User Routes
 
-* Sensitive data stored in `.env` (not pushed to GitHub)
-* `.env` is ignored using `.gitignore`
-* No hardcoded credentials in source code
-* Clean Git history maintained
+## Register User
 
----
+```http
+POST /api/users/register
+```
 
-## 🚧 Future Improvements
+### Request Body
 
-* Product Schema & Database Models
-* User Authentication (JWT)
-* AI-based Product Recommendations
-* Image-based Product Search
-* Deployment (Render / AWS)
-
----
-
-## 👨‍💻 Author
-
-**Anurag Prasad**
-
-* Passionate about AI, Backend Development & Scalable Systems
-* Building projects for real-world impact
+```json
+{
+  "name": "Anurag",
+  "email": "anurag@gmail.com",
+  "password": "123456"
+}
+```
 
 ---
 
-## ⭐ Contribute / Support
+## Login User
 
-If you found this useful:
+```http
+POST /api/users/login
+```
 
-* Star the repository ⭐
-* Fork and improve 🔧
-* Share with others 🚀
+### Request Body
+
+```json
+{
+  "email": "anurag@gmail.com",
+  "password": "123456"
+}
+```
 
 ---
+
+## Get User Profile (Protected)
+
+```http
+GET /api/users/profile
+```
+
+### Headers
+
+```http
+Authorization: Bearer YOUR_TOKEN
+```
+
+---
+
+# 📦 Product Routes
+
+## Create Product (Protected)
+
+```http
+POST /api/products
+```
+
+### Request Body
+
+```json
+{
+  "name": "iPhone 15",
+  "price": 999,
+  "description": "Latest Apple smartphone",
+  "image": "iphone.jpg",
+  "countInStock": 10,
+  "category": "Electronics"
+}
+```
+
+---
+
+## Get All Products
+
+```http
+GET /api/products
+```
+
+---
+
+# 🔍 Product Search
+
+```http
+GET /api/products?keyword=iphone
+```
+
+---
+
+# 🏷️ Category Filtering
+
+```http
+GET /api/products?category=Electronics
+```
+
+---
+
+# 💰 Price Filtering
+
+```http
+GET /api/products?minPrice=100&maxPrice=1000
+```
+
+---
+
+# 📄 Pagination
+
+## Page Number
+
+```http
+GET /api/products?pageNumber=2
+```
+
+---
+
+## Dynamic Page Size
+
+```http
+GET /api/products?limit=2
+```
+
+---
+
+# ↕️ Sorting
+
+## Sort by Newest
+
+```http
+GET /api/products?sort=-createdAt
+```
+
+---
+
+## Sort by Price
+
+```http
+GET /api/products?sort=price
+```
+
+---
+
+## Sort by Highest Price
+
+```http
+GET /api/products?sort=-price
+```
+
+---
+
+# 🧠 Features Implemented
+
+- JWT Authentication
+- Password Encryption
+- Protected Routes Middleware
+- MongoDB Models & Schemas
+- Product Creation API
+- Product Search Functionality
+- Category Filtering
+- Price Range Filtering
+- Pagination System
+- Dynamic Page Size
+- Sorting Optimization
+- Field Selection Optimization
+- RESTful API Architecture
+- Environment Variable Security
+- Git & GitHub Workflow
+
+---
+
+# ⚡ Performance Optimizations
+
+The backend includes multiple optimization techniques:
+
+- Pagination using `.limit()` and `.skip()`
+- Dynamic filtering
+- Field selection using `.select()`
+- Sorting optimization
+- Optimized MongoDB queries
+- Reduced API payload size
+
+---
+
+# 🔐 Security Practices
+
+- Password hashing using bcryptjs
+- JWT-based authentication
+- Protected private routes
+- Sensitive data stored in `.env`
+- `.env` excluded using `.gitignore`
+- No hardcoded credentials
+- Clean Git workflow maintained
+
+---
+
+# 🚧 Future Improvements
+
+- React Frontend Integration
+- Redux State Management
+- Admin Dashboard
+- Product Reviews & Ratings
+- Order Management System
+- Payment Gateway Integration
+- AI Product Recommendation Engine
+- Image Upload Support
+- Cloud Deployment (Render / AWS)
+
+---
+
+# 👨‍💻 Author
+
+## Anurag Prasad
+
+- Passionate about AI, Backend Development & Scalable Systems
+- Building production-style full-stack applications
+- Exploring scalable API architecture and modern web technologies
+
+---
+
+# ⭐ Support
+
+If you found this project useful:
+
+- Star the repository ⭐
+- Fork and improve 🔧
+- Share with others 🚀
+
+---
+
+# 📈 Current Progress
+
+✅ Backend Setup Completed  
+✅ MongoDB Connected  
+✅ Authentication System Completed  
+✅ Protected Routes Implemented  
+✅ Product APIs Implemented  
+✅ Search & Filtering Completed  
+✅ Pagination & Optimization Completed  
+
+🚀 Frontend Development Starting Next
