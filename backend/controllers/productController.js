@@ -32,6 +32,12 @@ const createProduct = async (req, res) => {
 // @access  Public
 const getProducts = async (req, res) => {
 
+  // Dynamic page size
+  const pageSize = Number(req.query.limit) || 5;
+
+  // Current page number
+  const page = Number(req.query.pageNumber) || 1;
+
   // Search by keyword
   const keyword = req.query.keyword
     ? {
@@ -68,14 +74,31 @@ const getProducts = async (req, res) => {
     ? req.query.sort
     : "-createdAt";
 
-  // Fetch products
+  // Count total matching products
+  const count = await Product.countDocuments({
+    ...keyword,
+    ...category,
+    ...priceFilter,
+  });
+
+  // Fetch paginated & optimized products
   const products = await Product.find({
     ...keyword,
     ...category,
     ...priceFilter,
-  }).sort(sort);
+  })
+    .select("name price image category countInStock")
+    .sort(sort)
+    .limit(pageSize)
+    .skip(pageSize * (page - 1));
 
-  res.json(products);
+  // Final response
+  res.json({
+    products,
+    page,
+    pages: Math.ceil(count / pageSize),
+    totalProducts: count,
+  });
 };
 
 
