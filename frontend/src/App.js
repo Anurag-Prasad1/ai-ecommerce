@@ -1,11 +1,15 @@
+import Navbar from "./components/Navbar";
 import ProductList from "./components/ProductList";
+import "./styles.css";
 
 function App() {
   return (
     <div>
-      <h1>AI E-commerce 🚀</h1>
+      <Navbar />
 
-      <ProductList />
+      <div className="container">
+        <ProductList />
+      </div>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import ProductCard from "./ProductCard";
 
 function ProductList() {
   const [products, setProducts] = useState([]);
@@ -17,21 +18,12 @@ function ProductList() {
   }, []);
 
   return (
-    <div>
-      <h2>Products</h2>
-
+    <div className="product-grid">
       {products.map((product) => (
-        <div key={product._id}>
-          <img
-            src={product.image}
-            alt={product.name}
-            width="100"
-          />
-
-          <h3>{product.name}</h3>
-
-          <p>₹ {product.price}</p>
-        </div>
+        <ProductCard
+          key={product._id}
+          product={product}
+        />
       ))}
     </div>
   );
