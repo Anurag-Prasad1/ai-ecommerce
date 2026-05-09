@@ -1,28 +1,47 @@
-# 🚀 AI E-commerce Backend
+# 🚀 NovaCart
 
-A scalable backend system for an AI-powered e-commerce platform built using Node.js, Express, and MongoDB.
+A modern full-stack AI-inspired e-commerce web application built using React, Node.js, Express, and MongoDB.
+
+NovaCart is designed with scalable backend architecture, reusable frontend components, responsive UI design, and production-style development practices.
 
 ---
 
 # 📌 Project Overview
 
-This project simulates a production-level backend architecture for an intelligent e-commerce system.
+NovaCart simulates a real-world scalable e-commerce platform.
 
-The backend currently supports:
+The project currently includes:
 
-- User Authentication (JWT)
+## ✅ Backend Features
+
+- JWT Authentication
 - Protected Routes
 - Product APIs
 - Search & Filtering
 - Pagination
 - Sorting Optimization
-- MongoDB Database Integration
-- RESTful API Structure
-- Scalable Backend Architecture
+- MongoDB Integration
+- RESTful API Architecture
+
+## ✅ Frontend Features
+
+- Responsive React UI
+- Reusable Components
+- Product Grid Layout
+- Product Cards
+- Modern Navbar
+- Responsive Styling
+- Dynamic Product Fetching using Axios
 
 ---
 
 # 🛠️ Tech Stack
+
+## Frontend
+
+- React.js
+- Axios
+- CSS3
 
 ## Backend
 
@@ -45,6 +64,7 @@ The backend currently supports:
 - Nodemon
 - Git & GitHub
 - Postman
+- VS Code
 
 ---
 
@@ -52,6 +72,7 @@ The backend currently supports:
 
 ```bash
 ai-ecommerce/
+│
 ├── backend/
 │   ├── config/
 │   │   └── db.js
@@ -75,10 +96,28 @@ ai-ecommerce/
 │   │   └── generateToken.js
 │   │
 │   ├── server.js
-│   └── package.json
+│   ├── package.json
+│   └── .env
 │
-├── .env.example
+├── frontend/
+│   ├── public/
+│   │   └── index.html
+│   │
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Navbar.js
+│   │   │   ├── ProductCard.js
+│   │   │   └── ProductList.js
+│   │   │
+│   │   ├── App.js
+│   │   ├── styles.css
+│   │   └── index.js
+│   │
+│   ├── package.json
+│   └── README.md
+│
 ├── .gitignore
+├── .env.example
 └── README.md
 ```
 
@@ -86,16 +125,23 @@ ai-ecommerce/
 
 # ⚙️ Setup Instructions
 
-## 1️⃣ Clone the Repository
+# 1️⃣ Clone Repository
 
 ```bash
 git clone https://github.com/Anurag-Prasad1/ai-ecommerce.git
+```
+
+---
+
+# 2️⃣ Navigate Into Project
+
+```bash
 cd ai-ecommerce
 ```
 
 ---
 
-## 2️⃣ Install Dependencies
+# 3️⃣ Install Backend Dependencies
 
 ```bash
 cd backend
@@ -104,32 +150,71 @@ npm install
 
 ---
 
-## 3️⃣ Setup Environment Variables
+# 4️⃣ Install Frontend Dependencies
 
-Create a `.env` file inside the `backend/` folder.
+Open another terminal:
 
-Copy the following from `.env.example`:
+```bash
+cd frontend
+npm install
+```
+
+---
+
+# 5️⃣ Setup Environment Variables
+
+Create a `.env` file inside:
+
+```bash
+backend/
+```
+
+Add:
 
 ```env
-MONGO_URI=your_mongodb_connection_string_here
-JWT_SECRET=your_jwt_secret_here
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_secret_key
 PORT=5000
 ```
 
 ---
 
-## 4️⃣ Run the Server
+# ▶️ Running the Application
 
-### Development Mode
+## Start Backend Server
+
+📍 Run from:
+
+```bash
+backend/
+```
+
+Command:
 
 ```bash
 npm run dev
 ```
 
-### Production Mode
+OR
 
 ```bash
-node server.js
+nodemon server.js
+```
+
+---
+
+## Start Frontend Server
+
+📍 Run from:
+
+```bash
+frontend/
+```
+
+Command:
+
+```bash
+npm start
 ```
 
 ---
@@ -218,7 +303,7 @@ POST /api/products
   "name": "iPhone 15",
   "price": 999,
   "description": "Latest Apple smartphone",
-  "image": "iphone.jpg",
+  "image": "https://example.com/image.jpg",
   "countInStock": 10,
   "category": "Electronics"
 }
@@ -302,23 +387,59 @@ GET /api/products?sort=-price
 
 ---
 
+# 🧠 Frontend Features
+
+## ✅ Navbar
+
+- Modern responsive navbar
+- Branding support
+- Search input UI
+- Navigation structure
+
+---
+
+## ✅ Product Cards
+
+- Reusable React components
+- Dynamic product rendering
+- Responsive product layout
+- Product images and pricing
+
+---
+
+## ✅ Responsive Layout
+
+- CSS Grid system
+- Mobile-friendly structure
+- Responsive card sizing
+- Clean ecommerce styling
+
+---
+
 # 🧠 Features Implemented
+
+## Backend
 
 - JWT Authentication
 - Password Encryption
 - Protected Routes Middleware
 - MongoDB Models & Schemas
 - Product Creation API
-- Product Search Functionality
-- Category Filtering
-- Price Range Filtering
-- Pagination System
-- Dynamic Page Size
+- Search Functionality
+- Filtering System
+- Pagination
 - Sorting Optimization
-- Field Selection Optimization
 - RESTful API Architecture
-- Environment Variable Security
-- Git & GitHub Workflow
+
+## Frontend
+
+- React Component Architecture
+- Reusable Components
+- Axios API Integration
+- Responsive UI Design
+- Product Grid Layout
+- CSS Styling System
+- Dynamic Product Rendering
 
 ---
 
@@ -349,10 +470,11 @@ The backend includes multiple optimization techniques:
 
 # 🚧 Future Improvements
 
-- React Frontend Integration
-- Redux State Management
+- Product Details Page
+- React Router Integration
+- Shopping Cart Functionality
+- Redux / Context API State Management
 - Admin Dashboard
-- Product Reviews & Ratings
 - Order Management System
 - Payment Gateway Integration
 - AI Product Recommendation Engine
@@ -365,9 +487,34 @@ The backend includes multiple optimization techniques:
 
 ## Anurag Prasad
 
-- Passionate about AI, Backend Development & Scalable Systems
-- Building production-style full-stack applications
-- Exploring scalable API architecture and modern web technologies
+- CSE Engineering Student
+- Passionate about Full-Stack Development & AI
+- Building scalable production-style web applications
+- Exploring backend architecture and modern frontend systems
+
+---
+
+# 📈 Current Progress
+
+## ✅ Backend Completed
+
+- MongoDB Integration
+- Authentication System
+- Protected Routes
+- Product APIs
+- Search & Filtering
+- Pagination & Optimization
+
+## ✅ Frontend Progress
+
+- React Setup
+- Navbar Component
+- Product Cards
+- Responsive Layout
+- Styling System
+- Dynamic Product Fetching
+
+🚀 Product Details Page Coming Next
 
 ---
 
@@ -378,17 +525,3 @@ If you found this project useful:
 - Star the repository ⭐
 - Fork and improve 🔧
 - Share with others 🚀
-
----
-
-# 📈 Current Progress
-
-✅ Backend Setup Completed  
-✅ MongoDB Connected  
-✅ Authentication System Completed  
-✅ Protected Routes Implemented  
-✅ Product APIs Implemented  
-✅ Search & Filtering Completed  
-✅ Pagination & Optimization Completed  
-
-🚀 Frontend Development Starting Next
