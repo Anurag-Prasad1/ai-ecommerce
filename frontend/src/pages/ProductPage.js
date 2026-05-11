@@ -22,20 +22,31 @@ function ProductPage() {
   if (!product) return <h2>Loading...</h2>;
 
   return (
-    <div style={{ padding: "20px" }}>
-      <img
-        src={product.image}
-        alt={product.name}
-        width="300"
-      />
+    <div className="product-page">
+      <div className="product-page-image">
+        <img
+          src={product.image}
+          alt={product.name}
+        />
+      </div>
 
-      <h1>{product.name}</h1>
+      <div className="product-page-details">
+        <h1>{product.name}</h1>
 
-      <h3>₹ {product.price.toLocaleString("en-IN")}</h3>
+        <h2>
+          ₹ {product.price.toLocaleString("en-IN")}
+        </h2>
 
-      <p>{product.description}</p>
+        <p className="product-description">
+          {product.description}
+        </p>
 
-      <button>Add to Cart</button>
+        <p className="product-stock">
+          Stock: {product.countInStock}
+        </p>
+
+        <button>Add to Cart</button>
+      </div>
     </div>
   );
 }
