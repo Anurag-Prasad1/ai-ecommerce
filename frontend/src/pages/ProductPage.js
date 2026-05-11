@@ -31,7 +31,7 @@ function ProductPage() {
 
       <h1>{product.name}</h1>
 
-      <h3>₹ {product.price}</h3>
+      <h3>₹ {product.price.toLocaleString("en-IN")}</h3>
 
       <p>{product.description}</p>
 
