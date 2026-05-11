@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function ProductCard({ product }) {
   return (
     <div className="product-card">
@@ -5,9 +7,13 @@ function ProductCard({ product }) {
 
       <h3>{product.name}</h3>
 
-      <p>₹ {product.price.toLocaleString("en-IN")}</p>
+      <p>
+        ₹ {product.price.toLocaleString("en-IN")}
+      </p>
 
-      <button>Add to Cart</button>
+      <Link to={`/product/${product._id}`}>
+        <button>View Details</button>
+      </Link>
     </div>
   );
 }
