@@ -19,7 +19,9 @@ function ProductPage() {
     fetchProduct();
   }, [id]);
 
-  if (!product) return <h2>Loading...</h2>;
+  if (!product) {
+    return <h2>Loading...</h2>;
+  }
 
   return (
     <div className="product-page">
