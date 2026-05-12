@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import ProductList from "./components/ProductList";
 
 import ProductPage from "./pages/ProductPage";
+import CartPage from "./pages/CartPage";
 
 import "./styles.css";
 
@@ -25,6 +26,11 @@ function App() {
         <Route
           path="/product/:id"
           element={<ProductPage />}
+        />
+
+        <Route
+          path="/cart"
+          element={<CartPage />}
         />
       </Routes>
     </div>
