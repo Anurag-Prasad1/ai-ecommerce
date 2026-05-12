@@ -10,6 +10,7 @@ function Navbar() {
       <div>
         <input
           type="text"
+          name="search"
           placeholder="Search products..."
         />
 
