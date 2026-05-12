@@ -10,7 +10,10 @@ function CartProvider({ children }) {
   });
 
   useEffect(() => {
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    localStorage.setItem(
+      "cartItems",
+      JSON.stringify(cartItems)
+    );
   }, [cartItems]);
 
   const addToCart = (product) => {
@@ -22,16 +25,30 @@ function CartProvider({ children }) {
       setCartItems(
         cartItems.map((item) =>
           item._id === product._id
-            ? { ...item, qty: item.qty + 1 }
+            ? {
+                ...item,
+                qty: item.qty + 1,
+              }
             : item
         )
       );
     } else {
       setCartItems([
         ...cartItems,
-        { ...product, qty: 1 },
+        {
+          ...product,
+          qty: 1,
+        },
       ]);
     }
+  };
+
+  const removeFromCart = (id) => {
+    setCartItems(
+      cartItems.filter(
+        (item) => item._id !== id
+      )
+    );
   };
 
   return (
@@ -39,6 +56,7 @@ function CartProvider({ children }) {
       value={{
         cartItems,
         addToCart,
+        removeFromCart,
       }}
     >
       {children}
