@@ -24,6 +24,10 @@ function ProductList() {
     fetchProducts();
   }, [keyword]);
 
+  if (products.length === 0) {
+    return <h2>No Products Found</h2>;
+  }
+
   return (
     <div className="product-grid">
       {products.map((product) => (
