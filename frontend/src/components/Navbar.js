@@ -14,6 +14,8 @@ function Navbar() {
     } else {
       navigate("/");
     }
+
+    setKeyword("");
   };
 
   return (
