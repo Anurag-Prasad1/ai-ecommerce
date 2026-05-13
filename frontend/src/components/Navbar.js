@@ -1,6 +1,21 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function Navbar() {
+  const [keyword, setKeyword] = useState("");
+
+  const navigate = useNavigate();
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+
+    if (keyword.trim()) {
+      navigate(`/?keyword=${keyword}`);
+    } else {
+      navigate("/");
+    }
+  };
+
   return (
     <nav className="navbar">
       <Link to="/" className="logo">
@@ -8,11 +23,16 @@ function Navbar() {
       </Link>
 
       <div>
-        <input
-          type="text"
-          name="search"
-          placeholder="Search products..."
-        />
+        <form onSubmit={submitHandler}>
+          <input
+            type="text"
+            placeholder="Search products..."
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
+          />
+
+          <button type="submit">Search</button>
+        </form>
 
         <button>Login</button>
 
