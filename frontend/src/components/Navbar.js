@@ -3,17 +3,16 @@ import { useState } from "react";
 
 function Navbar() {
   const [keyword, setKeyword] = useState("");
+  const [category, setCategory] = useState("");
 
   const navigate = useNavigate();
 
   const submitHandler = (e) => {
     e.preventDefault();
 
-    if (keyword.trim()) {
-      navigate(`/?keyword=${keyword}`);
-    } else {
-      navigate("/");
-    }
+    navigate(
+      `/?keyword=${keyword}&category=${category}`
+    );
 
     setKeyword("");
   };
@@ -32,6 +31,18 @@ function Navbar() {
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
           />
+
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <option value="">All</option>
+            <option value="mobile">Mobile</option>
+            <option value="fashion">Fashion</option>
+            <option value="electronics">
+              Electronics
+            </option>
+          </select>
 
           <button type="submit">Search</button>
         </form>
