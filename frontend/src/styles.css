@@ -183,3 +183,13 @@ a {
 
   border-radius: 10px;
 }
+
+.navbar form {
+  display: flex;
+  gap: 10px;
+}
+
+.navbar input,
+.navbar select {
+  padding: 8px;
+}
