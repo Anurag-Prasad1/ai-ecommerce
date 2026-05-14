@@ -42,6 +42,7 @@ function Navbar() {
             <option value="electronics">
               Electronics
             </option>
+            <option value="books">Books</option>
           </select>
 
           <button type="submit">Search</button>
