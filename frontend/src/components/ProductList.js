@@ -10,19 +10,29 @@ function ProductList() {
 
   const location = useLocation();
 
-  const keyword = new URLSearchParams(location.search).get("keyword");
+  const keyword =
+    new URLSearchParams(location.search).get(
+      "keyword"
+    );
+
+  const category =
+    new URLSearchParams(location.search).get(
+      "category"
+    );
 
   useEffect(() => {
     const fetchProducts = async () => {
       const { data } = await axios.get(
-        `http://localhost:5000/api/products?keyword=${keyword || ""}`
+        `http://localhost:5000/api/products?keyword=${
+          keyword || ""
+        }&category=${category || ""}`
       );
 
       setProducts(data.products || data);
     };
 
     fetchProducts();
-  }, [keyword]);
+  }, [keyword, category]);
 
   if (products.length === 0) {
     return <h2>No Products Found</h2>;
