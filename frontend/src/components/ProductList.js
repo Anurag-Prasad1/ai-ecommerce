@@ -20,19 +20,31 @@ function ProductList() {
       "category"
     );
 
+  const minPrice =
+    new URLSearchParams(location.search).get(
+      "minPrice"
+    );
+
+  const maxPrice =
+    new URLSearchParams(location.search).get(
+      "maxPrice"
+    );
+
   useEffect(() => {
     const fetchProducts = async () => {
       const { data } = await axios.get(
         `http://localhost:5000/api/products?keyword=${
           keyword || ""
-        }&category=${category || ""}`
+        }&category=${category || ""}&minPrice=${
+          minPrice || ""
+        }&maxPrice=${maxPrice || ""}`
       );
 
       setProducts(data.products || data);
     };
 
     fetchProducts();
-  }, [keyword, category]);
+  }, [keyword, category, minPrice, maxPrice]);
 
   if (products.length === 0) {
     return <h2>No Products Found</h2>;
