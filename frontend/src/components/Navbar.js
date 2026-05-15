@@ -5,16 +5,21 @@ function Navbar() {
   const [keyword, setKeyword] = useState("");
   const [category, setCategory] = useState("");
 
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+
   const navigate = useNavigate();
 
   const submitHandler = (e) => {
     e.preventDefault();
 
     navigate(
-      `/?keyword=${keyword}&category=${category}`
+      `/?keyword=${keyword}&category=${category}&minPrice=${minPrice}&maxPrice=${maxPrice}`
     );
 
     setKeyword("");
+    setMinPrice("");
+    setMaxPrice("");
   };
 
   return (
@@ -37,13 +42,35 @@ function Navbar() {
             onChange={(e) => setCategory(e.target.value)}
           >
             <option value="">All</option>
+
             <option value="mobile">Mobile</option>
+
             <option value="fashion">Fashion</option>
+
             <option value="electronics">
               Electronics
             </option>
+
             <option value="books">Books</option>
           </select>
+
+          <input
+            type="number"
+            placeholder="Min Price"
+            value={minPrice}
+            onChange={(e) =>
+              setMinPrice(e.target.value)
+            }
+          />
+
+          <input
+            type="number"
+            placeholder="Max Price"
+            value={maxPrice}
+            onChange={(e) =>
+              setMaxPrice(e.target.value)
+            }
+          />
 
           <button type="submit">Search</button>
         </form>
