@@ -220,3 +220,8 @@ a {
   background: black !important;
   color: white;
 }
+
+.pagination button:hover {
+  background: black;
+  color: white;
+}
