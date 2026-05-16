@@ -81,6 +81,22 @@ function ProductList() {
       </div>
 
       <div className="pagination">
+        {page > 1 && (
+          <Link
+            to={`/?keyword=${
+              keyword || ""
+            }&category=${
+              category || ""
+            }&minPrice=${
+              minPrice || ""
+            }&maxPrice=${
+              maxPrice || ""
+            }&pageNumber=${page - 1}`}
+          >
+            <button>Prev</button>
+          </Link>
+        )}
+
         {[...Array(pages).keys()].map((x) => (
           <Link
             key={x + 1}
@@ -105,6 +121,22 @@ function ProductList() {
             </button>
           </Link>
         ))}
+
+        {page < pages && (
+          <Link
+            to={`/?keyword=${
+              keyword || ""
+            }&category=${
+              category || ""
+            }&minPrice=${
+              minPrice || ""
+            }&maxPrice=${
+              maxPrice || ""
+            }&pageNumber=${page + 1}`}
+          >
+            <button>Next</button>
+          </Link>
+        )}
       </div>
     </>
   );
