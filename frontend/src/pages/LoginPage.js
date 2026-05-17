@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
+
   const [password, setPassword] =
     useState("");
 
@@ -19,17 +20,22 @@ function LoginPage() {
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    const { data } = await axios.post(
-      "http://localhost:5000/api/users/login",
-      {
-        email,
-        password,
-      }
-    );
+    try {
+      const { data } = await axios.post(
+        "http://localhost:5000/api/users/login",
+        {
+          email,
+          password,
+        }
+      );
 
-    setUserInfo(data);
+      setUserInfo(data);
 
-    navigate("/");
+      navigate("/");
+
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
