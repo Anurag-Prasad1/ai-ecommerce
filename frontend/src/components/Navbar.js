@@ -47,7 +47,7 @@ function Navbar() {
         <h2>NovaCart 🚀</h2>
       </Link>
 
-      <div>
+      <div className="nav-right">
         <form onSubmit={submitHandler}>
           <input
             type="text"
@@ -112,7 +112,9 @@ function Navbar() {
 
         {userInfo ? (
           <>
-            <span>{userInfo.name}</span>
+            <span className="user-name">
+              {userInfo.name}
+            </span>
 
             <button onClick={logout}>
               Logout

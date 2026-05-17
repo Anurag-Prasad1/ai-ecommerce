@@ -258,3 +258,17 @@ a {
   border: none;
   cursor: pointer;
 }
+
+.nav-right {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+}
+
+.user-name {
+  color: white;
+
+  font-weight: bold;
+}
