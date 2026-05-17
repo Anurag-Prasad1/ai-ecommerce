@@ -1,14 +1,32 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import {
+  Link,
+  useNavigate,
+} from "react-router-dom";
+
+import {
+  useState,
+  useContext,
+} from "react";
+
+import { AuthContext } from "../context/AuthContext";
 
 function Navbar() {
-  const [keyword, setKeyword] = useState("");
-  const [category, setCategory] = useState("");
+  const [keyword, setKeyword] =
+    useState("");
 
-  const [minPrice, setMinPrice] = useState("");
-  const [maxPrice, setMaxPrice] = useState("");
+  const [category, setCategory] =
+    useState("");
+
+  const [minPrice, setMinPrice] =
+    useState("");
+
+  const [maxPrice, setMaxPrice] =
+    useState("");
 
   const navigate = useNavigate();
+
+  const { userInfo, logout } =
+    useContext(AuthContext);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -18,6 +36,7 @@ function Navbar() {
     );
 
     setKeyword("");
+
     setMinPrice("");
     setMaxPrice("");
   };
@@ -34,24 +53,34 @@ function Navbar() {
             type="text"
             placeholder="Search products..."
             value={keyword}
-            onChange={(e) => setKeyword(e.target.value)}
+            onChange={(e) =>
+              setKeyword(e.target.value)
+            }
           />
 
           <select
             value={category}
-            onChange={(e) => setCategory(e.target.value)}
+            onChange={(e) =>
+              setCategory(e.target.value)
+            }
           >
             <option value="">All</option>
 
-            <option value="mobile">Mobile</option>
+            <option value="mobile">
+              Mobile
+            </option>
 
-            <option value="fashion">Fashion</option>
+            <option value="fashion">
+              Fashion
+            </option>
 
             <option value="electronics">
               Electronics
             </option>
 
-            <option value="books">Books</option>
+            <option value="books">
+              Books
+            </option>
           </select>
 
           <input
@@ -72,14 +101,28 @@ function Navbar() {
             }
           />
 
-          <button type="submit">Search</button>
+          <button type="submit">
+            Search
+          </button>
         </form>
-
-        <button>Login</button>
 
         <Link to="/cart">
           <button>Cart</button>
         </Link>
+
+        {userInfo ? (
+          <>
+            <span>{userInfo.name}</span>
+
+            <button onClick={logout}>
+              Logout
+            </button>
+          </>
+        ) : (
+          <Link to="/login">
+            <button>Login</button>
+          </Link>
+        )}
       </div>
     </nav>
   );
