@@ -225,3 +225,36 @@ a {
   background: black;
   color: white;
 }
+
+.form-container {
+  max-width: 400px;
+
+  margin: 40px auto;
+
+  background: white;
+
+  padding: 30px;
+
+  border-radius: 10px;
+}
+
+.form-container form {
+  display: flex;
+  flex-direction: column;
+
+  gap: 15px;
+}
+
+.form-container input {
+  padding: 10px;
+}
+
+.form-container button {
+  padding: 10px;
+
+  background: black;
+  color: white;
+
+  border: none;
+  cursor: pointer;
+}
