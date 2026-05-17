@@ -6,6 +6,9 @@ import ProductList from "./components/ProductList";
 import ProductPage from "./pages/ProductPage";
 import CartPage from "./pages/CartPage";
 
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+
 import "./styles.css";
 
 function App() {
@@ -31,6 +34,16 @@ function App() {
         <Route
           path="/cart"
           element={<CartPage />}
+        />
+
+        <Route
+          path="/login"
+          element={<LoginPage />}
+        />
+
+        <Route
+          path="/register"
+          element={<RegisterPage />}
         />
       </Routes>
     </div>
