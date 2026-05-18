@@ -119,7 +119,7 @@ function Navbar() {
           <>
             <span className="user-name">
               Welcome{" "}
-              {userInfo.user?.name ||
+              {userInfo.name ||
                 "User"}
             </span>
 
