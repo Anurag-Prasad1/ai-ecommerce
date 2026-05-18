@@ -43,7 +43,10 @@ function Navbar() {
 
   return (
     <nav className="navbar">
-      <Link to="/" className="logo">
+      <Link
+        to="/"
+        className="logo"
+      >
         <h2>NovaCart 🚀</h2>
       </Link>
 
@@ -64,7 +67,9 @@ function Navbar() {
               setCategory(e.target.value)
             }
           >
-            <option value="">All</option>
+            <option value="">
+              All
+            </option>
 
             <option value="mobile">
               Mobile
@@ -113,7 +118,9 @@ function Navbar() {
         {userInfo ? (
           <>
             <span className="user-name">
-              {userInfo.name}
+              Welcome{" "}
+              {userInfo.user?.name ||
+                "User"}
             </span>
 
             <button onClick={logout}>
