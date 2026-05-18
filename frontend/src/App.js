@@ -9,6 +9,8 @@ import CartPage from "./pages/CartPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 
+import ProtectedRoute from "./components/ProtectedRoute";
+
 import "./styles.css";
 
 function App() {
@@ -33,7 +35,11 @@ function App() {
 
         <Route
           path="/cart"
-          element={<CartPage />}
+          element={
+            <ProtectedRoute>
+              <CartPage />
+            </ProtectedRoute>
+          }
         />
 
         <Route
