@@ -1,12 +1,34 @@
-import { createContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useEffect,
+  useState,
+} from "react";
 
 export const CartContext = createContext();
 
 function CartProvider({ children }) {
-  const [cartItems, setCartItems] = useState(() => {
-    const savedCart = localStorage.getItem("cartItems");
+  const [cartItems, setCartItems] =
+    useState(() => {
+      const savedCart =
+        localStorage.getItem("cartItems");
 
-    return savedCart ? JSON.parse(savedCart) : [];
+      return savedCart
+        ? JSON.parse(savedCart)
+        : [];
+    });
+
+  const [
+    shippingAddress,
+    setShippingAddress,
+  ] = useState(() => {
+    const savedShipping =
+      localStorage.getItem(
+        "shippingAddress"
+      );
+
+    return savedShipping
+      ? JSON.parse(savedShipping)
+      : {};
   });
 
   useEffect(() => {
@@ -15,6 +37,13 @@ function CartProvider({ children }) {
       JSON.stringify(cartItems)
     );
   }, [cartItems]);
+
+  useEffect(() => {
+    localStorage.setItem(
+      "shippingAddress",
+      JSON.stringify(shippingAddress)
+    );
+  }, [shippingAddress]);
 
   const addToCart = (product) => {
     const exist = cartItems.find(
@@ -57,6 +86,9 @@ function CartProvider({ children }) {
         cartItems,
         addToCart,
         removeFromCart,
+
+        shippingAddress,
+        setShippingAddress,
       }}
     >
       {children}
