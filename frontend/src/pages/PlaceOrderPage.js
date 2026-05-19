@@ -8,6 +8,12 @@ function PlaceOrderPage() {
     shippingAddress,
   } = useContext(CartContext);
 
+  const totalPrice = cartItems.reduce(
+    (acc, item) =>
+      acc + item.price * item.qty,
+    0
+  );
+
   return (
     <div className="container">
       <h1>Place Order</h1>
@@ -33,6 +39,8 @@ function PlaceOrderPage() {
           </p>
         </div>
       ))}
+
+      <h2>Total: ₹ {totalPrice}</h2>
     </div>
   );
 }
