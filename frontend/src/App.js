@@ -9,6 +9,9 @@ import CartPage from "./pages/CartPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 
+import ShippingPage from "./pages/ShippingPage";
+import PlaceOrderPage from "./pages/PlaceOrderPage";
+
 import ProtectedRoute from "./components/ProtectedRoute";
 
 import "./styles.css";
@@ -38,6 +41,24 @@ function App() {
           element={
             <ProtectedRoute>
               <CartPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/shipping"
+          element={
+            <ProtectedRoute>
+              <ShippingPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/placeorder"
+          element={
+            <ProtectedRoute>
+              <PlaceOrderPage />
             </ProtectedRoute>
           }
         />
