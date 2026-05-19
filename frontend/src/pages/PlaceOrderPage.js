@@ -35,12 +35,21 @@ function PlaceOrderPage() {
           <h3>{item.name}</h3>
 
           <p>
-            ₹ {item.price} × {item.qty}
+            ₹{" "}
+            {item.price.toLocaleString(
+              "en-IN"
+            )}{" "}
+            × {item.qty}
           </p>
         </div>
       ))}
 
-      <h2>Total: ₹ {totalPrice}</h2>
+      <h2>
+        Total: ₹{" "}
+        {totalPrice.toLocaleString(
+          "en-IN"
+        )}
+      </h2>
     </div>
   );
 }
