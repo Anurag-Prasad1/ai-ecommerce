@@ -1,13 +1,17 @@
 const cors = require("cors");
-require("dotenv").config(); // Load environment variables
+
+require("dotenv").config();
 
 const express = require("express");
+
 const connectDB = require("./config/db");
 
 const app = express();
+
 app.use(cors());
 
-// 🔥 Middleware (VERY IMPORTANT)
+
+// 🔥 Middleware
 app.use(express.json());
 
 
@@ -16,23 +20,45 @@ app.use(express.json());
 // Home route
 app.get("/", (req, res) => {
   console.log("👉 Request received at /");
-  res.send("API running with MongoDB + MVC 🚀");
+
+  res.send(
+    "API + MongoDB + MVC + Payments 🚀"
+  );
 });
 
 
 // Products route (optional - keep for testing)
 app.get("/products", (req, res) => {
-  console.log("👉 Request received at /products");
-  res.json(["Product 1", "Product 2"]);
+  console.log(
+    "👉 Request received at /products"
+  );
+
+  res.json([
+    "Product 1",
+    "Product 2",
+  ]);
 });
 
 
-// 🔥 User Routes (DAY 4)
-app.use("/api/users", require("./routes/userRoutes"));
+// 🔥 User Routes
+app.use(
+  "/api/users",
+  require("./routes/userRoutes")
+);
 
 
-// 🔥 Product Routes (DAY 7 - NEW ADDITION)
-app.use("/api/products", require("./routes/productRoutes"));
+// 🔥 Product Routes
+app.use(
+  "/api/products",
+  require("./routes/productRoutes")
+);
+
+
+// 🔥 Payment Routes (DAY 21 - NEW ADDITION)
+app.use(
+  "/api/payments",
+  require("./routes/paymentRoutes")
+);
 
 
 // 🔥 Start server ONLY after DB connects
@@ -41,10 +67,15 @@ const startServer = async () => {
     await connectDB();
 
     app.listen(5000, () => {
-      console.log("🚀 Server running on port 5000");
+      console.log(
+        "🚀 Server running on port 5000"
+      );
     });
   } catch (error) {
-    console.error("❌ Server failed to start", error);
+    console.error(
+      "❌ Server failed to start",
+      error
+    );
   }
 };
 
