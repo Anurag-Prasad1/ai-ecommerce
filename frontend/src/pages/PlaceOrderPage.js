@@ -1,5 +1,7 @@
 import { useContext } from "react";
 
+import axios from "axios";
+
 import { CartContext } from "../context/CartContext";
 
 function PlaceOrderPage() {
@@ -13,6 +15,57 @@ function PlaceOrderPage() {
       acc + item.price * item.qty,
     0
   );
+
+  const paymentHandler = async () => {
+    try {
+      const { data } = await axios.post(
+        "http://localhost:5000/api/payments/create-order",
+        {
+          amount: totalPrice,
+        }
+      );
+
+      const options = {
+        key:
+          "rzp_test_SraRd60FDhsPEG",
+
+        amount: data.amount,
+
+        currency: data.currency,
+
+        name: "NovaCart",
+
+        description:
+          "Thank you for shopping with NovaCart",
+
+        order_id: data.id,
+
+        handler: function () {
+          alert(
+            `Payment Successful 🎉
+Order Amount: ₹ ${totalPrice.toLocaleString(
+              "en-IN"
+            )}`
+          );
+        },
+
+        theme: {
+          color: "#3399cc",
+        },
+      };
+
+      const razor =
+        new window.Razorpay(options);
+
+      razor.open();
+    } catch (error) {
+      console.error(error);
+
+      alert(
+        "Payment Failed ❌"
+      );
+    }
+  };
 
   return (
     <div className="container">
@@ -50,6 +103,10 @@ function PlaceOrderPage() {
           "en-IN"
         )}
       </h2>
+
+      <button onClick={paymentHandler}>
+        Pay Now
+      </button>
     </div>
   );
 }
