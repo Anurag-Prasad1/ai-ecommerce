@@ -117,6 +117,12 @@ function Navbar() {
 
         {userInfo ? (
           <>
+            <Link to="/myorders">
+              <button>
+                My Orders
+              </button>
+            </Link>
+
             <span className="user-name">
               Welcome{" "}
               {userInfo.name ||
