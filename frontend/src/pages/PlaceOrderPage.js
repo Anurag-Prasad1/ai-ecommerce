@@ -4,11 +4,16 @@ import axios from "axios";
 
 import { CartContext } from "../context/CartContext";
 
+import { AuthContext } from "../context/AuthContext";
+
 function PlaceOrderPage() {
   const {
     cartItems,
     shippingAddress,
   } = useContext(CartContext);
+
+  const { userInfo } =
+    useContext(AuthContext);
 
   const totalPrice = cartItems.reduce(
     (acc, item) =>
@@ -40,7 +45,24 @@ function PlaceOrderPage() {
 
         order_id: data.id,
 
-        handler: function () {
+        handler: async function () {
+          // 🔥 SAVE ORDER AFTER SUCCESSFUL PAYMENT
+          await axios.post(
+            "http://localhost:5000/api/orders",
+            {
+              orderItems: cartItems,
+
+              shippingAddress,
+
+              totalPrice,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${userInfo.token}`,
+              },
+            }
+          );
+
           alert(
             `Payment Successful 🎉
 Order Amount: ₹ ${totalPrice.toLocaleString(
