@@ -12,6 +12,8 @@ import RegisterPage from "./pages/RegisterPage";
 import ShippingPage from "./pages/ShippingPage";
 import PlaceOrderPage from "./pages/PlaceOrderPage";
 
+import MyOrdersPage from "./pages/MyOrdersPage";
+
 import ProtectedRoute from "./components/ProtectedRoute";
 
 import "./styles.css";
@@ -59,6 +61,15 @@ function App() {
           element={
             <ProtectedRoute>
               <PlaceOrderPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/myorders"
+          element={
+            <ProtectedRoute>
+              <MyOrdersPage />
             </ProtectedRoute>
           }
         />
