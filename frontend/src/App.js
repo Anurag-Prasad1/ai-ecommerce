@@ -14,7 +14,11 @@ import PlaceOrderPage from "./pages/PlaceOrderPage";
 
 import MyOrdersPage from "./pages/MyOrdersPage";
 
+import AdminDashboardPage from "./pages/AdminDashboardPage";
+
 import ProtectedRoute from "./components/ProtectedRoute";
+
+import AdminRoute from "./components/AdminRoute";
 
 import "./styles.css";
 
@@ -24,6 +28,7 @@ function App() {
       <Navbar />
 
       <Routes>
+
         <Route
           path="/"
           element={
@@ -75,6 +80,15 @@ function App() {
         />
 
         <Route
+          path="/admin/dashboard"
+          element={
+            <AdminRoute>
+              <AdminDashboardPage />
+            </AdminRoute>
+          }
+        />
+
+        <Route
           path="/login"
           element={<LoginPage />}
         />
@@ -83,6 +97,7 @@ function App() {
           path="/register"
           element={<RegisterPage />}
         />
+
       </Routes>
     </div>
   );
