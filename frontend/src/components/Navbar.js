@@ -11,6 +11,7 @@ import {
 import { AuthContext } from "../context/AuthContext";
 
 function Navbar() {
+
   const [keyword, setKeyword] =
     useState("");
 
@@ -25,10 +26,13 @@ function Navbar() {
 
   const navigate = useNavigate();
 
-  const { userInfo, logout } =
-    useContext(AuthContext);
+  const {
+    userInfo,
+    logout,
+  } = useContext(AuthContext);
 
   const submitHandler = (e) => {
+
     e.preventDefault();
 
     navigate(
@@ -38,11 +42,13 @@ function Navbar() {
     setKeyword("");
 
     setMinPrice("");
+
     setMaxPrice("");
   };
 
   return (
     <nav className="navbar">
+
       <Link
         to="/"
         className="logo"
@@ -51,22 +57,29 @@ function Navbar() {
       </Link>
 
       <div className="nav-right">
+
         <form onSubmit={submitHandler}>
+
           <input
             type="text"
             placeholder="Search products..."
             value={keyword}
             onChange={(e) =>
-              setKeyword(e.target.value)
+              setKeyword(
+                e.target.value
+              )
             }
           />
 
           <select
             value={category}
             onChange={(e) =>
-              setCategory(e.target.value)
+              setCategory(
+                e.target.value
+              )
             }
           >
+
             <option value="">
               All
             </option>
@@ -86,6 +99,7 @@ function Navbar() {
             <option value="books">
               Books
             </option>
+
           </select>
 
           <input
@@ -93,7 +107,9 @@ function Navbar() {
             placeholder="Min Price"
             value={minPrice}
             onChange={(e) =>
-              setMinPrice(e.target.value)
+              setMinPrice(
+                e.target.value
+              )
             }
           />
 
@@ -102,13 +118,16 @@ function Navbar() {
             placeholder="Max Price"
             value={maxPrice}
             onChange={(e) =>
-              setMaxPrice(e.target.value)
+              setMaxPrice(
+                e.target.value
+              )
             }
           />
 
           <button type="submit">
             Search
           </button>
+
         </form>
 
         <Link to="/cart">
@@ -117,33 +136,53 @@ function Navbar() {
 
         {userInfo ? (
           <>
+
             <Link to="/myorders">
               <button>
                 My Orders
               </button>
             </Link>
 
+            {userInfo?.isAdmin && (
+              <Link to="/admin/dashboard">
+                <button>
+                  Admin
+                </button>
+              </Link>
+            )}
+
             <span className="user-name">
+
               Welcome{" "}
+
               {userInfo.name ||
                 "User"}
+
             </span>
 
             <button onClick={logout}>
               Logout
             </button>
+
           </>
         ) : (
           <>
+
             <Link to="/login">
-              <button>Login</button>
+              <button>
+                Login
+              </button>
             </Link>
 
             <Link to="/register">
-              <button>Register</button>
+              <button>
+                Register
+              </button>
             </Link>
+
           </>
         )}
+
       </div>
     </nav>
   );

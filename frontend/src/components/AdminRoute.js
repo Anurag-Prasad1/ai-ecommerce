@@ -7,12 +7,13 @@ import {
 import { AuthContext } from "../context/AuthContext";
 
 function AdminRoute({ children }) {
+
   const { userInfo } =
     useContext(AuthContext);
 
   if (
     !userInfo ||
-    !userInfo.user?.isAdmin
+    !userInfo?.isAdmin
   ) {
     return <Navigate to="/" />;
   }

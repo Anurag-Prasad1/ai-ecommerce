@@ -6,19 +6,30 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+
     email: {
       type: String,
       required: true,
-      unique: true, // no duplicate emails
+      unique: true,
     },
+
     password: {
       type: String,
       required: true,
     },
+
+    isAdmin: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
   },
   {
-    timestamps: true, // adds createdAt & updatedAt
+    timestamps: true,
   }
 );
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model(
+  "User",
+  userSchema
+);
