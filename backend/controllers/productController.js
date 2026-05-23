@@ -8,23 +8,25 @@ const createProduct = async (
   req,
   res
 ) => {
-  const {
-    name,
-    price,
-    description,
-    image,
-    countInStock,
-    category,
-  } = req.body;
 
-  const product = await Product.create({
-    name,
-    price,
-    description,
-    image,
-    countInStock,
-    category,
-  });
+  const product =
+    await Product.create({
+
+      name: "Sample Product",
+
+      price: 0,
+
+      description:
+        "Sample Description",
+
+      image:
+        "https://via.placeholder.com/300",
+
+      countInStock: 0,
+
+      category:
+        "Sample Category",
+    });
 
   res.status(201).json(product);
 };
