@@ -16,6 +16,8 @@ import MyOrdersPage from "./pages/MyOrdersPage";
 
 import AdminDashboardPage from "./pages/AdminDashboardPage";
 
+import ProductEditPage from "./pages/ProductEditPage";
+
 import ProtectedRoute from "./components/ProtectedRoute";
 
 import AdminRoute from "./components/AdminRoute";
@@ -84,6 +86,15 @@ function App() {
           element={
             <AdminRoute>
               <AdminDashboardPage />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/product/:id/edit"
+          element={
+            <AdminRoute>
+              <ProductEditPage />
             </AdminRoute>
           }
         />
