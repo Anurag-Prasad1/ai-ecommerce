@@ -151,6 +151,61 @@ const getProductById = async (
 };
 
 
+// @desc    Update Product
+// @route   PUT /api/products/:id
+// @access  Private/Admin
+const updateProduct = async (
+  req,
+  res
+) => {
+
+  const product =
+    await Product.findById(
+      req.params.id
+    );
+
+  if (product) {
+
+    product.name =
+      req.body.name ||
+      product.name;
+
+    product.price =
+      req.body.price ||
+      product.price;
+
+    product.description =
+      req.body.description ||
+      product.description;
+
+    product.image =
+      req.body.image ||
+      product.image;
+
+    product.countInStock =
+      req.body.countInStock ||
+      product.countInStock;
+
+    product.category =
+      req.body.category ||
+      product.category;
+
+    const updatedProduct =
+      await product.save();
+
+    res.json(updatedProduct);
+
+  } else {
+
+    res.status(404);
+
+    throw new Error(
+      "Product not found"
+    );
+  }
+};
+
+
 // @desc    Delete Product
 // @route   DELETE /api/products/:id
 // @access  Private/Admin
@@ -188,5 +243,6 @@ module.exports = {
   createProduct,
   getProducts,
   getProductById,
+  updateProduct,
   deleteProduct,
 };
