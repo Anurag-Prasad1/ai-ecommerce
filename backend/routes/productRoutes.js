@@ -6,6 +6,7 @@ const {
   createProduct,
   getProducts,
   getProductById,
+  updateProduct,
   deleteProduct,
 } = require("../controllers/productController");
 
@@ -32,6 +33,13 @@ router.post(
   protect,
   admin,
   createProduct
+);
+
+router.put(
+  "/:id",
+  protect,
+  admin,
+  updateProduct
 );
 
 router.delete(
