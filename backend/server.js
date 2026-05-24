@@ -4,6 +4,8 @@ require("dotenv").config();
 
 const express = require("express");
 
+const path = require("path");
+
 const connectDB = require("./config/db");
 
 const app = express();
@@ -20,7 +22,7 @@ app.get("/", (req, res) => {
   console.log("👉 Request received at /");
 
   res.send(
-    "API + MongoDB + MVC + Orders 🚀"
+    "API + MongoDB + MVC + Uploads 🚀"
   );
 });
 
@@ -54,10 +56,24 @@ app.use(
   require("./routes/paymentRoutes")
 );
 
-// 🔥 Order Routes (DAY 22 - NEW ADDITION)
+// 🔥 Order Routes
 app.use(
   "/api/orders",
   require("./routes/orderRoutes")
+);
+
+// 🔥 Upload Routes (DAY 25 - NEW ADDITION)
+app.use(
+  "/api/upload",
+  require("./routes/uploadRoutes")
+);
+
+// 🔥 Serve Uploaded Images Publicly
+app.use(
+  "/uploads",
+  express.static(
+    path.join(__dirname, "/uploads")
+  )
 );
 
 // 🔥 Start server ONLY after DB connects
