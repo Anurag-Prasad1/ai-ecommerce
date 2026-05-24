@@ -69,6 +69,36 @@ function ProductEditPage() {
     fetchProduct();
   }, [id]);
 
+  // 🔥 Upload Product Image
+  const uploadFileHandler = async (
+    e
+  ) => {
+    const file = e.target.files[0];
+
+    const formData = new FormData();
+
+    formData.append("image", file);
+
+    const config = {
+      headers: {
+        "Content-Type":
+          "multipart/form-data",
+
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.post(
+      "http://localhost:5000/api/upload",
+      formData,
+      config
+    );
+
+    setImage(
+      `http://localhost:5000${data}`
+    );
+  };
+
   const submitHandler = async (e) => {
     e.preventDefault();
 
@@ -124,6 +154,21 @@ function ProductEditPage() {
             setImage(e.target.value)
           }
         />
+
+        {/* 🔥 Upload Image Input */}
+        <input
+          type="file"
+          onChange={uploadFileHandler}
+        />
+
+        {/* 🔥 Uploaded Image Preview */}
+        {image && (
+          <img
+            src={image}
+            alt="preview"
+            width="150"
+          />
+        )}
 
         <input
           type="text"
