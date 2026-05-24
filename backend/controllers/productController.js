@@ -22,6 +22,8 @@ const createProduct = async (
       image:
         "https://via.placeholder.com/300",
 
+      brand: "Sample Brand",
+
       countInStock: 0,
 
       category:
@@ -183,6 +185,10 @@ const updateProduct = async (
     product.image =
       req.body.image ||
       product.image;
+
+    product.brand =
+      req.body.brand ||
+      product.brand;
 
     product.countInStock =
       req.body.countInStock ||

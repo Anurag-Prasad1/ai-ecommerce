@@ -20,6 +20,12 @@ const productSchema = mongoose.Schema(
       type: String,
     },
 
+    // 🔥 NEW ADDITION
+    brand: {
+      type: String,
+      default: "",
+    },
+
     countInStock: {
       type: Number,
       default: 0,
@@ -34,4 +40,7 @@ const productSchema = mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Product", productSchema);
+module.exports = mongoose.model(
+  "Product",
+  productSchema
+);
