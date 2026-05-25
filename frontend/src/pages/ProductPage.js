@@ -10,22 +10,46 @@ import axios from "axios";
 
 import { CartContext } from "../context/CartContext";
 
+import ProductCard from "../components/ProductCard";
+
 function ProductPage() {
   const { id } = useParams();
 
-  const [product, setProduct] = useState(null);
+  const [product, setProduct] =
+    useState(null);
 
-  const { addToCart } = useContext(CartContext);
+  const [
+    recommendedProducts,
+    setRecommendedProducts,
+  ] = useState([]);
+
+  const { addToCart } =
+    useContext(CartContext);
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const { data } = await axios.get(
-          `http://localhost:5000/api/products/${id}`
-        );
+
+        // Fetch current product
+        const { data } =
+          await axios.get(
+            `http://localhost:5000/api/products/${id}`
+          );
 
         setProduct(data);
+
+        // Fetch recommended products
+        const recommendationData =
+          await axios.get(
+            `http://localhost:5000/api/products/${id}/recommendations`
+          );
+
+        setRecommendedProducts(
+          recommendationData.data
+        );
+
       } catch (error) {
+
         console.log(error);
       }
     };
@@ -38,28 +62,57 @@ function ProductPage() {
   }
 
   return (
-    <div className="product-page">
-      <img
-        src={product.image}
-        alt={product.name}
-      />
+    <div className="container">
 
-      <div>
-        <h2>{product.name}</h2>
+      <div className="product-page">
+        <img
+          src={product.image}
+          alt={product.name}
+        />
 
-        <p>{product.description}</p>
+        <div>
+          <h2>{product.name}</h2>
 
-        <h3>
-          ₹{" "}
-          {product.price.toLocaleString("en-IN")}
-        </h3>
+          <p>
+            {product.description}
+          </p>
 
-        <button
-          onClick={() => addToCart(product)}
-        >
-          Add to Cart
-        </button>
+          <h3>
+            ₹{" "}
+            {product.price.toLocaleString(
+              "en-IN"
+            )}
+          </h3>
+
+          <button
+            onClick={() =>
+              addToCart(product)
+            }
+          >
+            Add to Cart
+          </button>
+        </div>
       </div>
+
+      {recommendedProducts.length >
+        0 && (
+        <>
+          <h2>
+            Recommended Products
+          </h2>
+
+          <div className="product-grid">
+            {recommendedProducts.map(
+              (product) => (
+                <ProductCard
+                  key={product._id}
+                  product={product}
+                />
+              )
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 }
