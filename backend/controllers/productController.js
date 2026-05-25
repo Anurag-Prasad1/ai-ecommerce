@@ -155,6 +155,52 @@ const getProductById = async (
 };
 
 
+// @desc    Get Recommended Products
+// @route   GET /api/products/:id/recommendations
+// @access  Public
+const getRecommendedProducts =
+  async (req, res) => {
+
+    const product =
+      await Product.findById(
+        req.params.id
+      );
+
+    if (!product) {
+
+      res.status(404);
+
+      throw new Error(
+        "Product not found"
+      );
+    }
+
+    const recommendations =
+      await Product.find({
+
+        // Exclude current product
+        _id: {
+          $ne: product._id,
+        },
+
+        // Same category
+        category:
+          product.category,
+
+        // Similar price range
+        price: {
+          $gte:
+            product.price - 20000,
+
+          $lte:
+            product.price + 20000,
+        },
+      }).limit(4);
+
+    res.json(recommendations);
+  };
+
+
 // @desc    Update Product
 // @route   PUT /api/products/:id
 // @access  Private/Admin
@@ -251,6 +297,7 @@ module.exports = {
   createProduct,
   getProducts,
   getProductById,
+  getRecommendedProducts,
   updateProduct,
   deleteProduct,
 };
