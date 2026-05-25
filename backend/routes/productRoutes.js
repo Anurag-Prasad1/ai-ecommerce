@@ -6,6 +6,7 @@ const {
   createProduct,
   getProducts,
   getProductById,
+  getRecommendedProducts,
   updateProduct,
   deleteProduct,
 } = require("../controllers/productController");
@@ -23,7 +24,14 @@ const {
 router.get("/", getProducts);
 
 // IMPORTANT:
-// Keep this BELOW "/" route
+// Keep this ABOVE "/:id" route
+router.get(
+  "/:id/recommendations",
+  getRecommendedProducts
+);
+
+// IMPORTANT:
+// Keep this BELOW recommendation route
 router.get("/:id", getProductById);
 
 
