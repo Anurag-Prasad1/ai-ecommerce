@@ -272,3 +272,25 @@ a {
 
   font-weight: bold;
 }
+
+.suggestions-box {
+  background: white;
+
+  border: 1px solid #ddd;
+
+  position: absolute;
+
+  width: 200px;
+
+  z-index: 10;
+}
+
+.suggestions-box div {
+  padding: 10px;
+
+  cursor: pointer;
+}
+
+.suggestions-box div:hover {
+  background: #f4f4f4;
+}
