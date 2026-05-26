@@ -6,7 +6,10 @@ import {
 import {
   useState,
   useContext,
+  useEffect,
 } from "react";
+
+import axios from "axios";
 
 import { AuthContext } from "../context/AuthContext";
 
@@ -14,6 +17,11 @@ function Navbar() {
 
   const [keyword, setKeyword] =
     useState("");
+
+  const [
+    suggestions,
+    setSuggestions,
+  ] = useState([]);
 
   const [category, setCategory] =
     useState("");
@@ -31,6 +39,32 @@ function Navbar() {
     logout,
   } = useContext(AuthContext);
 
+  // Fetch smart search suggestions
+  useEffect(() => {
+
+    const fetchSuggestions =
+      async () => {
+
+        // Prevent empty API calls
+        if (!keyword) {
+
+          setSuggestions([]);
+
+          return;
+        }
+
+        const { data } =
+          await axios.get(
+            `http://localhost:5000/api/products/search/suggestions?keyword=${keyword}`
+          );
+
+        setSuggestions(data);
+      };
+
+    fetchSuggestions();
+
+  }, [keyword]);
+
   const submitHandler = (e) => {
 
     e.preventDefault();
@@ -39,11 +73,8 @@ function Navbar() {
       `/?keyword=${keyword}&category=${category}&minPrice=${minPrice}&maxPrice=${maxPrice}`
     );
 
-    setKeyword("");
-
-    setMinPrice("");
-
-    setMaxPrice("");
+    // Close suggestions dropdown
+    setSuggestions([]);
   };
 
   return (
@@ -69,7 +100,44 @@ function Navbar() {
                 e.target.value
               )
             }
+
+            // Hide suggestions on blur
+            onBlur={() => {
+              setTimeout(() => {
+                setSuggestions([]);
+              }, 200);
+            }}
           />
+
+          {/* Smart Suggestions Dropdown */}
+          {suggestions.length > 0 && (
+
+            <div className="suggestions-box">
+
+              {suggestions.map(
+                (
+                  suggestion,
+                  index
+                ) => (
+
+                  <div
+                    key={index}
+                    onClick={() => {
+
+                      setKeyword(
+                        suggestion
+                      );
+
+                      setSuggestions([]);
+                    }}
+                  >
+                    {suggestion}
+                  </div>
+                )
+              )}
+
+            </div>
+          )}
 
           <select
             value={category}
