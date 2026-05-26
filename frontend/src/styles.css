@@ -189,6 +189,12 @@ a {
   gap: 10px;
 }
 
+/* IMPORTANT:
+Needed for absolute suggestion dropdown */
+.nav-right form {
+  position: relative;
+}
+
 .navbar input,
 .navbar select {
   padding: 8px;
@@ -273,24 +279,40 @@ a {
   font-weight: bold;
 }
 
+/* Smart Suggestions Dropdown */
 .suggestions-box {
+  position: absolute;
+
+  top: 45px;
+
+  left: 0;
+
+  width: 250px;
+
   background: white;
 
   border: 1px solid #ddd;
 
-  position: absolute;
+  border-radius: 5px;
 
-  width: 200px;
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.1);
 
-  z-index: 10;
+  z-index: 1000;
+
+  overflow: hidden;
 }
 
+/* Suggestion Items */
 .suggestions-box div {
-  padding: 10px;
+  padding: 12px;
 
   cursor: pointer;
+
+  transition: 0.2s;
 }
 
+/* Hover Effect */
 .suggestions-box div:hover {
   background: #f4f4f4;
 }
