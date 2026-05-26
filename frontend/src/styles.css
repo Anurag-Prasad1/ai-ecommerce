@@ -310,9 +310,17 @@ Needed for absolute suggestion dropdown */
   cursor: pointer;
 
   transition: 0.2s;
+
+  color: black;
+
+  background: white;
+
+  font-size: 14px;
 }
 
 /* Hover Effect */
 .suggestions-box div:hover {
   background: #f4f4f4;
+
+  color: black;
 }
