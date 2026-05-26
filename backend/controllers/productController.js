@@ -90,7 +90,7 @@ const getProducts = async (
     }
   }
 
-  // Sorting
+  // Default sorting
   const sort = req.query.sort
     ? req.query.sort
     : "-createdAt";
@@ -108,13 +108,30 @@ const getProducts = async (
       filter
     );
 
-  // Fetch paginated products
-  const products =
-    await Product.find(filter)
+  // Smart intelligent search query
+  let productsQuery =
+    Product.find(filter)
       .select(
         "name price image category countInStock"
-      )
-      .sort(sort)
+      );
+
+  // Intelligent ranking for search
+  if (req.query.keyword) {
+
+    productsQuery =
+      productsQuery.sort({
+        name: 1,
+      });
+
+  } else {
+
+    productsQuery =
+      productsQuery.sort(sort);
+  }
+
+  // Final paginated products
+  const products =
+    await productsQuery
       .limit(pageSize)
       .skip(pageSize * (page - 1));
 
@@ -144,8 +161,11 @@ const getProductById = async (
     );
 
   if (product) {
+
     res.json(product);
+
   } else {
+
     res.status(404);
 
     throw new Error(
@@ -198,6 +218,41 @@ const getRecommendedProducts =
       }).limit(4);
 
     res.json(recommendations);
+  };
+
+
+// @desc    Smart Search Suggestions
+// @route   GET /api/products/search/suggestions
+// @access  Public
+const getSearchSuggestions =
+  async (req, res) => {
+
+    const keyword =
+      req.query.keyword;
+
+    // Prevent empty search requests
+    if (!keyword) {
+      return res.json([]);
+    }
+
+    // Find matching product names
+    const products =
+      await Product.find({
+        name: {
+          $regex: keyword,
+          $options: "i",
+        },
+      })
+        .select("name")
+        .limit(5);
+
+    // Extract only names
+    const suggestions =
+      products.map(
+        (product) => product.name
+      );
+
+    res.json(suggestions);
   };
 
 
@@ -298,6 +353,7 @@ module.exports = {
   getProducts,
   getProductById,
   getRecommendedProducts,
+  getSearchSuggestions,
   updateProduct,
   deleteProduct,
 };
