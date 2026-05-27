@@ -1,6 +1,5 @@
 const Product = require("../models/Product");
 
-
 // @desc    Create Product
 // @route   POST /api/products
 // @access  Private/Admin
@@ -28,6 +27,8 @@ const createProduct = async (
 
       category:
         "Sample Category",
+
+      popularityScore: 0,
     });
 
   res.status(201).json(product);
@@ -112,7 +113,7 @@ const getProducts = async (
   let productsQuery =
     Product.find(filter)
       .select(
-        "name price image category countInStock"
+        "name price image category countInStock popularityScore"
       );
 
   // Intelligent ranking for search
@@ -256,6 +257,23 @@ const getSearchSuggestions =
   };
 
 
+// @desc    Get Trending Products
+// @route   GET /api/products/trending/products
+// @access  Public
+const getTrendingProducts =
+  async (req, res) => {
+
+    const trendingProducts =
+      await Product.find({})
+        .sort({
+          popularityScore: -1,
+        })
+        .limit(6);
+
+    res.json(trendingProducts);
+  };
+
+
 // @desc    Update Product
 // @route   PUT /api/products/:id
 // @access  Private/Admin
@@ -350,10 +368,18 @@ const deleteProduct = async (
 
 module.exports = {
   createProduct,
+
   getProducts,
+
   getProductById,
+
   getRecommendedProducts,
+
   getSearchSuggestions,
+
+  getTrendingProducts,
+
   updateProduct,
+
   deleteProduct,
 };
