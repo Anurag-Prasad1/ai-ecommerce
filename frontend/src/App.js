@@ -1,15 +1,21 @@
 import { Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
+
 import ProductList from "./components/ProductList";
 
+import TrendingProducts from "./components/TrendingProducts";
+
 import ProductPage from "./pages/ProductPage";
+
 import CartPage from "./pages/CartPage";
 
 import LoginPage from "./pages/LoginPage";
+
 import RegisterPage from "./pages/RegisterPage";
 
 import ShippingPage from "./pages/ShippingPage";
+
 import PlaceOrderPage from "./pages/PlaceOrderPage";
 
 import MyOrdersPage from "./pages/MyOrdersPage";
@@ -35,7 +41,11 @@ function App() {
           path="/"
           element={
             <div className="container">
+
+              <TrendingProducts />
+
               <ProductList />
+
             </div>
           }
         />
