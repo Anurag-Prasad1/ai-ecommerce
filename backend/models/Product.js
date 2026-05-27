@@ -20,7 +20,7 @@ const productSchema = mongoose.Schema(
       type: String,
     },
 
-    // 🔥 NEW ADDITION
+    // 🔥 BRAND SUPPORT
     brand: {
       type: String,
       default: "",
@@ -33,6 +33,12 @@ const productSchema = mongoose.Schema(
 
     category: {
       type: String,
+    },
+
+    // 🔥 AI ANALYTICS FIELD
+    popularityScore: {
+      type: Number,
+      default: 0,
     },
   },
   {
