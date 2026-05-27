@@ -8,6 +8,7 @@ const {
   getProductById,
   getRecommendedProducts,
   getSearchSuggestions,
+  getTrendingProducts,
   updateProduct,
   deleteProduct,
 } = require("../controllers/productController");
@@ -30,6 +31,14 @@ router.get("/", getProducts);
 router.get(
   "/search/suggestions",
   getSearchSuggestions
+);
+
+
+// IMPORTANT:
+// Keep this ABOVE "/:id" route
+router.get(
+  "/trending/products",
+  getTrendingProducts
 );
 
 
