@@ -8,12 +8,15 @@ import axios from "axios";
 import ProductCard from "./ProductCard";
 
 function TrendingProducts() {
+
   const [products, setProducts] =
     useState([]);
 
   useEffect(() => {
+
     const fetchTrending =
       async () => {
+
         const { data } =
           await axios.get(
             "http://localhost:5000/api/products/trending/products"
@@ -23,26 +26,37 @@ function TrendingProducts() {
       };
 
     fetchTrending();
+
   }, []);
 
   return (
     <div>
+
       {products.length > 0 && (
+
         <>
+
           <h2>
             🔥 Trending Products
           </h2>
 
-          <div className="product-grid">
+          <div className="trending-grid">
+
             {products.map((product) => (
+
               <ProductCard
                 key={product._id}
                 product={product}
               />
+
             ))}
+
           </div>
+
         </>
+
       )}
+
     </div>
   );
 }

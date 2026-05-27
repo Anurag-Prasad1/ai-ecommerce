@@ -324,3 +324,19 @@ Needed for absolute suggestion dropdown */
 
   color: black;
 }
+
+.trending-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(250px, 300px)
+    );
+
+  gap: 20px;
+
+  justify-content: start;
+
+  margin-bottom: 40px;
+}
