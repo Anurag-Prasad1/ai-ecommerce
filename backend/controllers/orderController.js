@@ -1,5 +1,7 @@
 const Order = require("../models/Order");
 
+const Product = require("../models/Product");
+
 const addOrderItems = async (
   req,
   res
@@ -27,6 +29,21 @@ const addOrderItems = async (
   const createdOrder =
     await order.save();
 
+  // 🔥 UPDATE PRODUCT POPULARITY
+  for (const item of orderItems) {
+    const product =
+      await Product.findById(
+        item.product || item._id
+      );
+
+    if (product) {
+      product.popularityScore +=
+        item.qty;
+
+      await product.save();
+    }
+  }
+
   res.status(201).json(createdOrder);
 };
 
@@ -43,5 +60,6 @@ const getMyOrders = async (
 
 module.exports = {
   addOrderItems,
+
   getMyOrders,
 };
