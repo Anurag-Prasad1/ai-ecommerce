@@ -264,7 +264,11 @@ const getTrendingProducts =
   async (req, res) => {
 
     const trendingProducts =
-      await Product.find({})
+      await Product.find({
+        popularityScore: {
+          $gt: 0,
+        },
+      })
         .sort({
           popularityScore: -1,
         })
