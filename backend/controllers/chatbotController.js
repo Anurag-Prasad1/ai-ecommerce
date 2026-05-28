@@ -19,7 +19,10 @@ const chatbotReply = async (
       message.includes("phone")
     ) {
       products = await Product.find({
-        category: "mobile",
+        category: {
+          $regex: "mobile",
+          $options: "i",
+        },
       }).limit(4);
 
       reply =
@@ -31,7 +34,10 @@ const chatbotReply = async (
       message.includes("fashion")
     ) {
       products = await Product.find({
-        category: "fashion",
+        category: {
+          $regex: "fashion",
+          $options: "i",
+        },
       }).limit(4);
 
       reply =
@@ -44,7 +50,10 @@ const chatbotReply = async (
       message.includes("laptops")
     ) {
       products = await Product.find({
-        category: "laptop",
+        category: {
+          $regex: "laptop",
+          $options: "i",
+        },
       }).limit(4);
 
       reply =
@@ -57,7 +66,10 @@ const chatbotReply = async (
       message.includes("shoes")
     ) {
       products = await Product.find({
-        category: "fashion",
+        category: {
+          $regex: "shoe",
+          $options: "i",
+        },
       }).limit(4);
 
       reply =
@@ -101,6 +113,8 @@ const chatbotReply = async (
   }
 
   catch (error) {
+    console.log(error);
+
     res.status(500).json({
       message:
         "Chatbot server error",
