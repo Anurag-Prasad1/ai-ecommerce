@@ -5,8 +5,11 @@ const chatbotReply = async (
   res
 ) => {
   try {
+    const originalMessage =
+      req.body.message;
+
     const message =
-      req.body.message.toLowerCase();
+      originalMessage.toLowerCase();
 
     let products = [];
 
@@ -143,8 +146,14 @@ const chatbotReply = async (
 
       if (products.length > 0) {
         reply =
-          `Here are some results for "${message}".`;
+          `Here are some results for "${originalMessage}".`;
       }
+    }
+
+    // 🔥 Smart No Product Found Response
+    if (products.length === 0) {
+      reply =
+        `No products found for "${originalMessage}".`;
     }
 
     res.json({
