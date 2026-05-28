@@ -6,6 +6,8 @@ import ProductList from "./components/ProductList";
 
 import TrendingProducts from "./components/TrendingProducts";
 
+import Chatbot from "./components/Chatbot";
+
 import ProductPage from "./pages/ProductPage";
 
 import CartPage from "./pages/CartPage";
@@ -43,6 +45,8 @@ function App() {
             <div className="container">
 
               <TrendingProducts />
+
+              <Chatbot />
 
               <ProductList />
 
