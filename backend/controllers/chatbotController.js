@@ -66,10 +66,20 @@ const chatbotReply = async (
       message.includes("shoes")
     ) {
       products = await Product.find({
-        category: {
-          $regex: "shoe",
-          $options: "i",
-        },
+        $or: [
+          {
+            name: {
+              $regex: "shoe",
+              $options: "i",
+            },
+          },
+          {
+            category: {
+              $regex: "fashion",
+              $options: "i",
+            },
+          },
+        ],
       }).limit(4);
 
       reply =
