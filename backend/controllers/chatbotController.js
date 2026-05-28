@@ -116,6 +116,37 @@ const chatbotReply = async (
         "Here are premium products.";
     }
 
+    // 🔥 Dynamic Smart Search
+    else {
+      products = await Product.find({
+        $or: [
+          {
+            name: {
+              $regex: message,
+              $options: "i",
+            },
+          },
+          {
+            brand: {
+              $regex: message,
+              $options: "i",
+            },
+          },
+          {
+            category: {
+              $regex: message,
+              $options: "i",
+            },
+          },
+        ],
+      }).limit(4);
+
+      if (products.length > 0) {
+        reply =
+          `Here are some results for "${message}".`;
+      }
+    }
+
     res.json({
       reply,
       products,
