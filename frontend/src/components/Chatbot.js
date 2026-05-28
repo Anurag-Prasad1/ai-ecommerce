@@ -18,6 +18,8 @@ function Chatbot() {
 
   const sendMessage = async () => {
     try {
+      if (!message.trim()) return;
+
       const { data } =
         await axios.post(
           "http://localhost:5000/api/chatbot",
@@ -40,6 +42,12 @@ function Chatbot() {
     }
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      sendMessage();
+    }
+  };
+
   return (
     <div className="chatbot-container">
       <h2>
@@ -53,6 +61,7 @@ function Chatbot() {
         onChange={(e) =>
           setMessage(e.target.value)
         }
+        onKeyDown={handleKeyPress}
       />
 
       <button onClick={sendMessage}>
@@ -61,14 +70,16 @@ function Chatbot() {
 
       {reply && <h3>{reply}</h3>}
 
-      <div className="product-grid">
-        {products.map((product) => (
-          <ProductCard
-            key={product._id}
-            product={product}
-          />
-        ))}
-      </div>
+      {products.length > 0 && (
+        <div className="product-grid">
+          {products.map((product) => (
+            <ProductCard
+              key={product._id}
+              product={product}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
