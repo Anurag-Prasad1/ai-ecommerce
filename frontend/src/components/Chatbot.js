@@ -18,7 +18,17 @@ function Chatbot() {
 
   const sendMessage = async () => {
     try {
-      if (!message.trim()) return;
+
+      // 🔥 Empty Input Handling
+      if (!message.trim()) {
+        setReply(
+          "👋 Please enter a product keyword like mobiles, laptops, shoes, Samsung, Nike, etc."
+        );
+
+        setProducts([]);
+
+        return;
+      }
 
       const { data } =
         await axios.post(
@@ -39,6 +49,8 @@ function Chatbot() {
       setReply(
         "Chatbot server error."
       );
+
+      setProducts([]);
     }
   };
 
