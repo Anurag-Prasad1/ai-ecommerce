@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
   console.log("👉 Request received at /");
 
   res.send(
-    "API + MongoDB + MVC + Uploads 🚀"
+    "API + MongoDB + MVC + AI Chatbot 🚀"
   );
 });
 
@@ -66,6 +66,12 @@ app.use(
 app.use(
   "/api/upload",
   require("./routes/uploadRoutes")
+);
+
+// 🔥 Chatbot Routes (DAY 29 - NEW ADDITION)
+app.use(
+  "/api/chatbot",
+  require("./routes/chatbotRoutes")
 );
 
 // 🔥 Serve Uploaded Images Publicly
