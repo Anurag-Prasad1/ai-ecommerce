@@ -13,7 +13,11 @@ const chatbotReply = async (
     let reply =
       "Sorry, I couldn't understand.";
 
-    if (message.includes("mobile")) {
+    // 🔥 Mobiles
+    if (
+      message.includes("mobile") ||
+      message.includes("phone")
+    ) {
       products = await Product.find({
         category: "mobile",
       }).limit(4);
@@ -22,6 +26,7 @@ const chatbotReply = async (
         "Here are some popular mobiles.";
     }
 
+    // 🔥 Fashion
     else if (
       message.includes("fashion")
     ) {
@@ -33,8 +38,36 @@ const chatbotReply = async (
         "Here are trending fashion items.";
     }
 
+    // 🔥 Laptops
     else if (
-      message.includes("cheap")
+      message.includes("laptop") ||
+      message.includes("laptops")
+    ) {
+      products = await Product.find({
+        category: "laptop",
+      }).limit(4);
+
+      reply =
+        "Here are some powerful laptops.";
+    }
+
+    // 🔥 Shoes
+    else if (
+      message.includes("shoe") ||
+      message.includes("shoes")
+    ) {
+      products = await Product.find({
+        category: "fashion",
+      }).limit(4);
+
+      reply =
+        "Here are some stylish shoes.";
+    }
+
+    // 🔥 Cheap Products
+    else if (
+      message.includes("cheap") ||
+      message.includes("budget")
     ) {
       products = await Product.find({})
         .sort({
@@ -46,8 +79,10 @@ const chatbotReply = async (
         "Here are some budget-friendly products.";
     }
 
+    // 🔥 Expensive Products
     else if (
-      message.includes("expensive")
+      message.includes("expensive") ||
+      message.includes("premium")
     ) {
       products = await Product.find({})
         .sort({
