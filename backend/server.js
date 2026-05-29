@@ -8,12 +8,18 @@ const path = require("path");
 
 const connectDB = require("./config/db");
 
+const apiLimiter =
+  require("./middleware/rateLimiter");
+
 const app = express();
 
 app.use(cors());
 
 // 🔥 Middleware
 app.use(express.json());
+
+// 🔥 Day 30 Production Security
+app.use(apiLimiter);
 
 // 🔥 ROUTES
 
