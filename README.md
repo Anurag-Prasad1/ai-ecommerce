@@ -1,8 +1,8 @@
 # 🚀 NovaCart
 
-A modern full-stack AI-inspired e-commerce web application built using React, Node.js, Express, and MongoDB.
+A modern full-stack AI-powered e-commerce web application built using React, Node.js, Express, and MongoDB Atlas.
 
-NovaCart is designed with scalable backend architecture, reusable frontend components, responsive UI design, and production-style development practices.
+NovaCart is designed with scalable backend architecture, reusable frontend components, responsive UI design, AI-powered shopping features, and production-ready development practices.
 
 ---
 
@@ -14,24 +14,40 @@ The project currently includes:
 
 ## ✅ Backend Features
 
-- JWT Authentication
-- Protected Routes
-- Product APIs
-- Search & Filtering
-- Pagination
-- Sorting Optimization
-- MongoDB Integration
-- RESTful API Architecture
+* JWT Authentication
+* Protected Routes
+* Role-Based Authorization
+* Product Management APIs
+* Order Management APIs
+* Razorpay Payment Integration
+* Search & Filtering
+* Pagination
+* Sorting Optimization
+* Product Image Upload System
+* MongoDB Atlas Integration
+* RESTful API Architecture
+* API Rate Limiting
 
 ## ✅ Frontend Features
 
-- Responsive React UI
-- Reusable Components
-- Product Grid Layout
-- Product Cards
-- Modern Navbar
-- Responsive Styling
-- Dynamic Product Fetching using Axios
+* Responsive React UI
+* Reusable Components
+* Product Grid Layout
+* Product Cards
+* Product Details Page
+* Shopping Cart
+* Checkout Flow
+* Order History
+* Admin Dashboard
+* Responsive Styling
+* Dynamic Product Fetching using Axios
+
+## ✅ AI Features
+
+* AI Product Recommendation System
+* Smart Search Engine
+* Trending Product Analytics
+* Conversational Shopping Assistant
 
 ---
 
@@ -39,32 +55,37 @@ The project currently includes:
 
 ## Frontend
 
-- React.js
-- Axios
-- CSS3
+* React.js
+* Axios
+* CSS3
 
 ## Backend
 
-- Node.js
-- Express.js
+* Node.js
+* Express.js
 
 ## Database
 
-- MongoDB
-- Mongoose
+* MongoDB Atlas
+* Mongoose
 
 ## Authentication & Security
 
-- JWT (JSON Web Token)
-- bcryptjs
-- dotenv
+* JWT (JSON Web Token)
+* bcryptjs
+* dotenv
+* express-rate-limit
+
+## Payment Gateway
+
+* Razorpay
 
 ## Development Tools
 
-- Nodemon
-- Git & GitHub
-- Postman
-- VS Code
+* Nodemon
+* Git & GitHub
+* Postman
+* VS Code
 
 ---
 
@@ -75,57 +96,38 @@ ai-ecommerce/
 │
 ├── backend/
 │   ├── config/
-│   │   └── db.js
-│   │
 │   ├── controllers/
-│   │   ├── productController.js
-│   │   └── userController.js
-│   │
 │   ├── middleware/
-│   │   └── authMiddleware.js
-│   │
 │   ├── models/
-│   │   ├── Product.js
-│   │   └── User.js
-│   │
 │   ├── routes/
-│   │   ├── productRoutes.js
-│   │   └── userRoutes.js
-│   │
-│   ├── utils/
-│   │   └── generateToken.js
-│   │
+│   ├── uploads/
 │   ├── server.js
 │   ├── package.json
 │   └── .env
 │
 ├── frontend/
 │   ├── public/
-│   │   └── index.html
-│   │
 │   ├── src/
 │   │   ├── components/
-│   │   │   ├── Navbar.js
-│   │   │   ├── ProductCard.js
-│   │   │   └── ProductList.js
-│   │   │
+│   │   ├── context/
+│   │   ├── pages/
 │   │   ├── App.js
-│   │   ├── styles.css
-│   │   └── index.js
+│   │   ├── index.js
+│   │   └── styles.css
 │   │
 │   ├── package.json
-│   └── README.md
+│   └── .env
 │
 ├── .gitignore
-├── .env.example
-└── README.md
+├── README.md
+└── DEPLOYMENT_CHECKLIST.md
 ```
 
 ---
 
 # ⚙️ Setup Instructions
 
-# 1️⃣ Clone Repository
+## 1️⃣ Clone Repository
 
 ```bash
 git clone https://github.com/Anurag-Prasad1/ai-ecommerce.git
@@ -133,7 +135,7 @@ git clone https://github.com/Anurag-Prasad1/ai-ecommerce.git
 
 ---
 
-# 2️⃣ Navigate Into Project
+## 2️⃣ Navigate Into Project
 
 ```bash
 cd ai-ecommerce
@@ -141,7 +143,7 @@ cd ai-ecommerce
 
 ---
 
-# 3️⃣ Install Backend Dependencies
+## 3️⃣ Install Backend Dependencies
 
 ```bash
 cd backend
@@ -150,7 +152,7 @@ npm install
 
 ---
 
-# 4️⃣ Install Frontend Dependencies
+## 4️⃣ Install Frontend Dependencies
 
 Open another terminal:
 
@@ -161,20 +163,38 @@ npm install
 
 ---
 
-# 5️⃣ Setup Environment Variables
+## 5️⃣ Setup Environment Variables
 
-Create a `.env` file inside:
+### Backend
+
+Create:
 
 ```bash
-backend/
+backend/.env
 ```
 
-Add:
+Example:
 
 ```env
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_secret_key
+RAZORPAY_KEY_ID=your_key
+RAZORPAY_KEY_SECRET=your_secret
 PORT=5000
+```
+
+### Frontend
+
+Create:
+
+```bash
+frontend/.env
+```
+
+Example:
+
+```env
+REACT_APP_API_URL=http://localhost:5000
 ```
 
 ---
@@ -189,16 +209,8 @@ PORT=5000
 backend/
 ```
 
-Command:
-
 ```bash
 npm run dev
-```
-
-OR
-
-```bash
-nodemon server.js
 ```
 
 ---
@@ -211,175 +223,69 @@ nodemon server.js
 frontend/
 ```
 
-Command:
-
 ```bash
 npm start
 ```
 
 ---
 
-# 🌐 API Endpoints
+# 🌐 Core API Endpoints
 
-# 🏠 Base Route
+## Authentication
 
-```http
-GET /
-```
-
-### Response
-
-```json
-{
-  "message": "API running with MongoDB 🚀"
-}
-```
-
----
-
-# 👤 User Routes
-
-## Register User
+### Register User
 
 ```http
 POST /api/users/register
 ```
 
-### Request Body
-
-```json
-{
-  "name": "Anurag",
-  "email": "anurag@gmail.com",
-  "password": "123456"
-}
-```
-
----
-
-## Login User
+### Login User
 
 ```http
 POST /api/users/login
 ```
 
-### Request Body
-
-```json
-{
-  "email": "anurag@gmail.com",
-  "password": "123456"
-}
-```
-
----
-
-## Get User Profile (Protected)
+### User Profile
 
 ```http
 GET /api/users/profile
 ```
 
-### Headers
-
-```http
-Authorization: Bearer YOUR_TOKEN
-```
-
 ---
 
-# 📦 Product Routes
+## Products
 
-## Create Product (Protected)
-
-```http
-POST /api/products
-```
-
-### Request Body
-
-```json
-{
-  "name": "iPhone 15",
-  "price": 999,
-  "description": "Latest Apple smartphone",
-  "image": "https://example.com/image.jpg",
-  "countInStock": 10,
-  "category": "Electronics"
-}
-```
-
----
-
-## Get All Products
+### Get Products
 
 ```http
 GET /api/products
 ```
 
----
-
-# 🔍 Product Search
+### Product Search
 
 ```http
 GET /api/products?keyword=iphone
 ```
 
----
-
-# 🏷️ Category Filtering
+### Category Filter
 
 ```http
 GET /api/products?category=Electronics
 ```
 
----
-
-# 💰 Price Filtering
+### Price Filter
 
 ```http
 GET /api/products?minPrice=100&maxPrice=1000
 ```
 
----
-
-# 📄 Pagination
-
-## Page Number
+### Pagination
 
 ```http
 GET /api/products?pageNumber=2
 ```
 
----
-
-## Dynamic Page Size
-
-```http
-GET /api/products?limit=2
-```
-
----
-
-# ↕️ Sorting
-
-## Sort by Newest
-
-```http
-GET /api/products?sort=-createdAt
-```
-
----
-
-## Sort by Price
-
-```http
-GET /api/products?sort=price
-```
-
----
-
-## Sort by Highest Price
+### Sorting
 
 ```http
 GET /api/products?sort=-price
@@ -387,59 +293,92 @@ GET /api/products?sort=-price
 
 ---
 
-# 🧠 Frontend Features
+## Orders
 
-## ✅ Navbar
+```http
+POST /api/orders
+```
 
-- Modern responsive navbar
-- Branding support
-- Search input UI
-- Navigation structure
-
----
-
-## ✅ Product Cards
-
-- Reusable React components
-- Dynamic product rendering
-- Responsive product layout
-- Product images and pricing
+```http
+GET /api/orders/myorders
+```
 
 ---
 
-## ✅ Responsive Layout
+## Payments
 
-- CSS Grid system
-- Mobile-friendly structure
-- Responsive card sizing
-- Clean ecommerce styling
+```http
+POST /api/payments/create-order
+```
 
 ---
 
-# 🧠 Features Implemented
+## Uploads
 
-## Backend
+```http
+POST /api/upload
+```
 
-- JWT Authentication
-- Password Encryption
-- Protected Routes Middleware
-- MongoDB Models & Schemas
-- Product Creation API
-- Search Functionality
-- Filtering System
-- Pagination
-- Sorting Optimization
-- RESTful API Architecture
+---
 
-## Frontend
+## Chatbot
 
-- React Component Architecture
-- Reusable Components
-- Axios API Integration
-- Responsive UI Design
-- Product Grid Layout
-- CSS Styling System
-- Dynamic Product Rendering
+```http
+POST /api/chatbot
+```
+
+---
+
+# 🧠 Major Features Implemented
+
+## Authentication & Security
+
+* JWT Authentication
+* Password Encryption using bcryptjs
+* Protected Routes
+* Admin Authorization
+* Environment Variable Management
+* API Rate Limiting
+
+## E-Commerce Features
+
+* Product Catalog
+* Product Details Page
+* Shopping Cart
+* Order Placement
+* Order History
+* Inventory Management
+
+## Payment System
+
+* Razorpay Payment Gateway Integration
+* Secure Payment Verification
+
+## Admin Features
+
+* Admin Dashboard
+* Product Management
+* Order Management
+* User Management Ready Architecture
+
+## Media Management
+
+* Product Image Upload System
+* Public Image Serving
+
+## AI Features
+
+* AI Product Recommendations
+* Smart Search Engine
+* Trending Product Analytics
+* Conversational Shopping Assistant
+
+## Production Readiness
+
+* Environment-Based Configuration
+* API Rate Limiting
+* Structured Git Workflow
+* Deployment Preparation
 
 ---
 
@@ -447,39 +386,40 @@ GET /api/products?sort=-price
 
 The backend includes multiple optimization techniques:
 
-- Pagination using `.limit()` and `.skip()`
-- Dynamic filtering
-- Field selection using `.select()`
-- Sorting optimization
-- Optimized MongoDB queries
-- Reduced API payload size
+* Pagination using `.limit()` and `.skip()`
+* Dynamic filtering
+* Sorting optimization
+* Optimized MongoDB queries
+* Reduced API payload size
+* Efficient API architecture
 
 ---
 
 # 🔐 Security Practices
 
-- Password hashing using bcryptjs
-- JWT-based authentication
-- Protected private routes
-- Sensitive data stored in `.env`
-- `.env` excluded using `.gitignore`
-- No hardcoded credentials
-- Clean Git workflow maintained
+* Password hashing using bcryptjs
+* JWT-based authentication
+* Protected private routes
+* Sensitive data stored in `.env`
+* `.env` excluded using `.gitignore`
+* No hardcoded credentials
+* API Rate Limiting
+* Production-ready backend practices
 
 ---
 
 # 🚧 Future Improvements
 
-- Product Details Page
-- React Router Integration
-- Shopping Cart Functionality
-- Redux / Context API State Management
-- Admin Dashboard
-- Order Management System
-- Payment Gateway Integration
-- AI Product Recommendation Engine
-- Image Upload Support
-- Cloud Deployment (Render / AWS)
+* Gemini AI Integration
+* Semantic Product Search
+* AI Review Summarizer
+* AI Product Description Generator
+* Personalized Recommendation Engine
+* Email Notifications
+* Wishlist System
+* Product Reviews & Ratings
+* Docker Deployment
+* CI/CD Pipeline
 
 ---
 
@@ -487,34 +427,66 @@ The backend includes multiple optimization techniques:
 
 ## Anurag Prasad
 
-- CSE Engineering Student
-- Passionate about Full-Stack Development & AI
-- Building scalable production-style web applications
-- Exploring backend architecture and modern frontend systems
+* CSE Engineering Student
+* Passionate about Full-Stack Development & AI
+* Building scalable production-style web applications
+* Exploring backend architecture and modern AI systems
 
 ---
 
-# 📈 Current Progress
+# 📈 Current Project Status
 
-## ✅ Backend Completed
+## Backend
 
-- MongoDB Integration
-- Authentication System
-- Protected Routes
-- Product APIs
-- Search & Filtering
-- Pagination & Optimization
+✅ MongoDB Atlas Integration
 
-## ✅ Frontend Progress
+✅ JWT Authentication
 
-- React Setup
-- Navbar Component
-- Product Cards
-- Responsive Layout
-- Styling System
-- Dynamic Product Fetching
+✅ Protected APIs
 
-🚀 Product Details Page Coming Next
+✅ Product Management
+
+✅ Order Management
+
+✅ Razorpay Integration
+
+✅ Image Upload System
+
+✅ AI Recommendation Engine
+
+✅ Smart Search
+
+✅ Trending Analytics
+
+✅ Shopping Assistant API
+
+✅ Rate Limiting
+
+## Frontend
+
+✅ Product Catalog
+
+✅ Product Details Page
+
+✅ Shopping Cart
+
+✅ Checkout Flow
+
+✅ Order History
+
+✅ Admin Dashboard
+
+✅ Smart Search UI
+
+✅ Trending Products Section
+
+✅ Shopping Assistant Interface
+
+## Deployment
+
+🚀 Deployment Preparation Completed
+
+🚀 Render + Vercel Deployment Coming Next
 
 ---
 
@@ -522,6 +494,6 @@ The backend includes multiple optimization techniques:
 
 If you found this project useful:
 
-- Star the repository ⭐
-- Fork and improve 🔧
-- Share with others 🚀
+* Star the repository ⭐
+* Fork and improve 🔧
+* Share with others 🚀
