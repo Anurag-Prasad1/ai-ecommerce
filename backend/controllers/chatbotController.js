@@ -157,8 +157,9 @@ Name: ${product.name}
 Category: ${product.category}
 Price: ₹${product.price}
 Description: ${
-  product.description || ""
-}
+                product.description ||
+                ""
+              }
 `
           )
           .join("\n");
@@ -175,12 +176,15 @@ ${originalMessage}
 
 Instructions:
 
-1. Recommend products if available.
-2. Use only provided products.
-3. Never invent products.
-4. Be concise and professional.
-5. If no products are available,
-politely explain that nothing matched.
+- Recommend products if available.
+- Use only provided products.
+- Never invent products.
+- Return plain text only.
+- Do not use markdown formatting.
+- Do not use **, *, #, bullet points, or special symbols.
+- Keep responses under 100 words.
+- Be professional and friendly.
+- If no products match, politely explain that nothing matched.
 `;
 
       const reply =
