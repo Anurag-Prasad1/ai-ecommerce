@@ -104,9 +104,9 @@ function Chatbot() {
       </button>
 
       {loading && (
-        <p>
-          🤖 AI is thinking...
-        </p>
+        <p className="chatbot-loading">
+  🤖 AI is thinking...
+</p>
       )}
 
       {reply && (

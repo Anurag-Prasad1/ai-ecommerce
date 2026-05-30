@@ -344,11 +344,15 @@ Needed for absolute suggestion dropdown */
 .chatbot-container {
   background: white;
 
-  padding: 20px;
+  padding: 25px;
 
   margin-bottom: 30px;
 
-  border-radius: 10px;
+  border-radius: 12px;
+
+  box-shadow:
+    0 4px 12px
+    rgba(0, 0, 0, 0.08);
 }
 
 .chatbot-container input {
@@ -369,4 +373,69 @@ Needed for absolute suggestion dropdown */
   border: none;
 
   cursor: pointer;
+}
+
+.chatbot-reply {
+  margin-top: 20px;
+
+  background: #fafafa;
+
+  border: 1px solid #e5e5e5;
+
+  border-radius: 12px;
+
+  padding: 18px;
+
+  box-shadow:
+    0 4px 12px
+    rgba(0, 0, 0, 0.08);
+}
+
+.chatbot-reply-header {
+  font-size: 20px;
+
+  font-weight: 700;
+
+  margin-bottom: 15px;
+
+  padding-bottom: 12px;
+
+  border-bottom:
+    1px solid #e5e5e5;
+}
+
+.chatbot-reply p {
+  margin: 10px 0;
+
+  line-height: 1.7;
+}
+
+.chatbot-reply ul {
+  margin-top: 10px;
+
+  padding-left: 22px;
+}
+
+.chatbot-reply li {
+  margin-bottom: 8px;
+
+  line-height: 1.6;
+}
+
+.chatbot-reply strong {
+  color: #111;
+}
+
+.chatbot-container button:disabled {
+  opacity: 0.7;
+
+  cursor: not-allowed;
+}
+
+.chatbot-loading {
+  margin-top: 15px;
+
+  font-weight: 600;
+
+  color: #444;
 }
