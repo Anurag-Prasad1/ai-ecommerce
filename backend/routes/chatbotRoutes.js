@@ -1,11 +1,25 @@
-const express = require("express");
+const express =
+  require("express");
 
-const router = express.Router();
+const router =
+  express.Router();
 
 const {
   chatbotReply,
-} = require("../controllers/chatbotController");
+} = require(
+  "../controllers/chatbotController"
+);
 
-router.post("/", chatbotReply);
+const chatbotLimiter =
+  require(
+    "../middleware/chatbotRateLimiter"
+  );
 
-module.exports = router;
+router.post(
+  "/",
+  chatbotLimiter,
+  chatbotReply
+);
+
+module.exports =
+  router;
