@@ -4,7 +4,11 @@ import {
 
 import axios from "axios";
 
-import ProductCard from "./ProductCard";
+import ReactMarkdown
+  from "react-markdown";
+
+import ProductCard
+  from "./ProductCard";
 
 function Chatbot() {
   const [message, setMessage] =
@@ -81,9 +85,13 @@ function Chatbot() {
         placeholder="Ask something..."
         value={message}
         onChange={(e) =>
-          setMessage(e.target.value)
+          setMessage(
+            e.target.value
+          )
         }
-        onKeyDown={handleKeyPress}
+        onKeyDown={
+          handleKeyPress
+        }
       />
 
       <button
@@ -102,7 +110,11 @@ function Chatbot() {
       )}
 
       {reply && (
-        <h3>{reply}</h3>
+        <div className="chatbot-reply">
+          <ReactMarkdown>
+            {reply}
+          </ReactMarkdown>
+        </div>
       )}
 
       {products.length > 0 && (
@@ -110,8 +122,12 @@ function Chatbot() {
           {products.map(
             (product) => (
               <ProductCard
-                key={product._id}
-                product={product}
+                key={
+                  product._id
+                }
+                product={
+                  product
+                }
               />
             )
           )}
