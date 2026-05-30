@@ -179,9 +179,9 @@ Instructions:
 - Recommend products if available.
 - Use only provided products.
 - Never invent products.
-- Return plain text only.
-- Do not use markdown formatting.
-- Do not use **, *, #, bullet points, or special symbols.
+- Use markdown formatting when appropriate.
+- Highlight product names using bold formatting.
+- Use headings and bullet points when useful.
 - Keep responses under 100 words.
 - Be professional and friendly.
 - If no products match, politely explain that nothing matched.
