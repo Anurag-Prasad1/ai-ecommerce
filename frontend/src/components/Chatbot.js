@@ -111,6 +111,10 @@ function Chatbot() {
 
       {reply && (
         <div className="chatbot-reply">
+          <div className="chatbot-reply-header">
+            🤖 NovaCart AI
+          </div>
+
           <ReactMarkdown>
             {reply}
           </ReactMarkdown>
