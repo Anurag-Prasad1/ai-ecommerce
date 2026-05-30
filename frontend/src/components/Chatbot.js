@@ -16,6 +16,9 @@ function Chatbot() {
   const [products, setProducts] =
     useState([]);
 
+  const [loading, setLoading] =
+    useState(false);
+
   const sendMessage = async () => {
     try {
 
@@ -30,6 +33,8 @@ function Chatbot() {
         return;
       }
 
+      setLoading(true);
+
       const { data } =
         await axios.post(
           "http://localhost:5000/api/chatbot",
@@ -43,9 +48,14 @@ function Chatbot() {
       setProducts(data.products);
 
       setMessage("");
+
+      setLoading(false);
     }
 
     catch (error) {
+
+      setLoading(false);
+
       setReply(
         "Chatbot server error."
       );
@@ -76,20 +86,35 @@ function Chatbot() {
         onKeyDown={handleKeyPress}
       />
 
-      <button onClick={sendMessage}>
-        Send
+      <button
+        onClick={sendMessage}
+        disabled={loading}
+      >
+        {loading
+          ? "Thinking..."
+          : "Send"}
       </button>
 
-      {reply && <h3>{reply}</h3>}
+      {loading && (
+        <p>
+          🤖 AI is thinking...
+        </p>
+      )}
+
+      {reply && (
+        <h3>{reply}</h3>
+      )}
 
       {products.length > 0 && (
         <div className="product-grid">
-          {products.map((product) => (
-            <ProductCard
-              key={product._id}
-              product={product}
-            />
-          ))}
+          {products.map(
+            (product) => (
+              <ProductCard
+                key={product._id}
+                product={product}
+              />
+            )
+          )}
         </div>
       )}
     </div>
