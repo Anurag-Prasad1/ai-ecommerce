@@ -14,14 +14,18 @@ const chatbotReply =
         req.body.message;
 
       const message =
-        originalMessage.toLowerCase();
+        originalMessage
+          .toLowerCase()
+          .trim();
 
       let products = [];
 
       // 🔥 Mobiles
       if (
-        message.includes("mobile") ||
-        message.includes("phone")
+        message === "mobile" ||
+        message === "mobiles" ||
+        message === "phone" ||
+        message === "phones"
       ) {
         products =
           await Product.find({
@@ -34,9 +38,7 @@ const chatbotReply =
 
       // 🔥 Fashion
       else if (
-        message.includes(
-          "fashion"
-        )
+        message === "fashion"
       ) {
         products =
           await Product.find({
@@ -49,12 +51,8 @@ const chatbotReply =
 
       // 🔥 Laptops
       else if (
-        message.includes(
-          "laptop"
-        ) ||
-        message.includes(
-          "laptops"
-        )
+        message === "laptop" ||
+        message === "laptops"
       ) {
         products =
           await Product.find({
@@ -67,8 +65,8 @@ const chatbotReply =
 
       // 🔥 Shoes
       else if (
-        message.includes("shoe") ||
-        message.includes("shoes")
+        message === "shoe" ||
+        message === "shoes"
       ) {
         products =
           await Product.find({
@@ -91,10 +89,8 @@ const chatbotReply =
 
       // 🔥 Cheap Products
       else if (
-        message.includes("cheap") ||
-        message.includes(
-          "budget"
-        )
+        message === "cheap" ||
+        message === "budget"
       ) {
         products =
           await Product.find({})
@@ -106,12 +102,8 @@ const chatbotReply =
 
       // 🔥 Premium Products
       else if (
-        message.includes(
-          "premium"
-        ) ||
-        message.includes(
-          "expensive"
-        )
+        message === "premium" ||
+        message === "expensive"
       ) {
         products =
           await Product.find({})
@@ -121,30 +113,50 @@ const chatbotReply =
             .limit(4);
       }
 
-      // 🔥 Dynamic Search
+      // 🔥 Smart Multi-Keyword Search
       else {
-        products =
-          await Product.find({
-            $or: [
+        const keywords =
+          message
+            .split(/\s+/)
+            .filter(
+              (word) =>
+                word.length > 2
+            );
+
+        const searchConditions =
+          keywords.flatMap(
+            (keyword) => [
               {
                 name: {
-                  $regex: message,
+                  $regex: keyword,
                   $options: "i",
                 },
               },
               {
                 brand: {
-                  $regex: message,
+                  $regex: keyword,
                   $options: "i",
                 },
               },
               {
                 category: {
-                  $regex: message,
+                  $regex: keyword,
                   $options: "i",
                 },
               },
-            ],
+              {
+                description: {
+                  $regex: keyword,
+                  $options: "i",
+                },
+              },
+            ]
+          );
+
+        products =
+          await Product.find({
+            $or:
+              searchConditions,
           }).limit(4);
       }
 
