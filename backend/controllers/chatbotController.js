@@ -118,6 +118,15 @@ const chatbotReply =
         const keywords =
           message
             .split(/\s+/)
+            .map(
+              (word) =>
+                word.endsWith("s")
+                  ? word.slice(
+                      0,
+                      -1
+                    )
+                  : word
+            )
             .filter(
               (word) =>
                 word.length > 2
@@ -199,10 +208,45 @@ Instructions:
 - If no products match, politely explain that nothing matched.
 `;
 
-      const reply =
-        await generateResponse(
-          prompt
+      let reply = "";
+
+      try {
+        reply =
+          await generateResponse(
+            prompt
+          );
+      } catch (geminiError) {
+        console.error(
+          "Gemini Fallback Triggered:",
+          geminiError.message
         );
+
+        if (
+          products.length > 0
+        ) {
+          reply = `
+⚠️ AI service is temporarily unavailable.
+
+Here are matching products from our catalog:
+
+${products
+  .map(
+    (product) =>
+      `• ${product.name}
+  Price: ₹${product.price}
+  Category: ${product.category}`
+  )
+  .join("\n\n")}
+`;
+        } else {
+          reply = `
+⚠️ AI service is temporarily unavailable.
+
+No matching products were found for your search.
+Please try another product name or category.
+`;
+        }
+      }
 
       res.json({
         reply,
