@@ -26,6 +26,10 @@ import AdminDashboardPage from "./pages/AdminDashboardPage";
 
 import ProductEditPage from "./pages/ProductEditPage";
 
+import AIProductGeneratorPage from "./pages/AIProductGeneratorPage";
+
+import AIComparisonPage from "./pages/AIComparisonPage";
+
 import ProtectedRoute from "./components/ProtectedRoute";
 
 import AdminRoute from "./components/AdminRoute";
@@ -110,6 +114,20 @@ function App() {
             <AdminRoute>
               <ProductEditPage />
             </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/ai-generator"
+          element={
+            <AIProductGeneratorPage />
+          }
+        />
+
+        <Route
+          path="/ai-comparison"
+          element={
+            <AIComparisonPage />
           }
         />
 
