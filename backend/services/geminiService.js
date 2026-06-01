@@ -31,6 +31,26 @@ const generateResponse =
     }
   };
 
+const generateStructuredResponse =
+  async (prompt) => {
+    try {
+      const result =
+        await model.generateContent(
+          prompt
+        );
+
+      return result.response.text();
+    } catch (error) {
+      console.error(
+        "Gemini Error:",
+        error
+      );
+
+      throw error;
+    }
+  };
+
 module.exports = {
   generateResponse,
+  generateStructuredResponse,
 };
