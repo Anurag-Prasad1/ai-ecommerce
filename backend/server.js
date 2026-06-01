@@ -80,6 +80,12 @@ app.use(
   require("./routes/chatbotRoutes")
 );
 
+// 🔥 AI Commerce Routes (DAY 32 - NEW ADDITION)
+app.use(
+  "/api/ai",
+  require("./routes/aiRoutes")
+);
+
 // 🔥 Serve Uploaded Images Publicly
 app.use(
   "/uploads",
