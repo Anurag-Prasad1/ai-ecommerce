@@ -7,10 +7,8 @@ const createProduct = async (
   req,
   res
 ) => {
-
   const product =
     await Product.create({
-
       name: "Sample Product",
 
       price: 0,
@@ -34,7 +32,6 @@ const createProduct = async (
   res.status(201).json(product);
 };
 
-
 // @desc    Get All Products
 // @route   GET /api/products
 // @access  Public
@@ -42,7 +39,6 @@ const getProducts = async (
   req,
   res
 ) => {
-
   // Dynamic page size
   const pageSize =
     Number(req.query.limit) || 5;
@@ -51,11 +47,21 @@ const getProducts = async (
   const page =
     Number(req.query.pageNumber) || 1;
 
+  // Escape regex special characters
+  const escapedKeyword =
+    req.query.keyword
+      ? req.query.keyword.replace(
+          /[.*+?^${}()|[\]\\]/g,
+          "\\$&"
+        )
+      : "";
+
   // Search by keyword
   const keyword = req.query.keyword
     ? {
         name: {
-          $regex: req.query.keyword,
+          $regex:
+            escapedKeyword,
           $options: "i",
         },
       }
@@ -65,7 +71,8 @@ const getProducts = async (
   const category = req.query.category
     ? {
         category: {
-          $regex: req.query.category,
+          $regex:
+            req.query.category,
           $options: "i",
         },
       }
@@ -82,12 +89,16 @@ const getProducts = async (
 
     if (req.query.minPrice) {
       priceFilter.price.$gte =
-        Number(req.query.minPrice);
+        Number(
+          req.query.minPrice
+        );
     }
 
     if (req.query.maxPrice) {
       priceFilter.price.$lte =
-        Number(req.query.maxPrice);
+        Number(
+          req.query.maxPrice
+        );
     }
   }
 
@@ -118,14 +129,11 @@ const getProducts = async (
 
   // Intelligent ranking for search
   if (req.query.keyword) {
-
     productsQuery =
       productsQuery.sort({
         name: 1,
       });
-
   } else {
-
     productsQuery =
       productsQuery.sort(sort);
   }
@@ -134,7 +142,9 @@ const getProducts = async (
   const products =
     await productsQuery
       .limit(pageSize)
-      .skip(pageSize * (page - 1));
+      .skip(
+        pageSize * (page - 1)
+      );
 
   // Final response
   res.json({
@@ -147,7 +157,6 @@ const getProducts = async (
   });
 };
 
-
 // @desc    Get Single Product
 // @route   GET /api/products/:id
 // @access  Public
@@ -155,18 +164,14 @@ const getProductById = async (
   req,
   res
 ) => {
-
   const product =
     await Product.findById(
       req.params.id
     );
 
   if (product) {
-
     res.json(product);
-
   } else {
-
     res.status(404);
 
     throw new Error(
@@ -175,20 +180,17 @@ const getProductById = async (
   }
 };
 
-
 // @desc    Get Recommended Products
 // @route   GET /api/products/:id/recommendations
 // @access  Public
 const getRecommendedProducts =
   async (req, res) => {
-
     const product =
       await Product.findById(
         req.params.id
       );
 
     if (!product) {
-
       res.status(404);
 
       throw new Error(
@@ -198,7 +200,6 @@ const getRecommendedProducts =
 
     const recommendations =
       await Product.find({
-
         // Exclude current product
         _id: {
           $ne: product._id,
@@ -211,23 +212,23 @@ const getRecommendedProducts =
         // Similar price range
         price: {
           $gte:
-            product.price - 20000,
+            product.price -
+            20000,
 
           $lte:
-            product.price + 20000,
+            product.price +
+            20000,
         },
       }).limit(4);
 
     res.json(recommendations);
   };
 
-
 // @desc    Smart Search Suggestions
 // @route   GET /api/products/search/suggestions
 // @access  Public
 const getSearchSuggestions =
   async (req, res) => {
-
     const keyword =
       req.query.keyword;
 
@@ -236,11 +237,19 @@ const getSearchSuggestions =
       return res.json([]);
     }
 
+    // Escape regex special characters
+    const escapedKeyword =
+      keyword.replace(
+        /[.*+?^${}()|[\]\\]/g,
+        "\\$&"
+      );
+
     // Find matching product names
     const products =
       await Product.find({
         name: {
-          $regex: keyword,
+          $regex:
+            escapedKeyword,
           $options: "i",
         },
       })
@@ -250,19 +259,18 @@ const getSearchSuggestions =
     // Extract only names
     const suggestions =
       products.map(
-        (product) => product.name
+        (product) =>
+          product.name
       );
 
     res.json(suggestions);
   };
-
 
 // @desc    Get Trending Products
 // @route   GET /api/products/trending/products
 // @access  Public
 const getTrendingProducts =
   async (req, res) => {
-
     const trendingProducts =
       await Product.find({
         popularityScore: {
@@ -274,9 +282,10 @@ const getTrendingProducts =
         })
         .limit(6);
 
-    res.json(trendingProducts);
+    res.json(
+      trendingProducts
+    );
   };
-
 
 // @desc    Update Product
 // @route   PUT /api/products/:id
@@ -285,14 +294,12 @@ const updateProduct = async (
   req,
   res
 ) => {
-
   const product =
     await Product.findById(
       req.params.id
     );
 
   if (product) {
-
     product.name =
       req.body.name ||
       product.name;
@@ -325,9 +332,7 @@ const updateProduct = async (
       await product.save();
 
     res.json(updatedProduct);
-
   } else {
-
     res.status(404);
 
     throw new Error(
@@ -335,7 +340,6 @@ const updateProduct = async (
     );
   }
 };
-
 
 // @desc    Delete Product
 // @route   DELETE /api/products/:id
@@ -344,23 +348,19 @@ const deleteProduct = async (
   req,
   res
 ) => {
-
   const product =
     await Product.findById(
       req.params.id
     );
 
   if (product) {
-
     await product.deleteOne();
 
     res.json({
       message:
         "Product removed successfully",
     });
-
   } else {
-
     res.status(404);
 
     throw new Error(
@@ -368,7 +368,6 @@ const deleteProduct = async (
     );
   }
 };
-
 
 module.exports = {
   createProduct,
