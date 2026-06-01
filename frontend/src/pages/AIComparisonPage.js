@@ -6,6 +6,8 @@ import axios from "axios";
 
 import ReactMarkdown from "react-markdown";
 
+import remarkGfm from "remark-gfm";
+
 function AIComparisonPage() {
   const [
     productA,
@@ -64,7 +66,9 @@ function AIComparisonPage() {
         );
 
         setError(
-          "Failed to compare products."
+          error.response?.data
+            ?.message ||
+            "Failed to compare products."
         );
       } finally {
         setLoading(false);
@@ -143,7 +147,11 @@ function AIComparisonPage() {
             Comparison Result
           </h2>
 
-          <ReactMarkdown>
+          <ReactMarkdown
+            remarkPlugins={[
+              remarkGfm,
+            ]}
+          >
             {result}
           </ReactMarkdown>
         </div>

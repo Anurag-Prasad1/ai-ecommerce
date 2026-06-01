@@ -43,6 +43,20 @@ Generate:
         result: response,
       });
     } catch (error) {
+      console.error(
+        "AI Product Description Error:",
+        error
+      );
+
+      if (
+        error.status === 429
+      ) {
+        return res.status(429).json({
+          message:
+            "AI service is temporarily rate limited. Please try again in a minute.",
+        });
+      }
+
       res.status(500).json({
         message:
           "AI generation failed",
@@ -67,13 +81,18 @@ VS
 
 ${productB}
 
-Provide:
+Requirements:
 
 1. Features Comparison
+   - Use a markdown table.
 
 2. Pros & Cons
+   - Use bullet points.
 
 3. Final Recommendation
+   - Explain which product is better and why.
+
+Return the entire response in properly formatted markdown.
 `;
 
       const response =
@@ -85,6 +104,20 @@ Provide:
         result: response,
       });
     } catch (error) {
+      console.error(
+        "AI Product Comparison Error:",
+        error
+      );
+
+      if (
+        error.status === 429
+      ) {
+        return res.status(429).json({
+          message:
+            "AI service is temporarily rate limited. Please try again in a minute.",
+        });
+      }
+
       res.status(500).json({
         message:
           "Comparison failed",

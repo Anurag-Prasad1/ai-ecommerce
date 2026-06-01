@@ -6,6 +6,8 @@ import axios from "axios";
 
 import ReactMarkdown from "react-markdown";
 
+import remarkGfm from "remark-gfm";
+
 function AIProductGeneratorPage() {
   const [name, setName] =
     useState("");
@@ -67,7 +69,9 @@ function AIProductGeneratorPage() {
         );
 
         setError(
-          "Failed to generate product description."
+          error.response?.data
+            ?.message ||
+            "Failed to generate product description."
         );
       } finally {
         setLoading(false);
@@ -157,7 +161,11 @@ function AIProductGeneratorPage() {
             Generated Result
           </h2>
 
-          <ReactMarkdown>
+          <ReactMarkdown
+            remarkPlugins={[
+              remarkGfm,
+            ]}
+          >
             {result}
           </ReactMarkdown>
         </div>
