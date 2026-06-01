@@ -7,7 +7,7 @@ body {
 .navbar {
   background: black;
   color: white;
-  padding: 15px 30px;
+  padding: 15px 40px 15px 30px;
 
   display: flex;
   justify-content: space-between;
@@ -15,7 +15,7 @@ body {
 }
 
 .navbar button {
-  margin-left: 10px;
+  margin-left: 5px;
   padding: 8px 12px;
   cursor: pointer;
 }
@@ -200,8 +200,12 @@ Needed for absolute suggestion dropdown */
   padding: 8px;
 }
 
+.navbar form input[type="text"] {
+  width: 160px;
+}
+
 .navbar input[type="number"] {
-  width: 120px;
+  width: 100px;
 }
 
 .pagination {
@@ -267,16 +271,16 @@ Needed for absolute suggestion dropdown */
 
 .nav-right {
   display: flex;
-
   align-items: center;
-
-  gap: 15px;
+  gap: 6px;
+  flex-shrink: 1;
 }
 
 .user-name {
   color: white;
-
   font-weight: bold;
+  white-space: nowrap;
+  margin: 0 5px;
 }
 
 /* Smart Suggestions Dropdown */
