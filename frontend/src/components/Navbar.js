@@ -14,7 +14,6 @@ import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 
 function Navbar() {
-
   const [keyword, setKeyword] =
     useState("");
 
@@ -22,6 +21,11 @@ function Navbar() {
     suggestions,
     setSuggestions,
   ] = useState([]);
+
+  const [
+    activeSuggestion,
+    setActiveSuggestion,
+  ] = useState(-1);
 
   const [category, setCategory] =
     useState("");
@@ -32,65 +36,158 @@ function Navbar() {
   const [maxPrice, setMaxPrice] =
     useState("");
 
-  const navigate = useNavigate();
+  const [
+    showAITools,
+    setShowAITools,
+  ] = useState(false);
+
+  const navigate =
+    useNavigate();
 
   const {
     userInfo,
     logout,
   } = useContext(AuthContext);
 
-  // Fetch smart search suggestions
   useEffect(() => {
-
     const fetchSuggestions =
       async () => {
-
-        // Prevent empty API calls
-        if (!keyword) {
-
+        if (!keyword.trim()) {
           setSuggestions([]);
+          setActiveSuggestion(
+            -1
+          );
 
           return;
         }
 
-        const { data } =
-          await axios.get(
-            `http://localhost:5000/api/products/search/suggestions?keyword=${keyword}`
-          );
+        try {
+          const { data } =
+            await axios.get(
+              `http://localhost:5000/api/products/search/suggestions?keyword=${keyword}`
+            );
 
-        setSuggestions(data);
+          setSuggestions(data);
+
+          setActiveSuggestion(
+            -1
+          );
+        } catch (error) {
+          console.error(error);
+        }
       };
 
     fetchSuggestions();
-
   }, [keyword]);
 
-  const submitHandler = (e) => {
+  const selectSuggestion = (
+    suggestion
+  ) => {
+    setKeyword(suggestion);
 
+    setSuggestions([]);
+
+    setActiveSuggestion(-1);
+  };
+
+  const handleKeyDown = (
+    e
+  ) => {
+    if (
+      suggestions.length === 0
+    ) {
+      return;
+    }
+
+    if (
+      e.key === "ArrowDown"
+    ) {
+      e.preventDefault();
+
+      setActiveSuggestion(
+        (prev) =>
+          prev <
+          suggestions.length -
+            1
+            ? prev + 1
+            : prev
+      );
+    } else if (
+      e.key === "ArrowUp"
+    ) {
+      e.preventDefault();
+
+      setActiveSuggestion(
+        (prev) =>
+          prev > 0
+            ? prev - 1
+            : 0
+      );
+    } else if (
+      e.key === "Enter"
+    ) {
+      if (
+        activeSuggestion >= 0
+      ) {
+        e.preventDefault();
+
+        selectSuggestion(
+          suggestions[
+            activeSuggestion
+          ]
+        );
+      }
+    } else if (
+      e.key === "Escape"
+    ) {
+      setSuggestions([]);
+
+      setActiveSuggestion(
+        -1
+      );
+    }
+  };
+
+  const submitHandler = (
+    e
+  ) => {
     e.preventDefault();
 
     navigate(
       `/?keyword=${keyword}&category=${category}&minPrice=${minPrice}&maxPrice=${maxPrice}`
     );
 
-    // Close suggestions dropdown
     setSuggestions([]);
+
+    setActiveSuggestion(-1);
   };
 
   return (
     <nav className="navbar">
-
       <Link
         to="/"
         className="logo"
+        style={{
+          marginRight:
+            "25px",
+        }}
       >
-        <h2>NovaCart 🚀</h2>
+        <h2
+          style={{
+            whiteSpace:
+              "nowrap",
+          }}
+        >
+          NovaCart 🚀
+        </h2>
       </Link>
 
       <div className="nav-right">
-
-        <form onSubmit={submitHandler}>
-
+        <form
+          onSubmit={
+            submitHandler
+          }
+        >
           <input
             type="text"
             placeholder="Search products..."
@@ -100,42 +197,58 @@ function Navbar() {
                 e.target.value
               )
             }
-
-            // Hide suggestions on blur
+            onKeyDown={
+              handleKeyDown
+            }
             onBlur={() => {
               setTimeout(() => {
-                setSuggestions([]);
+                setSuggestions(
+                  []
+                );
               }, 200);
             }}
           />
 
-          {/* Smart Suggestions Dropdown */}
-          {suggestions.length > 0 && (
-
+          {suggestions.length >
+            0 && (
             <div className="suggestions-box">
-
               {suggestions.map(
                 (
                   suggestion,
                   index
                 ) => (
-
                   <div
                     key={index}
-                    onClick={() => {
-
-                      setKeyword(
+                    onMouseDown={() =>
+                      selectSuggestion(
                         suggestion
-                      );
-
-                      setSuggestions([]);
+                      )
+                    }
+                    style={{
+                      padding:
+                        "12px",
+                      cursor:
+                        "pointer",
+                      background:
+                        index ===
+                        activeSuggestion
+                          ? "#f0f0f0"
+                          : "#fff",
+                      fontWeight:
+                        index ===
+                        activeSuggestion
+                          ? "600"
+                          : "400",
+                      color:
+                        "#000",
                     }}
                   >
-                    {suggestion}
+                    {
+                      suggestion
+                    }
                   </div>
                 )
               )}
-
             </div>
           )}
 
@@ -147,7 +260,6 @@ function Navbar() {
               )
             }
           >
-
             <option value="">
               All
             </option>
@@ -167,7 +279,6 @@ function Navbar() {
             <option value="books">
               Books
             </option>
-
           </select>
 
           <input
@@ -195,16 +306,106 @@ function Navbar() {
           <button type="submit">
             Search
           </button>
-
         </form>
 
+        {/* AI TOOLS DROPDOWN */}
+        <div
+          style={{
+            position:
+              "relative",
+            display:
+              "inline-block",
+          }}
+        >
+          <button
+            style={{
+              whiteSpace:
+                "nowrap",
+            }}
+            onClick={() =>
+              setShowAITools(
+                !showAITools
+              )
+            }
+          >
+            🤖 AI ▼
+          </button>
+
+          {showAITools && (
+            <div
+              style={{
+                position:
+                  "absolute",
+                top: "45px",
+                right: 0,
+                background:
+                  "#fff",
+                minWidth:
+                  "220px",
+                boxShadow:
+                  "0 2px 10px rgba(0,0,0,0.2)",
+                borderRadius:
+                  "6px",
+                zIndex: 999,
+              }}
+            >
+              <Link
+                to="/ai-generator"
+                onClick={() =>
+                  setShowAITools(
+                    false
+                  )
+                }
+                style={{
+                  display:
+                    "block",
+                  padding:
+                    "12px",
+                  textDecoration:
+                    "none",
+                  color:
+                    "#000",
+                  borderBottom:
+                    "1px solid #eee",
+                }}
+              >
+                🤖 AI Product
+                Generator
+              </Link>
+
+              <Link
+                to="/ai-comparison"
+                onClick={() =>
+                  setShowAITools(
+                    false
+                  )
+                }
+                style={{
+                  display:
+                    "block",
+                  padding:
+                    "12px",
+                  textDecoration:
+                    "none",
+                  color:
+                    "#000",
+                }}
+              >
+                ⚖️ AI Product
+                Comparison
+              </Link>
+            </div>
+          )}
+        </div>
+
         <Link to="/cart">
-          <button>Cart</button>
+          <button>
+            Cart
+          </button>
         </Link>
 
         {userInfo ? (
           <>
-
             <Link to="/myorders">
               <button>
                 My Orders
@@ -219,23 +420,26 @@ function Navbar() {
               </Link>
             )}
 
-            <span className="user-name">
-
+            <span
+              className="user-name"
+              style={{
+                whiteSpace:
+                  "nowrap",
+              }}
+            >
               Welcome{" "}
-
               {userInfo.name ||
                 "User"}
-
             </span>
 
-            <button onClick={logout}>
+            <button
+              onClick={logout}
+            >
               Logout
             </button>
-
           </>
         ) : (
           <>
-
             <Link to="/login">
               <button>
                 Login
@@ -247,10 +451,8 @@ function Navbar() {
                 Register
               </button>
             </Link>
-
           </>
         )}
-
       </div>
     </nav>
   );
