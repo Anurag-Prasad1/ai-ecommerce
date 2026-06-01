@@ -7,6 +7,7 @@ import {
   useState,
   useContext,
   useEffect,
+  useRef,
 } from "react";
 
 import axios from "axios";
@@ -40,6 +41,9 @@ function Navbar() {
     showAITools,
     setShowAITools,
   ] = useState(false);
+
+  const aiDropdownRef =
+    useRef(null);
 
   const navigate =
     useNavigate();
@@ -80,6 +84,32 @@ function Navbar() {
     fetchSuggestions();
   }, [keyword]);
 
+  useEffect(() => {
+    const handleClickOutside =
+      (event) => {
+        if (
+          aiDropdownRef.current &&
+          !aiDropdownRef.current.contains(
+            event.target
+          )
+        ) {
+          setShowAITools(false);
+        }
+      };
+
+    document.addEventListener(
+      "mousedown",
+      handleClickOutside
+    );
+
+    return () => {
+      document.removeEventListener(
+        "mousedown",
+        handleClickOutside
+      );
+    };
+  }, []);
+
   const selectSuggestion = (
     suggestion
   ) => {
@@ -107,8 +137,7 @@ function Navbar() {
       setActiveSuggestion(
         (prev) =>
           prev <
-          suggestions.length -
-            1
+          suggestions.length - 1
             ? prev + 1
             : prev
       );
@@ -310,6 +339,7 @@ function Navbar() {
 
         {/* AI TOOLS DROPDOWN */}
         <div
+          ref={aiDropdownRef}
           style={{
             position:
               "relative",
