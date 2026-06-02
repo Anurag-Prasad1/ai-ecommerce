@@ -30,6 +30,10 @@ import AIProductGeneratorPage from "./pages/AIProductGeneratorPage";
 
 import AIComparisonPage from "./pages/AIComparisonPage";
 
+import AIReviewSummarizerPage from "./pages/AIReviewSummarizerPage";
+
+import AISmartBuyingAssistantPage from "./pages/AISmartBuyingAssistantPage";
+
 import ProtectedRoute from "./components/ProtectedRoute";
 
 import AdminRoute from "./components/AdminRoute";
@@ -42,18 +46,15 @@ function App() {
       <Navbar />
 
       <Routes>
-
         <Route
           path="/"
           element={
             <div className="container">
-
               <TrendingProducts />
 
               <Chatbot />
 
               <ProductList />
-
             </div>
           }
         />
@@ -132,6 +133,20 @@ function App() {
         />
 
         <Route
+          path="/ai-review-summary"
+          element={
+            <AIReviewSummarizerPage />
+          }
+        />
+
+        <Route
+          path="/ai-buying-assistant"
+          element={
+            <AISmartBuyingAssistantPage />
+          }
+        />
+
+        <Route
           path="/login"
           element={<LoginPage />}
         />
@@ -140,7 +155,6 @@ function App() {
           path="/register"
           element={<RegisterPage />}
         />
-
       </Routes>
     </div>
   );
