@@ -361,71 +361,87 @@ function Navbar() {
             🤖 AI ▼
           </button>
 
-          {showAITools && (
-            <div
-              style={{
-                position:
-                  "absolute",
-                top: "45px",
-                right: 0,
-                background:
-                  "#fff",
-                minWidth:
-                  "220px",
-                boxShadow:
-                  "0 2px 10px rgba(0,0,0,0.2)",
-                borderRadius:
-                  "6px",
-                zIndex: 999,
-              }}
-            >
-              <Link
-                to="/ai-generator"
-                onClick={() =>
-                  setShowAITools(
-                    false
-                  )
-                }
-                style={{
-                  display:
-                    "block",
-                  padding:
-                    "12px",
-                  textDecoration:
-                    "none",
-                  color:
-                    "#000",
-                  borderBottom:
-                    "1px solid #eee",
-                }}
-              >
-                🤖 AI Product
-                Generator
-              </Link>
+{showAITools && (
+  <div
+    style={{
+      position: "absolute",
+      top: "45px",
+      right: 0,
+      background: "#fff",
+      minWidth: "260px",
+      boxShadow:
+        "0 2px 10px rgba(0,0,0,0.2)",
+      borderRadius: "6px",
+      zIndex: 999,
+    }}
+  >
+    <Link
+      to="/ai-generator"
+      onClick={() =>
+        setShowAITools(false)
+      }
+      style={{
+        display: "block",
+        padding: "12px",
+        textDecoration: "none",
+        color: "#000",
+        borderBottom:
+          "1px solid #eee",
+      }}
+    >
+      🤖 AI Product Generator
+    </Link>
 
-              <Link
-                to="/ai-comparison"
-                onClick={() =>
-                  setShowAITools(
-                    false
-                  )
-                }
-                style={{
-                  display:
-                    "block",
-                  padding:
-                    "12px",
-                  textDecoration:
-                    "none",
-                  color:
-                    "#000",
-                }}
-              >
-                ⚖️ AI Product
-                Comparison
-              </Link>
-            </div>
-          )}
+    <Link
+      to="/ai-comparison"
+      onClick={() =>
+        setShowAITools(false)
+      }
+      style={{
+        display: "block",
+        padding: "12px",
+        textDecoration: "none",
+        color: "#000",
+        borderBottom:
+          "1px solid #eee",
+      }}
+    >
+      ⚖️ AI Product Comparison
+    </Link>
+
+    <Link
+      to="/ai-review-summary"
+      onClick={() =>
+        setShowAITools(false)
+      }
+      style={{
+        display: "block",
+        padding: "12px",
+        textDecoration: "none",
+        color: "#000",
+        borderBottom:
+          "1px solid #eee",
+      }}
+    >
+      📝 AI Review Summarizer
+    </Link>
+
+    <Link
+      to="/ai-buying-assistant"
+      onClick={() =>
+        setShowAITools(false)
+      }
+      style={{
+        display: "block",
+        padding: "12px",
+        textDecoration: "none",
+        color: "#000",
+      }}
+    >
+      🛒 Smart Buying Assistant
+    </Link>
+  </div>
+)}
         </div>
 
         <Link to="/cart">
