@@ -2,6 +2,10 @@ import { useState } from "react";
 
 import axios from "axios";
 
+import ReactMarkdown from "react-markdown";
+
+import remarkGfm from "remark-gfm";
+
 function AISmartBuyingAssistantPage() {
   const [query, setQuery] =
     useState("");
@@ -141,33 +145,32 @@ Need earbuds with long battery life`}
           <div
             style={{
               marginTop:
-                "25px",
+                "5px",
             }}
           >
             <h2>
               AI Recommendation
             </h2>
 
-            <pre
+            <div
+              className="markdown-content"
               style={{
-                whiteSpace:
-                  "pre-wrap",
-                wordBreak:
-                  "break-word",
                 background:
                   "#f4f4f4",
                 padding:
-                  "15px",
+                  "20px",
                 borderRadius:
                   "8px",
-                boxSizing:
-                  "border-box",
-                overflowX:
-                  "auto",
               }}
             >
-              {result}
-            </pre>
+              <ReactMarkdown
+                remarkPlugins={[
+                  remarkGfm,
+                ]}
+              >
+                {result}
+              </ReactMarkdown>
+            </div>
           </div>
         )}
       </div>

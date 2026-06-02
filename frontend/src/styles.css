@@ -443,3 +443,115 @@ Needed for absolute suggestion dropdown */
 
   color: #444;
 }
+
+/* ==================================
+   AI MARKDOWN RENDERING
+================================== */
+
+.markdown-content {
+  margin-top: 10px;
+  line-height: 1.8;
+  font-size: 16px;
+  color: #222;
+}
+
+.markdown-content > *:first-child {
+  margin-top: 0;
+}
+
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3,
+.markdown-content h4 {
+  margin-top: 24px;
+  margin-bottom: 12px;
+  color: #111;
+  font-weight: 700;
+}
+
+.markdown-content h1 {
+  font-size: 32px;
+}
+
+.markdown-content h2 {
+  font-size: 26px;
+}
+
+.markdown-content h3 {
+  font-size: 22px;
+}
+
+.markdown-content p {
+  margin-bottom: 14px;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+  padding-left: 24px;
+  margin-bottom: 16px;
+}
+
+.markdown-content li {
+  margin-bottom: 8px;
+}
+
+.markdown-content strong {
+  font-weight: 700;
+  color: #000;
+}
+
+.markdown-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  overflow-x: auto;
+  display: block;
+}
+
+.markdown-content th {
+  background: #f4f4f4;
+  font-weight: 700;
+}
+
+.markdown-content th,
+.markdown-content td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+.markdown-content blockquote {
+  border-left: 4px solid #007bff;
+  padding-left: 15px;
+  margin: 15px 0;
+  color: #555;
+}
+
+.markdown-content code {
+  background: #f4f4f4;
+  padding: 2px 5px;
+  border-radius: 4px;
+}
+
+.markdown-content pre {
+  background: #1e1e1e;
+  color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+.markdown-content > *:first-child {
+  margin-top: 0;
+}
+
+.markdown-content p:first-child {
+  margin-top: 0;
+}
+
+.markdown-content h1:first-child,
+.markdown-content h2:first-child,
+.markdown-content h3:first-child,
+.markdown-content h4:first-child {
+  margin-top: 0;
+}

@@ -2,6 +2,10 @@ import { useState } from "react";
 
 import axios from "axios";
 
+import ReactMarkdown from "react-markdown";
+
+import remarkGfm from "remark-gfm";
+
 function AIReviewSummarizerPage() {
   const [reviews, setReviews] =
     useState("");
@@ -143,33 +147,32 @@ Fast charging is amazing.`}
           <div
             style={{
               marginTop:
-                "25px",
+                "5px",
             }}
           >
             <h2>
               AI Analysis
             </h2>
 
-            <pre
+            <div
+              className="markdown-content"
               style={{
-                whiteSpace:
-                  "pre-wrap",
-                wordBreak:
-                  "break-word",
                 background:
                   "#f4f4f4",
                 padding:
-                  "15px",
+                  "20px",
                 borderRadius:
                   "8px",
-                boxSizing:
-                  "border-box",
-                overflowX:
-                  "auto",
               }}
             >
-              {result}
-            </pre>
+              <ReactMarkdown
+                remarkPlugins={[
+                  remarkGfm,
+                ]}
+              >
+                {result}
+              </ReactMarkdown>
+            </div>
           </div>
         )}
       </div>
