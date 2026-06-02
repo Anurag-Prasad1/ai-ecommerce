@@ -68,88 +68,109 @@ function AISmartBuyingAssistantPage() {
 
   return (
     <div className="container">
-      <h1>
-        🤖 Smart Buying Assistant
-      </h1>
+      <div
+        style={{
+          maxWidth: "900px",
+          margin: "40px auto",
+        }}
+      >
+        <h1>
+          🤖 Smart Buying Assistant
+        </h1>
 
-      <p>
-        Describe your requirements and
-        let AI recommend the best
-        products available in NovaCart.
-      </p>
+        <p>
+          Describe your requirements
+          and let AI recommend the
+          best products available in
+          NovaCart.
+        </p>
 
-      <textarea
-        rows="6"
-        placeholder={`Examples:
+        <textarea
+          rows="5"
+          placeholder={`Examples:
 
-Suggest a laptop for machine learning under ₹70,000
+Suggest a laptop under ₹70,000
 
 Recommend a gaming phone under ₹30,000
 
-Need wireless earbuds with good battery life`}
-        value={query}
-        onChange={(e) =>
-          setQuery(
-            e.target.value
-          )
-        }
-        style={{
-          width: "100%",
-          padding: "12px",
-          marginTop: "15px",
-          marginBottom: "15px",
-        }}
-      />
-
-      <button
-        onClick={askHandler}
-        disabled={loading}
-      >
-        {loading
-          ? "Analyzing..."
-          : "Ask AI"}
-      </button>
-
-      {error && (
-        <div
+Need earbuds with long battery life`}
+          value={query}
+          onChange={(e) =>
+            setQuery(
+              e.target.value
+            )
+          }
           style={{
-            marginTop: "20px",
-            color: "red",
-            fontWeight:
-              "bold",
+            width: "100%",
+            padding: "14px",
+            marginTop: "15px",
+            marginBottom:
+              "15px",
+            boxSizing:
+              "border-box",
+            borderRadius:
+              "8px",
+            resize: "vertical",
           }}
-        >
-          {error}
-        </div>
-      )}
+        />
 
-      {result && (
-        <div
-          style={{
-            marginTop: "25px",
-          }}
+        <button
+          onClick={askHandler}
+          disabled={loading}
         >
-          <h2>
-            AI Recommendation
-          </h2>
+          {loading
+            ? "Analyzing..."
+            : "Ask AI"}
+        </button>
 
-          <pre
+        {error && (
+          <div
             style={{
-              whiteSpace:
-                "pre-wrap",
-              background:
-                "#f4f4f4",
-              padding: "15px",
-              borderRadius:
-                "8px",
-              overflowX:
-                "auto",
+              marginTop:
+                "20px",
+              color: "red",
+              fontWeight:
+                "bold",
             }}
           >
-            {result}
-          </pre>
-        </div>
-      )}
+            {error}
+          </div>
+        )}
+
+        {result && (
+          <div
+            style={{
+              marginTop:
+                "25px",
+            }}
+          >
+            <h2>
+              AI Recommendation
+            </h2>
+
+            <pre
+              style={{
+                whiteSpace:
+                  "pre-wrap",
+                wordBreak:
+                  "break-word",
+                background:
+                  "#f4f4f4",
+                padding:
+                  "15px",
+                borderRadius:
+                  "8px",
+                boxSizing:
+                  "border-box",
+                overflowX:
+                  "auto",
+              }}
+            >
+              {result}
+            </pre>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

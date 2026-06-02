@@ -68,91 +68,111 @@ function AIReviewSummarizerPage() {
 
   return (
     <div className="container">
-      <h1>
-        🤖 AI Review Summarizer
-      </h1>
+      <div
+        style={{
+          maxWidth: "950px",
+          margin: "40px auto",
+        }}
+      >
+        <h1>
+          🤖 AI Review Summarizer
+        </h1>
 
-      <p>
-        Paste customer reviews and
-        let AI generate an overall
-        summary, pros, cons, and
-        sentiment analysis.
-      </p>
+        <p>
+          Paste customer reviews and
+          let AI generate an overall
+          summary, pros, cons, and
+          sentiment analysis.
+        </p>
 
-      <textarea
-        rows="12"
-        placeholder={`Example:
+        <textarea
+          rows="10"
+          placeholder={`Example:
 
 Great battery life.
 Excellent display quality.
 Camera is average.
-Phone gets warm during gaming.
+Phone gets warm while gaming.
 Fast charging is amazing.`}
-        value={reviews}
-        onChange={(e) =>
-          setReviews(
-            e.target.value
-          )
-        }
-        style={{
-          width: "100%",
-          padding: "12px",
-          marginTop: "15px",
-          marginBottom: "15px",
-        }}
-      />
-
-      <button
-        onClick={
-          summarizeHandler
-        }
-        disabled={loading}
-      >
-        {loading
-          ? "Analyzing..."
-          : "Summarize Reviews"}
-      </button>
-
-      {error && (
-        <div
+          value={reviews}
+          onChange={(e) =>
+            setReviews(
+              e.target.value
+            )
+          }
           style={{
-            marginTop: "20px",
-            color: "red",
-            fontWeight:
-              "bold",
+            width: "100%",
+            padding: "14px",
+            marginTop: "15px",
+            marginBottom:
+              "15px",
+            boxSizing:
+              "border-box",
+            borderRadius:
+              "8px",
+            resize: "vertical",
           }}
-        >
-          {error}
-        </div>
-      )}
+        />
 
-      {result && (
-        <div
-          style={{
-            marginTop: "25px",
-          }}
+        <button
+          onClick={
+            summarizeHandler
+          }
+          disabled={loading}
         >
-          <h2>
-            AI Analysis
-          </h2>
+          {loading
+            ? "Analyzing..."
+            : "Summarize Reviews"}
+        </button>
 
-          <pre
+        {error && (
+          <div
             style={{
-              whiteSpace:
-                "pre-wrap",
-              background:
-                "#f4f4f4",
-              padding: "15px",
-              borderRadius:
-                "8px",
-              overflowX:
-                "auto",
+              marginTop:
+                "20px",
+              color: "red",
+              fontWeight:
+                "bold",
             }}
           >
-            {result}
-          </pre>
-        </div>
-      )}
+            {error}
+          </div>
+        )}
+
+        {result && (
+          <div
+            style={{
+              marginTop:
+                "25px",
+            }}
+          >
+            <h2>
+              AI Analysis
+            </h2>
+
+            <pre
+              style={{
+                whiteSpace:
+                  "pre-wrap",
+                wordBreak:
+                  "break-word",
+                background:
+                  "#f4f4f4",
+                padding:
+                  "15px",
+                borderRadius:
+                  "8px",
+                boxSizing:
+                  "border-box",
+                overflowX:
+                  "auto",
+              }}
+            >
+              {result}
+            </pre>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
