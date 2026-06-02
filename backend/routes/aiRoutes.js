@@ -7,6 +7,8 @@ const router =
 const {
   generateProductDescription,
   compareProducts,
+  summarizeReviews,
+  smartBuyingAssistant,
 } = require(
   "../controllers/aiController"
 );
@@ -19,6 +21,16 @@ router.post(
 router.post(
   "/compare-products",
   compareProducts
+);
+
+router.post(
+  "/summarize-reviews",
+  summarizeReviews
+);
+
+router.post(
+  "/buying-assistant",
+  smartBuyingAssistant
 );
 
 module.exports =
