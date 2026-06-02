@@ -60,6 +60,15 @@ Generate:
         });
       }
 
+      if (
+        error.status === 503
+      ) {
+        return res.status(503).json({
+          message:
+            "AI service is currently busy. Please try again shortly.",
+        });
+      }
+
       res.status(500).json({
         message:
           "AI generation failed",
@@ -121,6 +130,15 @@ Return the entire response in properly formatted markdown.
         });
       }
 
+      if (
+        error.status === 503
+      ) {
+        return res.status(503).json({
+          message:
+            "AI service is currently busy. Please try again shortly.",
+        });
+      }
+
       res.status(500).json({
         message:
           "Comparison failed",
@@ -172,6 +190,15 @@ Generate:
         return res.status(429).json({
           message:
             "AI service is temporarily rate limited. Please try again in a minute.",
+        });
+      }
+
+      if (
+        error.status === 503
+      ) {
+        return res.status(503).json({
+          message:
+            "AI service is currently busy. Please try again shortly.",
         });
       }
 
@@ -245,6 +272,15 @@ Provide:
         return res.status(429).json({
           message:
             "AI service is temporarily rate limited. Please try again in a minute.",
+        });
+      }
+
+      if (
+        error.status === 503
+      ) {
+        return res.status(503).json({
+          message:
+            "AI service is currently busy. Please try again shortly.",
         });
       }
 
