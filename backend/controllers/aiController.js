@@ -5,7 +5,7 @@ const {
 );
 
 const Product =
-  require("../models/productModel");
+  require("../models/Product");
 
 const generateProductDescription =
   async (req, res) => {
