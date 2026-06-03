@@ -1,7 +1,4 @@
-import {
-  useState,
-  useContext,
-} from "react";
+import { useState, useContext } from "react";
 
 import axios from "axios";
 
@@ -10,6 +7,7 @@ import { AuthContext } from "../context/AuthContext";
 import {
   useNavigate,
   useLocation,
+  Link,
 } from "react-router-dom";
 
 function LoginPage() {
@@ -21,6 +19,9 @@ function LoginPage() {
 
   const [loading, setLoading] =
     useState(false);
+
+  const [error, setError] =
+    useState("");
 
   const { setUserInfo } =
     useContext(AuthContext);
@@ -36,57 +37,202 @@ function LoginPage() {
   const submitHandler = async (e) => {
     e.preventDefault();
 
+    setError("");
+
+    if (!email || !password) {
+      setError(
+        "Please fill all fields."
+      );
+      return;
+    }
+
     setLoading(true);
 
     try {
-      const { data } = await axios.post(
-        "http://localhost:5000/api/users/login",
-        {
-          email,
-          password,
-        }
-      );
+      const { data } =
+        await axios.post(
+          "http://localhost:5000/api/users/login",
+          {
+            email,
+            password,
+          }
+        );
 
       setUserInfo(data);
 
       navigate(redirect);
-
     } catch (error) {
-      console.log(error);
+      if (error.response) {
+        setError(
+          error.response.data.message ||
+            "Invalid email or password."
+        );
+      } else if (
+        error.request
+      ) {
+        setError(
+          "Unable to reach server. Check your internet connection."
+        );
+      } else {
+        setError(
+          "Something went wrong. Please try again."
+        );
+      }
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="form-container">
-      <h1>Login</h1>
+    <div
+      style={{
+        minHeight: "80vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: "20px",
+      }}
+    >
+      <div
+        style={{
+          width: "420px",
+          background: "#fff",
+          padding: "35px",
+          borderRadius: "16px",
+          boxShadow:
+            "0 10px 30px rgba(0,0,0,0.12)",
+        }}
+      >
+        <h1
+          style={{
+            textAlign: "center",
+            marginBottom: "10px",
+          }}
+        >
+          Welcome Back 👋
+        </h1>
 
-      {loading && <h3>Loading...</h3>}
+        <p
+          style={{
+            textAlign: "center",
+            color: "#666",
+            marginBottom: "25px",
+          }}
+        >
+          Login to your NovaCart account
+        </p>
 
-      <form onSubmit={submitHandler}>
-        <input
-          type="email"
-          placeholder="Enter Email"
-          value={email}
-          onChange={(e) =>
-            setEmail(e.target.value)
-          }
-        />
+        {error && (
+          <div
+            style={{
+              background: "#ffe5e5",
+              color: "#d8000c",
+              padding: "12px",
+              borderRadius: "8px",
+              marginBottom: "15px",
+              fontSize: "14px",
+            }}
+          >
+            {error}
+          </div>
+        )}
 
-        <input
-          type="password"
-          placeholder="Enter Password"
-          value={password}
-          onChange={(e) =>
-            setPassword(e.target.value)
-          }
-        />
+        <form onSubmit={submitHandler}>
+          <input
+            type="email"
+            placeholder="Enter Email"
+            value={email}
+            onChange={(e) =>
+              setEmail(e.target.value)
+            }
+            style={{
+              width: "100%",
+              padding: "14px",
+              marginBottom: "15px",
+              border:
+                "1px solid #ddd",
+              borderRadius: "8px",
+              fontSize: "15px",
+              boxSizing:
+                "border-box",
+            }}
+          />
 
-        <button type="submit">
-          Login
-        </button>
-      </form>
+          <input
+            type="password"
+            placeholder="Enter Password"
+            value={password}
+            onChange={(e) =>
+              setPassword(
+                e.target.value
+              )
+            }
+            style={{
+              width: "100%",
+              padding: "14px",
+              marginBottom: "12px",
+              border:
+                "1px solid #ddd",
+              borderRadius: "8px",
+              fontSize: "15px",
+              boxSizing:
+                "border-box",
+            }}
+          />
+
+          <div
+            style={{
+              textAlign: "right",
+              marginBottom: "20px",
+            }}
+          >
+            <Link
+              to="/forgot-password"
+              style={{
+                textDecoration:
+                  "none",
+                fontSize: "14px",
+              }}
+            >
+              Forgot Password?
+            </Link>
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            style={{
+              width: "100%",
+              padding: "14px",
+              background: "#000",
+              color: "#fff",
+              border: "none",
+              borderRadius: "8px",
+              cursor: loading
+                ? "not-allowed"
+                : "pointer",
+              fontWeight: "bold",
+              fontSize: "16px",
+            }}
+          >
+            {loading
+              ? "Logging in..."
+              : "Login"}
+          </button>
+        </form>
+
+        <div
+          style={{
+            marginTop: "20px",
+            textAlign: "center",
+          }}
+        >
+          Don't have an account?{" "}
+          <Link to="/register">
+            Register Now
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }
