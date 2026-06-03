@@ -1,4 +1,7 @@
-import { useContext } from "react";
+import {
+  useContext,
+  useState,
+} from "react";
 
 import axios from "axios";
 
@@ -15,109 +18,249 @@ function PlaceOrderPage() {
   const { userInfo } =
     useContext(AuthContext);
 
+  const [loading, setLoading] =
+    useState(false);
+
+  const [orderSuccess, setOrderSuccess] =
+    useState(null);
+
   const totalPrice = cartItems.reduce(
     (acc, item) =>
       acc + item.price * item.qty,
     0
   );
 
-  const paymentHandler = async () => {
-    try {
-      const { data } = await axios.post(
-        "http://localhost:5000/api/payments/create-order",
-        {
-          amount: totalPrice,
-        }
-      );
+  const paymentHandler =
+    async () => {
+      try {
+        setLoading(true);
 
-      const options = {
-        key:
-          "rzp_test_SraRd60FDhsPEG",
-
-        amount: data.amount,
-
-        currency: data.currency,
-
-        name: "NovaCart",
-
-        description:
-          "Thank you for shopping with NovaCart",
-
-        order_id: data.id,
-
-        handler: async function () {
-          // 🔥 SAVE ORDER AFTER SUCCESSFUL PAYMENT
+        const { data } =
           await axios.post(
-            "http://localhost:5000/api/orders",
+            "http://localhost:5000/api/payments/create-order",
             {
-              orderItems: cartItems,
-
-              shippingAddress,
-
-              totalPrice,
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${userInfo.token}`,
-              },
+              amount:
+                totalPrice,
             }
           );
 
-          alert(
-            `Payment Successful 🎉
-Order Amount: ₹ ${totalPrice.toLocaleString(
-              "en-IN"
-            )}`
+        const options = {
+          key:
+            "rzp_test_SraRd60FDhsPEG",
+
+          amount:
+            data.amount,
+
+          currency:
+            data.currency,
+
+          name:
+            "NovaCart",
+
+          description:
+            "Thank you for shopping with NovaCart",
+
+          order_id:
+            data.id,
+
+          handler:
+            async function () {
+              try {
+                const {
+                  data:
+                    orderData,
+                } =
+                  await axios.post(
+                    "http://localhost:5000/api/orders",
+                    {
+                      orderItems:
+                        cartItems,
+
+                      shippingAddress,
+
+                      totalPrice,
+                    },
+                    {
+                      headers:
+                        {
+                          Authorization: `Bearer ${userInfo.token}`,
+                        },
+                    }
+                  );
+
+                setOrderSuccess(
+                  orderData
+                );
+              } catch (
+                error
+              ) {
+                console.error(
+                  error
+                );
+              }
+            },
+
+          theme: {
+            color:
+              "#3399cc",
+          },
+        };
+
+        const razor =
+          new window.Razorpay(
+            options
           );
-        },
 
-        theme: {
-          color: "#3399cc",
-        },
-      };
+        razor.open();
+      } catch (error) {
+        console.error(
+          error
+        );
 
-      const razor =
-        new window.Razorpay(options);
+        alert(
+          "Payment Failed ❌"
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
 
-      razor.open();
-    } catch (error) {
-      console.error(error);
+  if (orderSuccess) {
+    return (
+      <div
+        className="container"
+        style={{
+          maxWidth:
+            "700px",
+          margin:
+            "40px auto",
+        }}
+      >
+        <div
+          style={{
+            background:
+              "#ecfdf5",
+            border:
+              "1px solid #10b981",
+            padding:
+              "30px",
+            borderRadius:
+              "12px",
+          }}
+        >
+          <h1>
+            🎉 Order Placed
+            Successfully
+          </h1>
 
-      alert(
-        "Payment Failed ❌"
-      );
-    }
-  };
+          <p>
+            Thank you
+            for shopping
+            with
+            NovaCart.
+          </p>
+
+          <p>
+            📧 Order
+            confirmation
+            email has
+            been sent to
+            your
+            registered
+            email
+            address.
+          </p>
+
+          <p>
+            <strong>
+              Order ID:
+            </strong>{" "}
+            {
+              orderSuccess
+                .order
+                ?._id
+            }
+          </p>
+
+          <p>
+            <strong>
+              Total:
+            </strong>{" "}
+            ₹
+            {totalPrice.toLocaleString(
+              "en-IN"
+            )}
+          </p>
+
+          <button
+            onClick={() =>
+              (
+                window.location.href =
+                  "/"
+              )
+            }
+            style={{
+              marginTop:
+                "20px",
+            }}
+          >
+            Continue
+            Shopping
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container">
-      <h1>Place Order</h1>
+      <h1>
+        Place Order
+      </h1>
 
-      <h2>Shipping</h2>
+      <h2>
+        Shipping
+      </h2>
 
       <p>
-        {shippingAddress.address},{" "}
-        {shippingAddress.city}
+        {
+          shippingAddress.address
+        }
+        ,{" "}
+        {
+          shippingAddress.city
+        }
       </p>
 
-      <h2>Order Items</h2>
+      <h2>
+        Order Items
+      </h2>
 
-      {cartItems.map((item) => (
-        <div
-          key={item._id}
-          className="cart-item"
-        >
-          <h3>{item.name}</h3>
+      {cartItems.map(
+        (item) => (
+          <div
+            key={
+              item._id
+            }
+            className="cart-item"
+          >
+            <h3>
+              {
+                item.name
+              }
+            </h3>
 
-          <p>
-            ₹{" "}
-            {item.price.toLocaleString(
-              "en-IN"
-            )}{" "}
-            × {item.qty}
-          </p>
-        </div>
-      ))}
+            <p>
+              ₹{" "}
+              {item.price.toLocaleString(
+                "en-IN"
+              )}{" "}
+              ×{" "}
+              {item.qty}
+            </p>
+          </div>
+        )
+      )}
 
       <h2>
         Total: ₹{" "}
@@ -126,8 +269,17 @@ Order Amount: ₹ ${totalPrice.toLocaleString(
         )}
       </h2>
 
-      <button onClick={paymentHandler}>
-        Pay Now
+      <button
+        onClick={
+          paymentHandler
+        }
+        disabled={
+          loading
+        }
+      >
+        {loading
+          ? "Processing..."
+          : "Pay Now"}
       </button>
     </div>
   );
