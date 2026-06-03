@@ -2,10 +2,14 @@ import { useState } from "react";
 
 import axios from "axios";
 
-import { useNavigate } from "react-router-dom";
+import {
+  useNavigate,
+  Link,
+} from "react-router-dom";
 
 function RegisterPage() {
-  const [name, setName] = useState("");
+  const [name, setName] =
+    useState("");
 
   const [email, setEmail] =
     useState("");
@@ -13,59 +17,429 @@ function RegisterPage() {
   const [password, setPassword] =
     useState("");
 
+  const [loading, setLoading] =
+    useState(false);
+
+  const [error, setError] =
+    useState("");
+
+  const [success, setSuccess] =
+    useState("");
+
   const navigate = useNavigate();
 
-  const submitHandler = async (e) => {
+  const validateEmail = (
+    email
+  ) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+      email
+    );
+  };
+
+  const submitHandler = async (
+    e
+  ) => {
     e.preventDefault();
 
-    await axios.post(
-      "http://localhost:5000/api/users/register",
-      {
-        name,
-        email,
-        password,
-      }
-    );
+    setError("");
+    setSuccess("");
 
-    navigate("/login");
+    if (
+      !name.trim() ||
+      !email.trim() ||
+      !password.trim()
+    ) {
+      setError(
+        "Please fill all fields."
+      );
+      return;
+    }
+
+    if (
+      !validateEmail(email)
+    ) {
+      setError(
+        "Please enter a valid email address."
+      );
+      return;
+    }
+
+    if (
+      password.length < 8
+    ) {
+      setError(
+        "Password must contain at least 8 characters."
+      );
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const { data } =
+        await axios.post(
+          "http://localhost:5000/api/users/register",
+          {
+            name,
+            email,
+            password,
+          }
+        );
+
+      if (data) {
+        setSuccess(
+          "✅ Account created successfully. Redirecting to login..."
+        );
+
+        setTimeout(() => {
+          navigate("/login");
+        }, 1800);
+      }
+    } catch (error) {
+      if (
+        error.response?.data
+          ?.message
+      ) {
+        if (
+          error.response.data.message ===
+          "User already exists"
+        ) {
+          setError(
+            "⚠️ An account with this email already exists."
+          );
+        } else {
+          setError(
+            error.response.data
+              .message
+          );
+        }
+      } else if (
+        error.request
+      ) {
+        setError(
+          "⚠️ Unable to connect to the server. Please check your internet connection."
+        );
+      } else {
+        setError(
+          "⚠️ Something went wrong. Please try again."
+        );
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="form-container">
-      <h1>Register</h1>
+    <div
+      style={{
+        minHeight: "85vh",
+        display: "flex",
+        justifyContent:
+          "center",
+        alignItems:
+          "center",
+        padding: "20px",
+      }}
+    >
+      <div
+        style={{
+          width: "460px",
+          background:
+            "#ffffff",
+          borderRadius:
+            "18px",
+          padding: "35px",
+          boxShadow:
+            "0 12px 35px rgba(0,0,0,0.15)",
+        }}
+      >
+        <div
+          style={{
+            textAlign:
+              "center",
+            marginBottom:
+              "25px",
+          }}
+        >
+          <h2
+            style={{
+              marginBottom:
+                "8px",
+            }}
+          >
+            NovaCart 🚀
+          </h2>
 
-      <form onSubmit={submitHandler}>
-        <input
-          type="text"
-          placeholder="Enter Name"
-          value={name}
-          onChange={(e) =>
-            setName(e.target.value)
+          <h1
+            style={{
+              fontSize:
+                "34px",
+              marginBottom:
+                "10px",
+            }}
+          >
+            Join NovaCart
+          </h1>
+
+          <p
+            style={{
+              color:
+                "#666",
+              fontSize:
+                "14px",
+            }}
+          >
+            Create your
+            account and
+            start shopping
+            smarter with
+            AI.
+          </p>
+        </div>
+
+        {error && (
+          <div
+            style={{
+              background:
+                "#ffe5e5",
+              color:
+                "#c62828",
+              padding:
+                "12px",
+              borderRadius:
+                "10px",
+              marginBottom:
+                "15px",
+              fontWeight:
+                "500",
+            }}
+          >
+            {error}
+          </div>
+        )}
+
+        {success && (
+          <div
+            style={{
+              background:
+                "#e8f8ea",
+              color:
+                "#2e7d32",
+              padding:
+                "12px",
+              borderRadius:
+                "10px",
+              marginBottom:
+                "15px",
+              fontWeight:
+                "500",
+            }}
+          >
+            {success}
+          </div>
+        )}
+
+        <form
+          onSubmit={
+            submitHandler
           }
-        />
+        >
+          <label
+            style={{
+              fontWeight:
+                "600",
+            }}
+          >
+            👤 Full Name
+          </label>
 
-        <input
-          type="email"
-          placeholder="Enter Email"
-          value={email}
-          onChange={(e) =>
-            setEmail(e.target.value)
-          }
-        />
+          <input
+            type="text"
+            placeholder="Enter your full name"
+            value={name}
+            onChange={(e) =>
+              setName(
+                e.target.value
+              )
+            }
+            style={{
+              width: "100%",
+              padding:
+                "12px",
+              marginTop:
+                "6px",
+              marginBottom:
+                "15px",
+              border:
+                "1px solid #ddd",
+              borderRadius:
+                "10px",
+            }}
+          />
 
-        <input
-          type="password"
-          placeholder="Enter Password"
-          value={password}
-          onChange={(e) =>
-            setPassword(e.target.value)
-          }
-        />
+          <label
+            style={{
+              fontWeight:
+                "600",
+            }}
+          >
+            📧 Email Address
+          </label>
 
-        <button type="submit">
-          Register
-        </button>
-      </form>
+          <input
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) =>
+              setEmail(
+                e.target.value
+              )
+            }
+            style={{
+              width: "100%",
+              padding:
+                "12px",
+              marginTop:
+                "6px",
+              marginBottom:
+                "15px",
+              border:
+                "1px solid #ddd",
+              borderRadius:
+                "10px",
+            }}
+          />
+
+          <label
+            style={{
+              fontWeight:
+                "600",
+            }}
+          >
+            🔒 Password
+          </label>
+
+          <input
+            type="password"
+            placeholder="Create a password"
+            value={password}
+            onChange={(e) =>
+              setPassword(
+                e.target.value
+              )
+            }
+            style={{
+              width: "100%",
+              padding:
+                "12px",
+              marginTop:
+                "6px",
+              marginBottom:
+                "15px",
+              border:
+                "1px solid #ddd",
+              borderRadius:
+                "10px",
+            }}
+          />
+
+          <div
+            style={{
+              background:
+                "#f8f9fa",
+              padding:
+                "12px",
+              borderRadius:
+                "10px",
+              marginBottom:
+                "20px",
+              fontSize:
+                "13px",
+            }}
+          >
+            <strong>
+              Password
+              Requirements:
+            </strong>
+
+            <div>
+              ✓ At least
+              8
+              characters
+            </div>
+
+            <div>
+              ✓ One
+              uppercase
+              letter
+              (recommended)
+            </div>
+
+            <div>
+              ✓ One number
+              (recommended)
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            disabled={
+              loading
+            }
+            style={{
+              width: "100%",
+              padding:
+                "14px",
+              border:
+                "none",
+              borderRadius:
+                "10px",
+              background:
+                loading
+                  ? "#777"
+                  : "#000",
+              color:
+                "#fff",
+              fontSize:
+                "16px",
+              fontWeight:
+                "600",
+              cursor:
+                loading
+                  ? "not-allowed"
+                  : "pointer",
+            }}
+          >
+            {loading
+              ? "⏳ Creating Account..."
+              : "🚀 Register"}
+          </button>
+        </form>
+
+        <div
+          style={{
+            textAlign:
+              "center",
+            marginTop:
+              "22px",
+          }}
+        >
+          Already have an
+          account?
+          {" "}
+          <Link
+            to="/login"
+            style={{
+              fontWeight:
+                "bold",
+              textDecoration:
+                "none",
+            }}
+          >
+            Login
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }
