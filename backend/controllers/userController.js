@@ -4,6 +4,17 @@ const jwt = require("jsonwebtoken");
 
 const User = require("../models/User");
 
+const {
+  sendEmail,
+} = require(
+  "../services/emailService"
+);
+
+const welcomeEmailTemplate =
+  require(
+    "../templates/welcomeEmailTemplate"
+  );
+
 
 // 🔐 Generate JWT Token
 const generateToken = (id) => {
@@ -77,6 +88,19 @@ const registerUser = async (
         password:
           hashedPassword,
       });
+
+    // 📧 Send Welcome Email
+    await sendEmail({
+      to: user.email,
+
+      subject:
+        "Welcome to NovaCart 🚀",
+
+      html:
+        welcomeEmailTemplate(
+          user.name
+        ),
+    });
 
     // 5. Send response
     res.status(201).json({
