@@ -2,6 +2,8 @@ import { Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 
+import HeroBanner from "./components/HeroBanner";
+
 import ProductList from "./components/ProductList";
 
 import TrendingProducts from "./components/TrendingProducts";
@@ -50,11 +52,19 @@ function App() {
           path="/"
           element={
             <div className="container">
-              <TrendingProducts />
+              <HeroBanner />
 
-              <Chatbot />
+              {/* PRODUCTS SECTION */}
+              <div id="products-section">
+                <TrendingProducts />
 
-              <ProductList />
+                <ProductList />
+              </div>
+
+              {/* AI ASSISTANT SECTION */}
+              <div id="chatbot-section">
+                <Chatbot />
+              </div>
             </div>
           }
         />
@@ -120,23 +130,17 @@ function App() {
 
         <Route
           path="/ai-generator"
-          element={
-            <AIProductGeneratorPage />
-          }
+          element={<AIProductGeneratorPage />}
         />
 
         <Route
           path="/ai-comparison"
-          element={
-            <AIComparisonPage />
-          }
+          element={<AIComparisonPage />}
         />
 
         <Route
           path="/ai-review-summary"
-          element={
-            <AIReviewSummarizerPage />
-          }
+          element={<AIReviewSummarizerPage />}
         />
 
         <Route

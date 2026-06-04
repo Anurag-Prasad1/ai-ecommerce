@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -33,13 +37,24 @@ body {
 }
 
 .product-card {
-  background: white;
-  padding: 15px;
-  border-radius: 10px;
+  position: relative;
 
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: white;
+
+  padding: 20px;
+
+  border-radius: 18px;
+
+  overflow: hidden;
 
   text-align: center;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+
+  box-shadow:
+    0 4px 15px rgba(0, 0, 0, 0.08);
 }
 
 .product-card h3 {
@@ -348,7 +363,9 @@ Needed for absolute suggestion dropdown */
 
   padding: 25px;
 
-  margin-bottom: 30px;
+  margin-top: 40px;
+
+  margin-bottom: 50px;
 
   border-radius: 12px;
 
@@ -558,20 +575,6 @@ Needed for absolute suggestion dropdown */
    PREMIUM PRODUCT CARDS
 ================================== */
 
-.product-card {
-  position: relative;
-
-  overflow: hidden;
-
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-
-  border-radius: 16px;
-
-  padding: 20px;
-}
-
 .product-card:hover {
   transform: translateY(-8px);
 
@@ -624,13 +627,297 @@ Needed for absolute suggestion dropdown */
   padding: 30px;
 }
 
-.chatbot-container {
-  margin-top: 40px;
-  margin-bottom: 50px;
+/* ==================================
+   PREMIUM PRODUCT CARD
+================================== */
+
+.product-card:hover {
+  transform: translateY(-8px);
+
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.15);
 }
 
-.section-title {
-  font-size: 34px;
+.product-badge {
+  position: absolute;
+
+  top: 12px;
+  left: 12px;
+
+  background: #ff5722;
+
+  color: white;
+
+  padding: 6px 10px;
+
+  border-radius: 20px;
+
+  font-size: 12px;
+
+  font-weight: bold;
+
+  z-index: 10;
+}
+
+.product-rating {
+  margin-top: 10px;
+
+  color: #f5a623;
+
+  font-size: 18px;
+
+  letter-spacing: 1px;
+}
+
+.delivery-tag {
+  margin-top: 10px;
+
+  font-size: 14px;
+
+  color: #28a745;
+
+  font-weight: 600;
+}
+
+/* ==================================
+   HERO BANNER
+================================== */
+
+.hero-banner {
+  background: linear-gradient(
+    135deg,
+    #0f172a,
+    #111827,
+    #1e293b
+  );
+
+  color: white;
+
+  border-radius: 24px;
+
+  padding: 60px;
+
+  margin-bottom: 40px;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 50px;
+
+  overflow: hidden;
+
+  position: relative;
+
+  box-shadow:
+    0 15px 40px
+    rgba(0, 0, 0, 0.25);
+}
+
+.hero-banner::before {
+  content: "";
+
+  position: absolute;
+
+  width: 400px;
+  height: 400px;
+
+  background:
+    rgba(59, 130, 246, 0.15);
+
+  border-radius: 50%;
+
+  top: -120px;
+  right: -120px;
+
+  filter: blur(60px);
+}
+
+.hero-content {
+  flex: 1;
+
+  z-index: 2;
+}
+
+.hero-badge {
+  display: inline-block;
+
+  background: rgba(
+    255,
+    255,
+    255,
+    0.12
+  );
+
+  padding: 10px 18px;
+
+  border-radius: 50px;
+
+  font-size: 14px;
+
+  margin-bottom: 20px;
+}
+
+.hero-content h1 {
+  font-size: 58px;
+
+  line-height: 1.15;
+
+  margin-bottom: 20px;
+
   font-weight: 800;
-  margin-bottom: 25px;
+}
+
+.hero-content p {
+  font-size: 20px;
+
+  line-height: 1.8;
+
+  color: #d1d5db;
+
+  margin-bottom: 30px;
+}
+
+.hero-buttons {
+  display: flex;
+
+  gap: 15px;
+
+  flex-wrap: wrap;
+}
+
+.hero-btn-primary {
+  background: #2563eb;
+
+  color: white;
+
+  border: none;
+
+  padding: 14px 24px;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  font-size: 16px;
+
+  font-weight: 600;
+
+  transition: 0.3s;
+}
+
+.hero-btn-primary:hover {
+  transform: translateY(-3px);
+
+  background: #1d4ed8;
+}
+
+.hero-btn-secondary {
+  background: transparent;
+
+  color: white;
+
+  border: 1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.3
+    );
+
+  padding: 14px 24px;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  font-size: 16px;
+
+  font-weight: 600;
+
+  transition: 0.3s;
+}
+
+.hero-btn-secondary:hover {
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.1
+    );
+}
+
+.hero-stats {
+  display: flex;
+
+  gap: 20px;
+
+  flex-wrap: wrap;
+
+  z-index: 2;
+}
+
+.hero-stat-card {
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.08
+    );
+
+  backdrop-filter: blur(10px);
+
+  padding: 24px;
+
+  border-radius: 18px;
+
+  min-width: 170px;
+
+  text-align: center;
+
+  border: 1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.1
+    );
+}
+
+.hero-stat-card h3 {
+  font-size: 32px;
+
+  margin-bottom: 8px;
+}
+
+.hero-stat-card p {
+  color: #d1d5db;
+
+  margin: 0;
+}
+
+/* ==================================
+   RESPONSIVE
+================================== */
+
+@media (max-width: 900px) {
+  .hero-banner {
+    flex-direction: column;
+
+    text-align: center;
+
+    padding: 40px 25px;
+  }
+
+  .hero-content h1 {
+    font-size: 40px;
+  }
+
+  .hero-stats {
+    justify-content: center;
+  }
 }
