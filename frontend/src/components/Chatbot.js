@@ -26,7 +26,6 @@ function Chatbot() {
   const sendMessage = async () => {
     try {
 
-      // 🔥 Empty Input Handling
       if (!message.trim()) {
         setReply(
           "👋 Please enter a product keyword like mobiles, laptops, shoes, Samsung, Nike, etc."
@@ -49,7 +48,9 @@ function Chatbot() {
 
       setReply(data.reply);
 
-      setProducts(data.products);
+      setProducts(
+        data.products
+      );
 
       setMessage("");
 
@@ -68,7 +69,9 @@ function Chatbot() {
     }
   };
 
-  const handleKeyPress = (e) => {
+  const handleKeyPress = (
+    e
+  ) => {
     if (e.key === "Enter") {
       sendMessage();
     }
@@ -76,13 +79,79 @@ function Chatbot() {
 
   return (
     <div className="chatbot-container">
-      <h2>
-        🤖 Shopping Assistant
+
+      <h2 className="section-title">
+        🤖 NovaCart AI Shopping Assistant
       </h2>
+
+      <p
+        style={{
+          marginBottom:
+            "18px",
+          color: "#555",
+          fontSize: "16px",
+        }}
+      >
+        Get AI-powered shopping
+        recommendations,
+        comparisons and buying
+        advice instantly.
+      </p>
+
+      {/* Suggested Prompts */}
+
+      <div
+        style={{
+          display: "flex",
+          gap: "10px",
+          flexWrap: "wrap",
+          marginBottom: "20px",
+        }}
+      >
+        <button
+          onClick={() =>
+            setMessage(
+              "Best phone under 30000"
+            )
+          }
+        >
+          📱 Best Phone
+        </button>
+
+        <button
+          onClick={() =>
+            setMessage(
+              "Best laptop for coding"
+            )
+          }
+        >
+          💻 Laptop
+        </button>
+
+        <button
+          onClick={() =>
+            setMessage(
+              "Best shoes under 5000"
+            )
+          }
+        >
+          👟 Shoes
+        </button>
+
+        <button
+          onClick={() =>
+            setMessage(
+              "Compare iPhone and Samsung"
+            )
+          }
+        >
+          ⚖️ Compare
+        </button>
+      </div>
 
       <input
         type="text"
-        placeholder="Ask something..."
+        placeholder="Ask AI anything about products..."
         value={message}
         onChange={(e) =>
           setMessage(
@@ -100,13 +169,13 @@ function Chatbot() {
       >
         {loading
           ? "Thinking..."
-          : "Send"}
+          : "Ask AI"}
       </button>
 
       {loading && (
         <p className="chatbot-loading">
-  🤖 AI is thinking...
-</p>
+          🤖 AI is thinking...
+        </p>
       )}
 
       {reply && (
@@ -122,20 +191,33 @@ function Chatbot() {
       )}
 
       {products.length > 0 && (
-        <div className="product-grid">
-          {products.map(
-            (product) => (
-              <ProductCard
-                key={
-                  product._id
-                }
-                product={
-                  product
-                }
-              />
-            )
-          )}
-        </div>
+        <>
+          <h3
+            style={{
+              marginTop:
+                "30px",
+            }}
+          >
+            Recommended Products
+          </h3>
+
+          <div className="product-grid">
+            {products.map(
+              (
+                product
+              ) => (
+                <ProductCard
+                  key={
+                    product._id
+                  }
+                  product={
+                    product
+                  }
+                />
+              )
+            )}
+          </div>
+        </>
       )}
     </div>
   );

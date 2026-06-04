@@ -36,9 +36,9 @@ function TrendingProducts() {
 
         <>
 
-          <h2>
-            🔥 Trending Products
-          </h2>
+          <h2 className="section-title">
+  🔥 Trending Products
+</h2>
 
           <div className="trending-grid">
 

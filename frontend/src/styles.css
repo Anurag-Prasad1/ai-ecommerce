@@ -334,15 +334,13 @@ Needed for absolute suggestion dropdown */
 
   grid-template-columns:
     repeat(
-      auto-fit,
-      minmax(250px, 300px)
+      auto-fill,
+      minmax(250px, 1fr)
     );
 
-  gap: 20px;
+  gap: 24px;
 
-  justify-content: start;
-
-  margin-bottom: 40px;
+  margin-bottom: 50px;
 }
 
 .chatbot-container {
@@ -554,4 +552,85 @@ Needed for absolute suggestion dropdown */
 .markdown-content h3:first-child,
 .markdown-content h4:first-child {
   margin-top: 0;
+}
+
+/* ==================================
+   PREMIUM PRODUCT CARDS
+================================== */
+
+.product-card {
+  position: relative;
+
+  overflow: hidden;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+
+  border-radius: 16px;
+
+  padding: 20px;
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+
+  box-shadow:
+    0 15px 35px
+    rgba(0,0,0,0.12);
+}
+
+.product-card img {
+  transition:
+    transform 0.4s ease;
+}
+
+.product-card:hover img {
+  transform: scale(1.08);
+}
+
+.product-card h3 {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.product-card p {
+  font-size: 24px;
+  font-weight: 700;
+  color: #111;
+}
+
+.product-card button {
+  width: 100%;
+  font-weight: 600;
+}
+
+/* ==================================
+   HOMEPAGE SECTIONS
+================================== */
+
+.section-title {
+  font-size: 34px;
+  font-weight: 800;
+
+  margin-bottom: 25px;
+}
+
+.container {
+  max-width: 1600px;
+
+  margin: auto;
+
+  padding: 30px;
+}
+
+.chatbot-container {
+  margin-top: 40px;
+  margin-bottom: 50px;
+}
+
+.section-title {
+  font-size: 34px;
+  font-weight: 800;
+  margin-bottom: 25px;
 }
