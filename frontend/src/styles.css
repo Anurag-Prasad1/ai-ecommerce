@@ -1,3 +1,12 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  overflow-x: hidden;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -9,23 +18,49 @@ body {
 }
 
 .navbar {
-  background: black;
-  color: white;
-  padding: 15px 40px 15px 30px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  z-index: 9999;
+
+  width: 100%;
 
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+
+  padding: 18px 30px;
+
+  background: rgba(10, 10, 10, 0.96);
+
+  backdrop-filter: blur(12px);
+
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.25);
+
+  color: white;
 }
 
 .navbar button {
-  margin-left: 5px;
-  padding: 8px 12px;
+  padding: 10px 16px;
+
+  border: none;
+
+  border-radius: 10px;
+
   cursor: pointer;
+
+  font-weight: 600;
+
+  transition: 0.3s ease;
+
+  margin-left: 5px;
 }
 
-.container {
-  padding: 20px;
+.navbar button:hover {
+  transform: translateY(-2px);
 }
 
 .product-grid {
@@ -162,6 +197,7 @@ body {
 .logo {
   text-decoration: none;
   color: white;
+  flex-shrink: 0;
 }
 
 .logo h2 {
@@ -169,7 +205,9 @@ body {
   font-weight: bold;
   letter-spacing: 1px;
 
-  transition: 0.3s;
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
 }
 
 .logo h2:hover {
@@ -201,7 +239,14 @@ a {
 
 .navbar form {
   display: flex;
-  gap: 10px;
+  align-items: center;
+  gap: 6px;
+
+  flex-wrap: nowrap;
+
+  flex: 1;
+
+  min-width: 0;
 }
 
 /* IMPORTANT:
@@ -212,15 +257,33 @@ Needed for absolute suggestion dropdown */
 
 .navbar input,
 .navbar select {
-  padding: 8px;
+  border-radius: 10px;
+
+  border: none;
+
+  padding: 10px;
 }
 
 .navbar form input[type="text"] {
-  width: 160px;
+  width: 180px;
+
+  flex: none;
+
+  border-radius: 10px;
+
+  border: none;
+
+  padding: 10px 14px;
 }
 
 .navbar input[type="number"] {
-  width: 100px;
+  width: 90px;
+
+  border-radius: 10px;
+
+  border: none;
+
+  padding: 10px;
 }
 
 .pagination {
@@ -287,15 +350,22 @@ Needed for absolute suggestion dropdown */
 .nav-right {
   display: flex;
   align-items: center;
+
   gap: 6px;
-  flex-shrink: 1;
+
+  flex-wrap: nowrap;
+
+  justify-content: flex-end;
+
+  flex-shrink: 0;
 }
 
 .user-name {
-  color: white;
-  font-weight: bold;
+  flex-shrink: 0;
+  color: #ffffff;
+  font-weight: 700;
   white-space: nowrap;
-  margin: 0 5px;
+  padding: 0 4px;
 }
 
 /* Smart Suggestions Dropdown */
@@ -575,14 +645,6 @@ Needed for absolute suggestion dropdown */
    PREMIUM PRODUCT CARDS
 ================================== */
 
-.product-card:hover {
-  transform: translateY(-8px);
-
-  box-shadow:
-    0 15px 35px
-    rgba(0,0,0,0.12);
-}
-
 .product-card img {
   transition:
     transform 0.4s ease;
@@ -624,7 +686,7 @@ Needed for absolute suggestion dropdown */
 
   margin: auto;
 
-  padding: 30px;
+  padding: 150px 30px 30px 30px;
 }
 
 /* ==================================
