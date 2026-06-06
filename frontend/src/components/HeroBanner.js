@@ -1,4 +1,38 @@
 function HeroBanner() {
+  const scrollToSection = (
+    sectionId
+  ) => {
+    const section =
+      document.getElementById(
+        sectionId
+      );
+
+    if (!section) {
+      return;
+    }
+
+    const navbar =
+      document.querySelector(
+        ".navbar"
+      );
+
+    const navbarHeight =
+      navbar?.offsetHeight || 0;
+
+    const sectionTop =
+      section.getBoundingClientRect()
+        .top +
+      window.pageYOffset;
+
+    window.scrollTo({
+      top:
+        sectionTop -
+        navbarHeight -
+        20,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <div className="hero-banner">
       <div className="hero-content">
@@ -13,26 +47,38 @@ function HeroBanner() {
         </h1>
 
         <p>
-          Discover trending products, compare brands,
-          get AI-powered buying recommendations,
-          summarize reviews, and make confident
-          purchase decisions instantly.
+          Discover trending products,
+          compare brands, get AI-powered
+          buying recommendations,
+          summarize reviews, and make
+          confident purchase decisions
+          instantly.
         </p>
 
         <div className="hero-buttons">
-          <a
-            href="#products-section"
+          <button
+            type="button"
             className="hero-btn-primary"
+            onClick={() =>
+              scrollToSection(
+                "products-section"
+              )
+            }
           >
             🛍️ Shop Now
-          </a>
+          </button>
 
-          <a
-            href="#chatbot-section"
+          <button
+            type="button"
             className="hero-btn-secondary"
+            onClick={() =>
+              scrollToSection(
+                "chatbot-section"
+              )
+            }
           >
             🤖 Try AI Assistant
-          </a>
+          </button>
         </div>
       </div>
 
