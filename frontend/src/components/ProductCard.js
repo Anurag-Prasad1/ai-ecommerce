@@ -1,12 +1,40 @@
 import { Link } from "react-router-dom";
 
+import { useContext } from "react";
+
+import { WishlistContext } from "../context/WishlistContext";
+
 function ProductCard({ product }) {
+  const {
+    toggleWishlist,
+    isWishlisted,
+  } = useContext(
+    WishlistContext
+  );
+
+  const wishlisted =
+    isWishlisted(
+      product._id
+    );
+
   return (
     <div className="product-card">
-
       <div className="product-badge">
         🔥 Trending
       </div>
+
+      <button
+        className="wishlist-btn"
+        onClick={() =>
+          toggleWishlist(
+            product
+          )
+        }
+      >
+        {wishlisted
+          ? "❤️"
+          : "🤍"}
+      </button>
 
       <img
         src={product.image}
@@ -37,7 +65,6 @@ function ProductCard({ product }) {
           View Details
         </button>
       </Link>
-
     </div>
   );
 }

@@ -10,6 +10,8 @@ import axios from "axios";
 
 import { CartContext } from "../context/CartContext";
 
+import { WishlistContext } from "../context/WishlistContext";
+
 import ProductCard from "../components/ProductCard";
 
 function ProductPage() {
@@ -26,10 +28,16 @@ function ProductPage() {
   const { addToCart } =
     useContext(CartContext);
 
+  const {
+    toggleWishlist,
+    isWishlisted,
+  } = useContext(
+    WishlistContext
+  );
+
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-
         // Fetch current product
         const { data } =
           await axios.get(
@@ -47,9 +55,7 @@ function ProductPage() {
         setRecommendedProducts(
           recommendationData.data
         );
-
       } catch (error) {
-
         console.log(error);
       }
     };
@@ -61,9 +67,11 @@ function ProductPage() {
     return <h2>Loading...</h2>;
   }
 
+  const wishlisted =
+    isWishlisted(product._id);
+
   return (
     <div className="container">
-
       <div className="product-page">
         <img
           src={product.image}
@@ -72,6 +80,17 @@ function ProductPage() {
 
         <div>
           <h2>{product.name}</h2>
+
+          <button
+            className="product-wishlist-btn"
+            onClick={() =>
+              toggleWishlist(product)
+            }
+          >
+            {wishlisted
+              ? "❤️ Remove from Wishlist"
+              : "🤍 Add to Wishlist"}
+          </button>
 
           <p>
             {product.description}
