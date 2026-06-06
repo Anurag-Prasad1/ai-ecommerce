@@ -63,6 +63,121 @@ body {
   transform: translateY(-2px);
 }
 
+.logout-btn {
+  background: linear-gradient(
+    135deg,
+    #ef4444,
+    #dc2626
+  ) !important;
+
+  color: white !important;
+
+  border: none;
+
+  border-radius: 12px;
+
+  font-weight: 700;
+
+  box-shadow:
+    0 4px 14px
+    rgba(239, 68, 68, 0.35);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.logout-btn:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 22px
+    rgba(239, 68, 68, 0.5);
+}
+
+/* ==================================
+   PREMIUM AI BUTTON
+================================== */
+
+.ai-navbar-btn {
+  background: linear-gradient(
+    135deg,
+    #7c3aed,
+    #2563eb
+  ) !important;
+
+  color: white !important;
+
+  border: none;
+
+  border-radius: 12px;
+
+  font-weight: 700;
+
+  box-shadow:
+    0 4px 14px
+    rgba(124, 58, 237, 0.35);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.ai-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.ai-dropdown-menu {
+  position: absolute;
+
+  top: 48px;
+  right: 0;
+
+  min-width: 280px;
+
+  background: white;
+
+  border-radius: 14px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.15);
+
+  z-index: 9999;
+}
+
+.ai-dropdown-item {
+  display: block;
+
+  padding: 14px 16px;
+
+  color: #111;
+
+  text-decoration: none;
+
+  font-weight: 500;
+
+  transition:
+    background 0.2s ease,
+    padding-left 0.2s ease;
+}
+
+.ai-dropdown-item:hover {
+  background: #f8fafc;
+
+  padding-left: 22px;
+}
+
+.ai-navbar-btn:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 22px
+    rgba(124, 58, 237, 0.45);
+}
+
 .product-grid {
   display: grid;
 
@@ -249,6 +364,54 @@ a {
   min-width: 0;
 }
 
+.search-wrapper {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+
+  left: 12px;
+
+  z-index: 2;
+}
+
+.search-wrapper input[type="text"] {
+  padding-left: 35px !important;
+
+  padding-right: 35px !important;
+}
+
+.clear-search-btn {
+  position: absolute;
+
+  right: 10px;
+
+  background: transparent !important;
+
+  border: none !important;
+
+  color: #666 !important;
+
+  cursor: pointer;
+
+  padding: 0 !important;
+
+  margin: 0 !important;
+
+  box-shadow: none !important;
+}
+
+.clear-search-btn:hover {
+  color: red !important;
+
+  transform: none !important;
+}
+
 /* IMPORTANT:
 Needed for absolute suggestion dropdown */
 .nav-right form {
@@ -269,11 +432,26 @@ Needed for absolute suggestion dropdown */
 
   flex: none;
 
-  border-radius: 10px;
+  border-radius: 12px;
 
-  border: none;
+  border: 2px solid transparent;
 
   padding: 10px 14px;
+
+  transition:
+    all 0.25s ease;
+}
+
+.navbar form input[type="text"]:focus {
+  outline: none;
+
+  border-color: #2563eb;
+
+  box-shadow:
+    0 0 0 4px
+    rgba(37, 99, 235, 0.15);
+
+  width: 220px;
 }
 
 .navbar input[type="number"] {
@@ -360,12 +538,66 @@ Needed for absolute suggestion dropdown */
   flex-shrink: 0;
 }
 
-.user-name {
+.user-profile-chip {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 8px 14px;
+
+  border-radius: 999px;
+
+  background: rgba(
+    255,
+    255,
+    255,
+    0.08
+  );
+
+  border: 1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.12
+    );
+
+  backdrop-filter: blur(8px);
+
   flex-shrink: 0;
-  color: #ffffff;
+}
+
+.user-avatar {
+  width: 28px;
+
+  height: 28px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #7c3aed
+    );
+
+  font-size: 14px;
+}
+
+.user-name {
+  color: white;
+
   font-weight: 700;
+
   white-space: nowrap;
-  padding: 0 4px;
 }
 
 /* Smart Suggestions Dropdown */
@@ -982,4 +1214,42 @@ Needed for absolute suggestion dropdown */
   .hero-stats {
     justify-content: center;
   }
+}
+
+.cart-btn {
+  position: relative;
+}
+
+.cart-badge {
+  position: absolute;
+
+  top: -8px;
+
+  right: -8px;
+
+  min-width: 20px;
+
+  height: 20px;
+
+  padding: 0 6px;
+
+  border-radius: 999px;
+
+  background: #ef4444;
+
+  color: white;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  box-shadow:
+    0 4px 10px
+    rgba(239, 68, 68, 0.35);
 }
