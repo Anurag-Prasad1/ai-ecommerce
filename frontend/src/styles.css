@@ -1253,3 +1253,31 @@ Needed for absolute suggestion dropdown */
     0 4px 10px
     rgba(239, 68, 68, 0.35);
 }
+
+/* ==================================
+   SEARCH RESULTS HEADER
+================================== */
+
+.search-results-header {
+  margin-bottom: 24px;
+
+  padding: 18px 24px;
+
+  background: white;
+
+  border-radius: 16px;
+
+  box-shadow:
+    0 4px 12px
+    rgba(0, 0, 0, 0.08);
+}
+
+.search-results-header h2 {
+  margin: 0;
+
+  font-size: 24px;
+
+  font-weight: 700;
+
+  color: #111827;
+}

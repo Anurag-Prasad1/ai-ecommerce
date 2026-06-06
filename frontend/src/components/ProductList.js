@@ -1,60 +1,75 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-import { useLocation, Link } from "react-router-dom";
+import {
+  useLocation,
+  Link,
+} from "react-router-dom";
 
 import ProductCard from "./ProductCard";
 
 function ProductList() {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] =
+    useState([]);
 
-  const [page, setPage] = useState(1);
-  const [pages, setPages] = useState(1);
+  const [page, setPage] =
+    useState(1);
 
-  const location = useLocation();
+  const [pages, setPages] =
+    useState(1);
+
+  const location =
+    useLocation();
 
   const keyword =
-    new URLSearchParams(location.search).get(
-      "keyword"
-    );
+    new URLSearchParams(
+      location.search
+    ).get("keyword");
 
   const category =
-    new URLSearchParams(location.search).get(
-      "category"
-    );
+    new URLSearchParams(
+      location.search
+    ).get("category");
 
   const minPrice =
-    new URLSearchParams(location.search).get(
-      "minPrice"
-    );
+    new URLSearchParams(
+      location.search
+    ).get("minPrice");
 
   const maxPrice =
-    new URLSearchParams(location.search).get(
-      "maxPrice"
-    );
+    new URLSearchParams(
+      location.search
+    ).get("maxPrice");
 
   const pageNumber =
-    new URLSearchParams(location.search).get(
-      "pageNumber"
-    ) || 1;
+    new URLSearchParams(
+      location.search
+    ).get("pageNumber") || 1;
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      const { data } = await axios.get(
-        `http://localhost:5000/api/products?keyword=${
-          keyword || ""
-        }&category=${category || ""}&minPrice=${
-          minPrice || ""
-        }&maxPrice=${
-          maxPrice || ""
-        }&pageNumber=${pageNumber}`
-      );
+    const fetchProducts =
+      async () => {
+        const { data } =
+          await axios.get(
+            `http://localhost:5000/api/products?keyword=${
+              keyword || ""
+            }&category=${
+              category || ""
+            }&minPrice=${
+              minPrice || ""
+            }&maxPrice=${
+              maxPrice || ""
+            }&pageNumber=${pageNumber}`
+          );
 
-      setProducts(data.products || data);
+        setProducts(
+          data.products || data
+        );
 
-      setPage(data.page);
-      setPages(data.pages);
-    };
+        setPage(data.page);
+
+        setPages(data.pages);
+      };
 
     fetchProducts();
   }, [
@@ -71,6 +86,16 @@ function ProductList() {
 
   return (
     <>
+      {keyword && (
+        <div className="search-results-header">
+          <h2>
+            Search Results for "
+            {keyword}
+            "
+          </h2>
+        </div>
+      )}
+
       <div className="product-grid">
         {products.map((product) => (
           <ProductCard
@@ -91,36 +116,45 @@ function ProductList() {
               minPrice || ""
             }&maxPrice=${
               maxPrice || ""
-            }&pageNumber=${page - 1}`}
+            }&pageNumber=${
+              page - 1
+            }`}
           >
-            <button>Prev</button>
+            <button>
+              Prev
+            </button>
           </Link>
         )}
 
-        {[...Array(pages).keys()].map((x) => (
-          <Link
-            key={x + 1}
-            to={`/?keyword=${
-              keyword || ""
-            }&category=${
-              category || ""
-            }&minPrice=${
-              minPrice || ""
-            }&maxPrice=${
-              maxPrice || ""
-            }&pageNumber=${x + 1}`}
-          >
-            <button
-              className={
-                x + 1 === Number(page)
-                  ? "active-page"
-                  : ""
-              }
+        {[...Array(pages).keys()].map(
+          (x) => (
+            <Link
+              key={x + 1}
+              to={`/?keyword=${
+                keyword || ""
+              }&category=${
+                category || ""
+              }&minPrice=${
+                minPrice || ""
+              }&maxPrice=${
+                maxPrice || ""
+              }&pageNumber=${
+                x + 1
+              }`}
             >
-              {x + 1}
-            </button>
-          </Link>
-        ))}
+              <button
+                className={
+                  x + 1 ===
+                  Number(page)
+                    ? "active-page"
+                    : ""
+                }
+              >
+                {x + 1}
+              </button>
+            </Link>
+          )
+        )}
 
         {page < pages && (
           <Link
@@ -132,9 +166,13 @@ function ProductList() {
               minPrice || ""
             }&maxPrice=${
               maxPrice || ""
-            }&pageNumber=${page + 1}`}
+            }&pageNumber=${
+              page + 1
+            }`}
           >
-            <button>Next</button>
+            <button>
+              Next
+            </button>
           </Link>
         )}
       </div>

@@ -1,4 +1,8 @@
-import { Routes, Route } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 
@@ -43,6 +47,14 @@ import AdminRoute from "./components/AdminRoute";
 import "./styles.css";
 
 function App() {
+  const location =
+    useLocation();
+
+  const keyword =
+    new URLSearchParams(
+      location.search
+    ).get("keyword");
+
   return (
     <div>
       <Navbar />
@@ -52,19 +64,23 @@ function App() {
           path="/"
           element={
             <div className="container">
-              <HeroBanner />
+              {!keyword && (
+                <>
+                  <HeroBanner />
 
-              {/* PRODUCTS SECTION */}
+                  <TrendingProducts />
+                </>
+              )}
+
               <div id="products-section">
-                <TrendingProducts />
-
                 <ProductList />
               </div>
 
-              {/* AI ASSISTANT SECTION */}
-              <div id="chatbot-section">
-                <Chatbot />
-              </div>
+              {!keyword && (
+                <div id="chatbot-section">
+                  <Chatbot />
+                </div>
+              )}
             </div>
           }
         />
@@ -130,7 +146,9 @@ function App() {
 
         <Route
           path="/ai-generator"
-          element={<AIProductGeneratorPage />}
+          element={
+            <AIProductGeneratorPage />
+          }
         />
 
         <Route
@@ -140,7 +158,9 @@ function App() {
 
         <Route
           path="/ai-review-summary"
-          element={<AIReviewSummarizerPage />}
+          element={
+            <AIReviewSummarizerPage />
+          }
         />
 
         <Route
