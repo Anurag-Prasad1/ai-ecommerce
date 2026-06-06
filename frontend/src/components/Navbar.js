@@ -2,6 +2,7 @@ import { CartContext } from "../context/CartContext";
 
 import {
   Link,
+  NavLink,
   useNavigate,
 } from "react-router-dom";
 
@@ -420,7 +421,12 @@ function Navbar() {
 )}
         </div>
 
-        <Link to="/cart">
+        <NavLink
+  to="/cart"
+  className={({ isActive }) =>
+    isActive ? "nav-active" : ""
+  }
+>
   <button className="cart-btn">
     🛒 Cart
 
@@ -430,22 +436,32 @@ function Navbar() {
       </span>
     )}
   </button>
-</Link>
+</NavLink>
 
         {userInfo ? (
           <>
-            <Link to="/myorders">
-              <button>
-                Orders
-              </button>
-            </Link>
+            <NavLink
+  to="/myorders"
+  className={({ isActive }) =>
+    isActive ? "nav-active" : ""
+  }
+>
+  <button>
+    Orders
+  </button>
+</NavLink>
 
             {userInfo?.isAdmin && (
-              <Link to="/admin/dashboard">
-                <button>
-                  Admin
-                </button>
-              </Link>
+              <NavLink
+  to="/admin/dashboard"
+  className={({ isActive }) =>
+    isActive ? "nav-active" : ""
+  }
+>
+  <button>
+    Admin
+  </button>
+</NavLink>
             )}
 
             <div className="user-profile-chip">

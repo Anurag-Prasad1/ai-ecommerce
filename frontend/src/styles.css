@@ -1281,3 +1281,17 @@ Needed for absolute suggestion dropdown */
 
   color: #111827;
 }
+
+.nav-active button {
+  background: #2563eb !important;
+
+  color: white !important;
+
+  box-shadow:
+    0 0 15px
+    rgba(37, 99, 235, 0.4);
+}
+
+.nav-active button:hover {
+  background: #1d4ed8 !important;
+}
