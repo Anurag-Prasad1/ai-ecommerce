@@ -1626,3 +1626,35 @@ Needed for absolute suggestion dropdown */
     align-items: stretch;
   }
 }
+
+.ai-review-textarea {
+  width: 100%;
+
+  padding: 16px;
+
+  margin-top: 15px;
+
+  border-radius: 14px;
+
+  border: 1px solid #d1d5db;
+
+  resize: vertical;
+
+  font-size: 15px;
+
+  font-family: inherit;
+
+  box-sizing: border-box;
+
+  transition: all 0.25s ease;
+}
+
+.ai-review-textarea:focus {
+  outline: none;
+
+  border-color: #2563eb;
+
+  box-shadow:
+    0 0 0 4px
+    rgba(37, 99, 235, 0.12);
+}

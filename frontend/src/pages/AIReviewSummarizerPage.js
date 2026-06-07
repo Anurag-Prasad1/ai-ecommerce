@@ -2,9 +2,11 @@ import { useState } from "react";
 
 import axios from "axios";
 
-import ReactMarkdown from "react-markdown";
+import { FaRobot } from "react-icons/fa";
 
-import remarkGfm from "remark-gfm";
+import AIPageHeader from "../components/ai/AIPageHeader";
+
+import AIResultCard from "../components/ai/AIResultCard";
 
 function AIReviewSummarizerPage() {
   const [reviews, setReviews] =
@@ -71,25 +73,25 @@ function AIReviewSummarizerPage() {
     };
 
   return (
-    <div className="container">
-      <div
-        style={{
-          maxWidth: "950px",
-          margin: "40px auto",
-        }}
-      >
-        <h1>
-          🤖 AI Review Summarizer
-        </h1>
+    <div className="container ai-page-container">
+      <AIPageHeader
+        title="AI Review Summarizer"
+        subtitle="Analyze customer reviews instantly and discover overall sentiment, strengths, weaknesses, and buying signals."
+      />
 
-        <p>
-          Paste customer reviews and
-          let AI generate an overall
-          summary, pros, cons, and
-          sentiment analysis.
-        </p>
+      <div className="ai-form-card">
+        <h2>
+          <FaRobot
+            style={{
+              marginRight:
+                "10px",
+            }}
+          />
+          Customer Reviews
+        </h2>
 
         <textarea
+          className="ai-review-textarea"
           rows="10"
           placeholder={`Example:
 
@@ -104,78 +106,48 @@ Fast charging is amazing.`}
               e.target.value
             )
           }
-          style={{
-            width: "100%",
-            padding: "14px",
-            marginTop: "15px",
-            marginBottom:
-              "15px",
-            boxSizing:
-              "border-box",
-            borderRadius:
-              "8px",
-            resize: "vertical",
-          }}
         />
 
         <button
+          className="ai-generate-btn"
           onClick={
             summarizeHandler
           }
           disabled={loading}
         >
           {loading
-            ? "Analyzing..."
-            : "Summarize Reviews"}
+            ? "📊 Analyzing Reviews..."
+            : "📊 Summarize Reviews"}
         </button>
 
         {error && (
-          <div
-            style={{
-              marginTop:
-                "20px",
-              color: "red",
-              fontWeight:
-                "bold",
-            }}
-          >
+          <div className="ai-error">
             {error}
           </div>
         )}
+      </div>
 
-        {result && (
-          <div
-            style={{
-              marginTop:
-                "5px",
-            }}
-          >
-            <h2>
-              AI Analysis
-            </h2>
+      {!result &&
+        !loading && (
+          <div className="ai-empty-state">
+            📊
 
-            <div
-              className="markdown-content"
-              style={{
-                background:
-                  "#f4f4f4",
-                padding:
-                  "20px",
-                borderRadius:
-                  "8px",
-              }}
-            >
-              <ReactMarkdown
-                remarkPlugins={[
-                  remarkGfm,
-                ]}
-              >
-                {result}
-              </ReactMarkdown>
-            </div>
+            <p>
+              Paste customer
+              reviews to receive
+              AI-powered sentiment
+              analysis, pros,
+              cons, and summary.
+            </p>
           </div>
         )}
-      </div>
+
+      {result && (
+        <AIResultCard
+          title="AI Review Analysis"
+          content={result}
+        />
+      )}
     </div>
   );
 }
