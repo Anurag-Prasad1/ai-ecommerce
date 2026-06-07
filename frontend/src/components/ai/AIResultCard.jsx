@@ -14,11 +14,55 @@ function AIResultCard({
         );
 
         alert(
-          "Copied successfully!"
+          "Content copied successfully!"
         );
       } catch (error) {
         console.error(error);
       }
+    };
+
+  const downloadHandler =
+    () => {
+      const blob =
+        new Blob(
+          [content],
+          {
+            type: "text/plain;charset=utf-8",
+          }
+        );
+
+      const url =
+        window.URL.createObjectURL(
+          blob
+        );
+
+      const link =
+        document.createElement(
+          "a"
+        );
+
+      link.href = url;
+
+      link.download = `${title
+        .toLowerCase()
+        .replaceAll(
+          " ",
+          "-"
+        )}.txt`;
+
+      document.body.appendChild(
+        link
+      );
+
+      link.click();
+
+      document.body.removeChild(
+        link
+      );
+
+      window.URL.revokeObjectURL(
+        url
+      );
     };
 
   return (
@@ -26,16 +70,31 @@ function AIResultCard({
       <div className="ai-result-header">
         <h2>{title}</h2>
 
-        <button
-          className="ai-copy-btn"
-          onClick={copyHandler}
-        >
-          📋 Copy
-        </button>
+        <div className="ai-result-actions">
+          <button
+            className="ai-copy-btn"
+            onClick={
+              copyHandler
+            }
+          >
+            📋 Copy
+          </button>
+
+          <button
+            className="ai-download-btn"
+            onClick={
+              downloadHandler
+            }
+          >
+            ⬇️ Download TXT
+          </button>
+        </div>
       </div>
 
       <ReactMarkdown
-        remarkPlugins={[remarkGfm]}
+        remarkPlugins={[
+          remarkGfm,
+        ]}
       >
         {content}
       </ReactMarkdown>

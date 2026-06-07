@@ -1785,3 +1785,33 @@ Needed for absolute suggestion dropdown */
 
   color: #64748b;
 }
+
+.ai-result-actions {
+  display: flex;
+
+  gap: 10px;
+
+  flex-wrap: wrap;
+}
+
+.ai-download-btn {
+  border: none;
+
+  cursor: pointer;
+
+  padding: 10px 16px;
+
+  border-radius: 10px;
+
+  font-weight: 600;
+
+  background: #0f172a;
+
+  color: white;
+
+  transition: all 0.25s ease;
+}
+
+.ai-download-btn:hover {
+  transform: translateY(-2px);
+}
