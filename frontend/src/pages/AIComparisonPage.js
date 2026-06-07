@@ -1,12 +1,10 @@
-import {
-  useState,
-} from "react";
+import { useState } from "react";
 
 import axios from "axios";
 
-import ReactMarkdown from "react-markdown";
+import AIPageHeader from "../components/ai/AIPageHeader";
 
-import remarkGfm from "remark-gfm";
+import AIResultCard from "../components/ai/AIResultCard";
 
 function AIComparisonPage() {
   const [
@@ -76,85 +74,79 @@ function AIComparisonPage() {
     };
 
   return (
-    <div className="container">
-      <h1>
-        AI Product Comparison
-      </h1>
+    <div className="container ai-page-container">
+      <AIPageHeader
+        title="AI Product Comparison"
+        subtitle="Compare products intelligently and get detailed AI-powered recommendations."
+      />
 
-      <div
-        style={{
-          maxWidth: "700px",
-        }}
-      >
-        <input
-          type="text"
-          placeholder="Product A"
-          value={productA}
-          onChange={(e) =>
-            setProductA(
-              e.target.value
-            )
-          }
-        />
+      <div className="ai-form-card">
+        <h2>
+          Product Comparison
+        </h2>
 
-        <input
-          type="text"
-          placeholder="Product B"
-          value={productB}
-          onChange={(e) =>
-            setProductB(
-              e.target.value
-            )
-          }
-        />
+        <div className="ai-form-grid">
+          <input
+            type="text"
+            placeholder="Enter Product A"
+            value={productA}
+            onChange={(e) =>
+              setProductA(
+                e.target.value
+              )
+            }
+          />
+
+          <input
+            type="text"
+            placeholder="Enter Product B"
+            value={productB}
+            onChange={(e) =>
+              setProductB(
+                e.target.value
+              )
+            }
+          />
+        </div>
 
         <button
+          className="ai-generate-btn"
           onClick={
             compareHandler
           }
           disabled={loading}
         >
           {loading
-            ? "Comparing..."
-            : "Compare Products"}
+            ? "⚖️ Comparing..."
+            : "⚖️ Compare Products"}
         </button>
 
         {error && (
-          <p
-            style={{
-              color: "red",
-              marginTop: "10px",
-            }}
-          >
+          <div className="ai-error">
             {error}
-          </p>
+          </div>
         )}
       </div>
 
-      {result && (
-        <div
-          style={{
-            marginTop: "30px",
-            padding: "20px",
-            background:
-              "#ffffff",
-            borderRadius: "10px",
-            boxShadow:
-              "0 2px 10px rgba(0,0,0,0.1)",
-          }}
-        >
-          <h2>
-            Comparison Result
-          </h2>
+      {!result &&
+        !loading && (
+          <div className="ai-empty-state">
+            ⚖️
 
-          <ReactMarkdown
-            remarkPlugins={[
-              remarkGfm,
-            ]}
-          >
-            {result}
-          </ReactMarkdown>
-        </div>
+            <p>
+              Compare two
+              products and get
+              an AI-powered
+              recommendation.
+            </p>
+          </div>
+        )}
+
+      {result && (
+        <AIResultCard
+          title="Comparison Result"
+          content={result}
+        />
       )}
     </div>
   );

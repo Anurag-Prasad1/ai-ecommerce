@@ -1537,13 +1537,16 @@ Needed for absolute suggestion dropdown */
 
   color: #6b7280;
 
+  white-space: pre-line;
+
   box-shadow:
     0 12px 30px
     rgba(0, 0, 0, 0.08);
 }
 
 .ai-empty-state p {
-  margin-top: 15px;
+  max-width: 500px;
+  margin: 15px auto 0;
 }
 
 .ai-result-card {
