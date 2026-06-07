@@ -8,6 +8,8 @@ import AIPageHeader from "../components/ai/AIPageHeader";
 
 import AIResultCard from "../components/ai/AIResultCard";
 
+import AILoadingSpinner from "../components/ai/AILoadingSpinner";
+
 function AIReviewSummarizerPage() {
   const [reviews, setReviews] =
     useState("");
@@ -115,15 +117,19 @@ Fast charging is amazing.`}
           }
           disabled={loading}
         >
-          {loading
-            ? "📊 Analyzing Reviews..."
-            : "📊 Summarize Reviews"}
+          📊 Summarize Reviews
         </button>
 
         {error && (
           <div className="ai-error">
             {error}
           </div>
+        )}
+
+        {loading && (
+          <AILoadingSpinner
+            text="Analyzing customer reviews..."
+          />
         )}
       </div>
 
@@ -142,12 +148,13 @@ Fast charging is amazing.`}
           </div>
         )}
 
-      {result && (
-        <AIResultCard
-          title="AI Review Analysis"
-          content={result}
-        />
-      )}
+      {result &&
+        !loading && (
+          <AIResultCard
+            title="AI Review Analysis"
+            content={result}
+          />
+        )}
     </div>
   );
 }

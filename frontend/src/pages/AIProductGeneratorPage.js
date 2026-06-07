@@ -8,6 +8,8 @@ import AIResultCard from "../components/ai/AIResultCard";
 
 import AIExampleChips from "../components/ai/AIExampleChips";
 
+import AILoadingSpinner from "../components/ai/AILoadingSpinner";
+
 function AIProductGeneratorPage() {
   const [name, setName] =
     useState("");
@@ -191,15 +193,19 @@ function AIProductGeneratorPage() {
           }
           disabled={loading}
         >
-          {loading
-            ? "✨ Generating..."
-            : "🚀 Generate Description"}
+          🚀 Generate Description
         </button>
 
         {error && (
           <div className="ai-error">
             {error}
           </div>
+        )}
+
+        {loading && (
+          <AILoadingSpinner
+            text="Generating product description..."
+          />
         )}
       </div>
 
@@ -216,12 +222,13 @@ function AIProductGeneratorPage() {
           </div>
         )}
 
-      {result && (
-        <AIResultCard
-          title="Generated Description"
-          content={result}
-        />
-      )}
+      {result &&
+        !loading && (
+          <AIResultCard
+            title="Generated Description"
+            content={result}
+          />
+        )}
     </div>
   );
 }

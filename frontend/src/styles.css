@@ -1740,3 +1740,48 @@ Needed for absolute suggestion dropdown */
 
   color: white;
 }
+
+.ai-loading {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 16px;
+
+  padding: 40px;
+}
+
+.ai-loading-spinner {
+  width: 60px;
+
+  height: 60px;
+
+  border-radius: 50%;
+
+  border: 5px solid #e5e7eb;
+
+  border-top-color: #2563eb;
+
+  animation: aiSpin 1s linear infinite;
+}
+
+@keyframes aiSpin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.ai-loading p {
+  font-size: 16px;
+
+  font-weight: 600;
+
+  color: #64748b;
+}

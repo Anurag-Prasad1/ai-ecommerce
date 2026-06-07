@@ -10,6 +10,8 @@ import AIResultCard from "../components/ai/AIResultCard";
 
 import AIExampleChips from "../components/ai/AIExampleChips";
 
+import AILoadingSpinner from "../components/ai/AILoadingSpinner";
+
 function AISmartBuyingAssistantPage() {
   const [query, setQuery] =
     useState("");
@@ -127,15 +129,19 @@ Best smartwatch for fitness tracking`}
           onClick={askHandler}
           disabled={loading}
         >
-          {loading
-            ? "🤖 Analyzing Requirements..."
-            : "🤖 Ask NovaCart AI"}
+          🤖 Ask NovaCart AI
         </button>
 
         {error && (
           <div className="ai-error">
             {error}
           </div>
+        )}
+
+        {loading && (
+          <AILoadingSpinner
+            text="Finding the best products for you..."
+          />
         )}
       </div>
 
@@ -155,12 +161,13 @@ Best smartwatch for fitness tracking`}
           </div>
         )}
 
-      {result && (
-        <AIResultCard
-          title="AI Recommendation"
-          content={result}
-        />
-      )}
+      {result &&
+        !loading && (
+          <AIResultCard
+            title="AI Recommendation"
+            content={result}
+          />
+        )}
     </div>
   );
 }

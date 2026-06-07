@@ -13,6 +13,8 @@ import AIResultCard from "../components/ai/AIResultCard";
 
 import AIExampleChips from "../components/ai/AIExampleChips";
 
+import AILoadingSpinner from "../components/ai/AILoadingSpinner";
+
 function AIComparisonPage() {
   const [
     productA,
@@ -224,15 +226,19 @@ function AIComparisonPage() {
           }
           disabled={loading}
         >
-          {loading
-            ? "⚖️ Comparing..."
-            : "⚖️ Compare Products"}
+          ⚖️ Compare Products
         </button>
 
         {error && (
           <div className="ai-error">
             {error}
           </div>
+        )}
+
+        {loading && (
+          <AILoadingSpinner
+            text="Comparing products..."
+          />
         )}
       </div>
 
@@ -253,12 +259,13 @@ function AIComparisonPage() {
           </div>
         )}
 
-      {result && (
-        <AIResultCard
-          title="Comparison Result"
-          content={result}
-        />
-      )}
+      {result &&
+        !loading && (
+          <AIResultCard
+            title="Comparison Result"
+            content={result}
+          />
+        )}
     </div>
   );
 }
