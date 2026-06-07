@@ -153,7 +153,9 @@ function App() {
 
         <Route
           path="/ai-comparison"
-          element={<AIComparisonPage />}
+          element={
+            <AIComparisonPage />
+          }
         />
 
         <Route
