@@ -8,6 +8,8 @@ import AIPageHeader from "../components/ai/AIPageHeader";
 
 import AIResultCard from "../components/ai/AIResultCard";
 
+import AIExampleChips from "../components/ai/AIExampleChips";
+
 function AISmartBuyingAssistantPage() {
   const [query, setQuery] =
     useState("");
@@ -108,6 +110,16 @@ Best smartwatch for fitness tracking`}
               e.target.value
             )
           }
+        />
+
+        <AIExampleChips
+          examples={[
+            "Suggest a laptop under ₹70,000",
+            "Recommend a gaming phone under ₹30,000",
+            "Need earbuds with long battery life",
+            "Best smartwatch for fitness tracking",
+          ]}
+          onSelect={setQuery}
         />
 
         <button

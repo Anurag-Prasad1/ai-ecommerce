@@ -1658,3 +1658,85 @@ Needed for absolute suggestion dropdown */
     0 0 0 4px
     rgba(37, 99, 235, 0.12);
 }
+
+.ai-stats-row {
+  display: flex;
+
+  justify-content: center;
+
+  gap: 20px;
+
+  flex-wrap: wrap;
+
+  margin-top: 24px;
+}
+
+.ai-stat {
+  background: white;
+
+  padding: 10px 18px;
+
+  border-radius: 999px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  color: #334155;
+
+  box-shadow:
+    0 8px 20px
+    rgba(0, 0, 0, 0.08);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.ai-stat:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 12px 24px
+    rgba(0, 0, 0, 0.12);
+}
+
+.ai-example-chips {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 12px;
+
+  margin-top: 18px;
+}
+
+.ai-chip {
+  border: none;
+
+  cursor: pointer;
+
+  padding: 10px 16px;
+
+  border-radius: 999px;
+
+  background: white;
+
+  color: #1e293b;
+
+  font-weight: 600;
+
+  transition: all 0.25s ease;
+
+  box-shadow:
+    0 8px 20px
+    rgba(0, 0, 0, 0.08);
+}
+
+.ai-chip:hover {
+  transform: translateY(-2px);
+
+  background: #2563eb;
+
+  color: white;
+}

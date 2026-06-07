@@ -2,9 +2,16 @@ import { useState } from "react";
 
 import axios from "axios";
 
+import {
+  FaBalanceScale,
+  FaExchangeAlt,
+} from "react-icons/fa";
+
 import AIPageHeader from "../components/ai/AIPageHeader";
 
 import AIResultCard from "../components/ai/AIResultCard";
+
+import AIExampleChips from "../components/ai/AIExampleChips";
 
 function AIComparisonPage() {
   const [
@@ -25,6 +32,70 @@ function AIComparisonPage() {
 
   const [error, setError] =
     useState("");
+
+  const comparisonExamples =
+    [
+      {
+        label:
+          "iPhone 15 Pro vs Samsung Galaxy S25",
+        productA:
+          "iPhone 15 Pro",
+        productB:
+          "Samsung Galaxy S25",
+      },
+      {
+        label:
+          "MacBook Air M4 vs Dell XPS 13",
+        productA:
+          "MacBook Air M4",
+        productB:
+          "Dell XPS 13",
+      },
+      {
+        label:
+          "Sony WH-1000XM5 vs AirPods Max",
+        productA:
+          "Sony WH-1000XM5",
+        productB:
+          "AirPods Max",
+      },
+      {
+        label:
+          "Apple Watch Series 10 vs Samsung Galaxy Watch 7",
+        productA:
+          "Apple Watch Series 10",
+        productB:
+          "Samsung Galaxy Watch 7",
+      },
+    ];
+
+  const loadComparison =
+    (label) => {
+      const selected =
+        comparisonExamples.find(
+          (item) =>
+            item.label === label
+        );
+
+      if (selected) {
+        setProductA(
+          selected.productA
+        );
+
+        setProductB(
+          selected.productB
+        );
+      }
+    };
+
+  const swapProducts =
+    () => {
+      const temp = productA;
+
+      setProductA(productB);
+
+      setProductB(temp);
+    };
 
   const compareHandler =
     async () => {
@@ -82,6 +153,12 @@ function AIComparisonPage() {
 
       <div className="ai-form-card">
         <h2>
+          <FaBalanceScale
+            style={{
+              marginRight:
+                "10px",
+            }}
+          />
           Product Comparison
         </h2>
 
@@ -110,6 +187,37 @@ function AIComparisonPage() {
         </div>
 
         <button
+          type="button"
+          className="ai-chip"
+          onClick={
+            swapProducts
+          }
+          style={{
+            marginTop: "15px",
+            marginBottom:
+              "15px",
+          }}
+        >
+          <FaExchangeAlt
+            style={{
+              marginRight:
+                "8px",
+            }}
+          />
+          Swap Products
+        </button>
+
+        <AIExampleChips
+          examples={comparisonExamples.map(
+            (item) =>
+              item.label
+          )}
+          onSelect={
+            loadComparison
+          }
+        />
+
+        <button
           className="ai-generate-btn"
           onClick={
             compareHandler
@@ -135,9 +243,12 @@ function AIComparisonPage() {
 
             <p>
               Compare two
-              products and get
-              an AI-powered
-              recommendation.
+              products side-by-side
+              and get AI-powered
+              recommendations,
+              pros & cons,
+              feature analysis,
+              and buying advice.
             </p>
           </div>
         )}

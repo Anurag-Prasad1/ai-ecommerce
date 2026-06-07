@@ -6,6 +6,8 @@ import AIPageHeader from "../components/ai/AIPageHeader";
 
 import AIResultCard from "../components/ai/AIResultCard";
 
+import AIExampleChips from "../components/ai/AIExampleChips";
+
 function AIProductGeneratorPage() {
   const [name, setName] =
     useState("");
@@ -26,6 +28,42 @@ function AIProductGeneratorPage() {
 
   const [error, setError] =
     useState("");
+
+  const productExamples = [
+    {
+      name: "iPhone 15 Pro",
+      category: "Smartphone",
+      price: "129999",
+    },
+    {
+      name: "Samsung Galaxy S25",
+      category: "Smartphone",
+      price: "89999",
+    },
+    {
+      name: "MacBook Air M4",
+      category: "Laptop",
+      price: "114999",
+    },
+    {
+      name: "Sony WH-1000XM5",
+      category: "Headphones",
+      price: "29999",
+    },
+  ];
+
+  const loadExample =
+    (product) => {
+      setName(product.name);
+
+      setCategory(
+        product.category
+      );
+
+      setPrice(
+        product.price
+      );
+    };
 
   const generateHandler =
     async () => {
@@ -122,6 +160,29 @@ function AIProductGeneratorPage() {
             }
           />
         </div>
+
+        <AIExampleChips
+          examples={productExamples.map(
+            (product) =>
+              product.name
+          )}
+          onSelect={(name) => {
+            const selected =
+              productExamples.find(
+                (product) =>
+                  product.name ===
+                  name
+              );
+
+            if (
+              selected
+            ) {
+              loadExample(
+                selected
+              );
+            }
+          }}
+        />
 
         <button
           className="ai-generate-btn"
