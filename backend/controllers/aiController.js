@@ -71,6 +71,7 @@ Generate:
 
       res.status(500).json({
         message:
+          error.message ||
           "AI generation failed",
       });
     }
@@ -141,6 +142,7 @@ Return the entire response in properly formatted markdown.
 
       res.status(500).json({
         message:
+          error.message ||
           "Comparison failed",
       });
     }
@@ -204,6 +206,7 @@ Generate:
 
       res.status(500).json({
         message:
+          error.message ||
           "Review summarization failed",
       });
     }
@@ -286,6 +289,7 @@ Provide:
 
       res.status(500).json({
         message:
+          error.message ||
           "Buying assistant failed",
       });
     }

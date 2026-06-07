@@ -1,12 +1,10 @@
-import {
-  useState,
-} from "react";
+import { useState } from "react";
 
 import axios from "axios";
 
-import ReactMarkdown from "react-markdown";
+import AIPageHeader from "../components/ai/AIPageHeader";
 
-import remarkGfm from "remark-gfm";
+import AIResultCard from "../components/ai/AIResultCard";
 
 function AIProductGeneratorPage() {
   const [name, setName] =
@@ -79,96 +77,89 @@ function AIProductGeneratorPage() {
     };
 
   return (
-    <div className="container">
-      <h1>
-        AI Product Generator
-      </h1>
+    <div className="container ai-page-container">
+      <AIPageHeader
+        title="AI Product Generator"
+        subtitle="Generate high-converting product descriptions instantly using NovaCart AI."
+      />
 
-      <div
-        style={{
-          maxWidth: "700px",
-        }}
-      >
-        <input
-          type="text"
-          placeholder="Product Name"
-          value={name}
-          onChange={(e) =>
-            setName(
-              e.target.value
-            )
-          }
-        />
+      <div className="ai-form-card">
+        <h2>
+          Product Information
+        </h2>
 
-        <input
-          type="text"
-          placeholder="Category"
-          value={category}
-          onChange={(e) =>
-            setCategory(
-              e.target.value
-            )
-          }
-        />
+        <div className="ai-form-grid">
+          <input
+            type="text"
+            placeholder="Product Name"
+            value={name}
+            onChange={(e) =>
+              setName(
+                e.target.value
+              )
+            }
+          />
 
-        <input
-          type="number"
-          placeholder="Price"
-          value={price}
-          onChange={(e) =>
-            setPrice(
-              e.target.value
-            )
-          }
-        />
+          <input
+            type="text"
+            placeholder="Category"
+            value={category}
+            onChange={(e) =>
+              setCategory(
+                e.target.value
+              )
+            }
+          />
+
+          <input
+            type="number"
+            placeholder="Price"
+            value={price}
+            onChange={(e) =>
+              setPrice(
+                e.target.value
+              )
+            }
+          />
+        </div>
 
         <button
+          className="ai-generate-btn"
           onClick={
             generateHandler
           }
           disabled={loading}
         >
           {loading
-            ? "Generating..."
-            : "Generate Description"}
+            ? "✨ Generating..."
+            : "🚀 Generate Description"}
         </button>
 
         {error && (
-          <p
-            style={{
-              color: "red",
-              marginTop: "10px",
-            }}
-          >
+          <div className="ai-error">
             {error}
-          </p>
+          </div>
         )}
       </div>
 
-      {result && (
-        <div
-          style={{
-            marginTop: "30px",
-            padding: "20px",
-            background:
-              "#ffffff",
-            borderRadius: "10px",
-            boxShadow:
-              "0 2px 10px rgba(0,0,0,0.1)",
-          }}
-        >
-          <h2>
-            Generated Result
-          </h2>
+      {!result &&
+        !loading && (
+          <div className="ai-empty-state">
+            🤖
 
-          <ReactMarkdown
-            remarkPlugins={[
-              remarkGfm,
-            ]}
-          >
-            {result}
-          </ReactMarkdown>
-        </div>
+            <p>
+              Generate your
+              first AI product
+              description.
+            </p>
+          </div>
+        )}
+
+      {result && (
+        <AIResultCard
+          title="Generated Description"
+          content={result}
+        />
       )}
     </div>
   );
