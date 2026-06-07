@@ -2,9 +2,11 @@ import { useState } from "react";
 
 import axios from "axios";
 
-import ReactMarkdown from "react-markdown";
+import { FaRobot } from "react-icons/fa";
 
-import remarkGfm from "remark-gfm";
+import AIPageHeader from "../components/ai/AIPageHeader";
+
+import AIResultCard from "../components/ai/AIResultCard";
 
 function AISmartBuyingAssistantPage() {
   const [query, setQuery] =
@@ -71,109 +73,82 @@ function AISmartBuyingAssistantPage() {
     };
 
   return (
-    <div className="container">
-      <div
-        style={{
-          maxWidth: "900px",
-          margin: "40px auto",
-        }}
-      >
-        <h1>
-          🤖 Smart Buying Assistant
-        </h1>
+    <div className="container ai-page-container">
+      <AIPageHeader
+        title="Smart Buying Assistant"
+        subtitle="Describe your needs and let NovaCart AI recommend the best products based on budget, features, and value."
+      />
 
-        <p>
-          Describe your requirements
-          and let AI recommend the
-          best products available in
-          NovaCart.
-        </p>
+      <div className="ai-form-card">
+        <h2>
+          <FaRobot
+            style={{
+              marginRight:
+                "10px",
+            }}
+          />
+          Shopping Requirements
+        </h2>
 
         <textarea
-          rows="5"
+          className="ai-review-textarea"
+          rows="6"
           placeholder={`Examples:
 
 Suggest a laptop under ₹70,000
 
 Recommend a gaming phone under ₹30,000
 
-Need earbuds with long battery life`}
+Need earbuds with long battery life
+
+Best smartwatch for fitness tracking`}
           value={query}
           onChange={(e) =>
             setQuery(
               e.target.value
             )
           }
-          style={{
-            width: "100%",
-            padding: "14px",
-            marginTop: "15px",
-            marginBottom:
-              "15px",
-            boxSizing:
-              "border-box",
-            borderRadius:
-              "8px",
-            resize: "vertical",
-          }}
         />
 
         <button
+          className="ai-generate-btn"
           onClick={askHandler}
           disabled={loading}
         >
           {loading
-            ? "Analyzing..."
-            : "Ask AI"}
+            ? "🤖 Analyzing Requirements..."
+            : "🤖 Ask NovaCart AI"}
         </button>
 
         {error && (
-          <div
-            style={{
-              marginTop:
-                "20px",
-              color: "red",
-              fontWeight:
-                "bold",
-            }}
-          >
+          <div className="ai-error">
             {error}
           </div>
         )}
+      </div>
 
-        {result && (
-          <div
-            style={{
-              marginTop:
-                "5px",
-            }}
-          >
-            <h2>
-              AI Recommendation
-            </h2>
+      {!result &&
+        !loading && (
+          <div className="ai-empty-state">
+            🛒
 
-            <div
-              className="markdown-content"
-              style={{
-                background:
-                  "#f4f4f4",
-                padding:
-                  "20px",
-                borderRadius:
-                  "8px",
-              }}
-            >
-              <ReactMarkdown
-                remarkPlugins={[
-                  remarkGfm,
-                ]}
-              >
-                {result}
-              </ReactMarkdown>
-            </div>
+            <p>
+              Tell NovaCart AI what
+              you're looking for and
+              receive personalized
+              product recommendations,
+              budget analysis, and
+              buying guidance.
+            </p>
           </div>
         )}
-      </div>
+
+      {result && (
+        <AIResultCard
+          title="AI Recommendation"
+          content={result}
+        />
+      )}
     </div>
   );
 }
