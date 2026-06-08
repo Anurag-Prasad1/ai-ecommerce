@@ -2089,3 +2089,108 @@ Needed for absolute suggestion dropdown */
   background: #d1d5db;
   flex-shrink: 0;
 }
+
+/* ==================================
+   ORDER SUCCESS PAGE
+================================== */
+
+.success-card {
+  max-width: 750px;
+  margin: 40px auto;
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 24px;
+  text-align: center;
+  box-shadow: 0 10px 40px
+    rgba(0, 0, 0, 0.08);
+}
+
+.success-icon {
+  font-size: 80px;
+  margin-bottom: 15px;
+  animation: pop 0.5s ease;
+}
+
+.success-title {
+  font-size: 40px;
+  margin-bottom: 15px;
+}
+
+.success-message {
+  color: #666;
+  margin-bottom: 25px;
+  font-size: 18px;
+}
+
+.success-order-box {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 25px;
+  text-align: left;
+}
+
+.success-order-box p {
+  margin: 10px 0;
+}
+
+.success-checklist {
+  background: #ecfdf5;
+  border: 1px solid #10b981;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 25px;
+  text-align: left;
+}
+
+.success-checklist p {
+  margin: 10px 0;
+  font-weight: 600;
+  color: #065f46;
+}
+
+.success-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.orders-btn,
+.continue-btn {
+  padding: 14px 24px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.orders-btn {
+  background: #2563eb;
+  color: white;
+}
+
+.continue-btn {
+  background: #111827;
+  color: white;
+}
+
+.orders-btn:hover,
+.continue-btn:hover {
+  opacity: 0.9;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0);
+  }
+
+  70% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}

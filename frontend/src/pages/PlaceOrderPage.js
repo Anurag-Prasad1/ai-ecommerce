@@ -160,15 +160,7 @@ function PlaceOrderPage() {
 
   if (orderSuccess) {
     return (
-      <div
-        className="container"
-        style={{
-          maxWidth:
-            "700px",
-          margin:
-            "40px auto",
-        }}
-      >
+      <div className="container">
         <CheckoutSteps
           step1={true}
           step2={true}
@@ -176,80 +168,77 @@ function PlaceOrderPage() {
           step4={true}
         />
 
-        <div
-          style={{
-            background:
-              "#ecfdf5",
-            border:
-              "1px solid #10b981",
-            padding:
-              "30px",
-            borderRadius:
-              "12px",
-          }}
-        >
-          <h1>
-            🎉 Order Placed
-            Successfully
+        <div className="success-card">
+          <div className="success-icon">
+            🎉
+          </div>
+
+          <h1 className="success-title">
+            Order Placed Successfully
           </h1>
 
-          <p>
-            Thank you
-            for shopping
-            with
+          <p className="success-message">
+            Thank you for shopping with
             NovaCart.
           </p>
 
-          <p>
-            📧 Order
-            confirmation
-            email has
-            been sent to
-            your
-            registered
-            email
-            address.
-          </p>
+          <div className="success-order-box">
+            <p>
+              <strong>
+                Order ID:
+              </strong>{" "}
+              {
+                orderSuccess.order
+                  ?._id
+              }
+            </p>
 
-          <p>
-            <strong>
-              Order ID:
-            </strong>{" "}
-            {
-              orderSuccess
-                .order
-                ?._id
-            }
-          </p>
-
-          <p>
-            <strong>
-              Total:
-            </strong>{" "}
-            ₹
-            {orderSuccess
-              .order
-              ?.totalPrice
-              ?.toLocaleString(
+            <p>
+              <strong>
+                Total Paid:
+              </strong>{" "}
+              ₹
+              {orderSuccess.order?.totalPrice?.toLocaleString(
                 "en-IN"
               )}
-          </p>
+            </p>
+          </div>
 
-          <button
-            onClick={() =>
-              (
-                window.location.href =
-                  "/"
-              )
-            }
-            style={{
-              marginTop:
-                "20px",
-            }}
-          >
-            Continue
-            Shopping
-          </button>
+          <div className="success-checklist">
+            <p>
+              ✓ Confirmation Email Sent
+            </p>
+
+            <p>
+              ✓ Payment Received
+            </p>
+
+            <p>
+              ✓ Order Processing Started
+            </p>
+          </div>
+
+          <div className="success-actions">
+            <button
+              className="orders-btn"
+              onClick={() =>
+                (window.location.href =
+                  "/myorders")
+              }
+            >
+              View My Orders
+            </button>
+
+            <button
+              className="continue-btn"
+              onClick={() =>
+                (window.location.href =
+                  "/")
+              }
+            >
+              Continue Shopping
+            </button>
+          </div>
         </div>
       </div>
     );
