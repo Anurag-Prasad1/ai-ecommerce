@@ -72,6 +72,23 @@ function CartProvider({ children }) {
     }
   };
 
+  const decreaseQuantity = (id) => {
+    setCartItems(
+      cartItems
+        .map((item) =>
+          item._id === id
+            ? {
+                ...item,
+                qty: item.qty - 1,
+              }
+            : item
+        )
+        .filter(
+          (item) => item.qty > 0
+        )
+    );
+  };
+
   const removeFromCart = (id) => {
     setCartItems(
       cartItems.filter(
@@ -84,7 +101,9 @@ function CartProvider({ children }) {
     <CartContext.Provider
       value={{
         cartItems,
+
         addToCart,
+        decreaseQuantity,
         removeFromCart,
 
         shippingAddress,
