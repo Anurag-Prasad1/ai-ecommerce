@@ -2,20 +2,24 @@ import {
   createContext,
   useEffect,
   useState,
+  useContext,
 } from "react";
 
-export const CartContext = createContext();
+import axios from "axios";
 
-function CartProvider({ children }) {
+import { AuthContext } from "./AuthContext";
+
+export const CartContext =
+  createContext();
+
+function CartProvider({
+  children,
+}) {
+  const { userInfo } =
+    useContext(AuthContext);
+
   const [cartItems, setCartItems] =
-    useState(() => {
-      const savedCart =
-        localStorage.getItem("cartItems");
-
-      return savedCart
-        ? JSON.parse(savedCart)
-        : [];
-    });
+    useState([]);
 
   const [
     shippingAddress,
@@ -31,71 +35,198 @@ function CartProvider({ children }) {
       : {};
   });
 
-  useEffect(() => {
-    localStorage.setItem(
-      "cartItems",
-      JSON.stringify(cartItems)
-    );
-  }, [cartItems]);
+  // ===================================
+  // Load Cart From MongoDB
+  // ===================================
+  const fetchCart =
+    async () => {
+      if (!userInfo?.token) {
+        setCartItems([]);
+        return;
+      }
 
+      try {
+        const { data } =
+          await axios.get(
+            "http://localhost:5000/api/cart",
+            {
+              headers: {
+                Authorization: `Bearer ${userInfo.token}`,
+              },
+            }
+          );
+
+        const formattedCart =
+          data.map((item) => ({
+            _id: item._id,
+            productId:
+              item.product._id,
+            name:
+              item.product.name,
+            image:
+              item.product.image,
+            price:
+              item.product.price,
+            brand:
+              item.product.brand,
+            category:
+              item.product.category,
+            qty:
+              item.quantity,
+          }));
+
+        setCartItems(
+          formattedCart
+        );
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+  useEffect(() => {
+    fetchCart();
+  }, [userInfo]);
+
+  // ===================================
+  // Shipping Address
+  // ===================================
   useEffect(() => {
     localStorage.setItem(
       "shippingAddress",
-      JSON.stringify(shippingAddress)
+      JSON.stringify(
+        shippingAddress
+      )
     );
   }, [shippingAddress]);
 
-  const addToCart = (product) => {
-    const exist = cartItems.find(
-      (item) => item._id === product._id
-    );
+  // ===================================
+  // Add To Cart
+  // ===================================
+  const addToCart =
+    async (product) => {
+      try {
+        if (!userInfo?.token) {
+          alert(
+            "Please login first"
+          );
+          return;
+        }
 
-    if (exist) {
-      setCartItems(
-        cartItems.map((item) =>
-          item._id === product._id
-            ? {
-                ...item,
-                qty: item.qty + 1,
-              }
-            : item
-        )
-      );
-    } else {
-      setCartItems([
-        ...cartItems,
-        {
-          ...product,
-          qty: 1,
-        },
-      ]);
-    }
-  };
+        await axios.post(
+          "http://localhost:5000/api/cart",
+          {
+            productId:
+              product._id,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${userInfo.token}`,
+            },
+          }
+        );
 
-  const decreaseQuantity = (id) => {
-    setCartItems(
-      cartItems
-        .map((item) =>
-          item._id === id
-            ? {
-                ...item,
-                qty: item.qty - 1,
-              }
-            : item
-        )
-        .filter(
-          (item) => item.qty > 0
-        )
-    );
-  };
+        await fetchCart();
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-  const removeFromCart = (id) => {
-    setCartItems(
-      cartItems.filter(
-        (item) => item._id !== id
-      )
-    );
-  };
+  // ===================================
+  // Decrease Quantity
+  // ===================================
+  const decreaseQuantity =
+    async (cartItemId) => {
+      try {
+        const item =
+          cartItems.find(
+            (item) =>
+              item._id ===
+              cartItemId
+          );
+
+        if (!item) return;
+
+        if (item.qty === 1) {
+          await removeFromCart(
+            cartItemId
+          );
+
+          return;
+        }
+
+        await axios.put(
+          `http://localhost:5000/api/cart/${cartItemId}`,
+          {
+            quantity:
+              item.qty - 1,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${userInfo.token}`,
+            },
+          }
+        );
+
+        await fetchCart();
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+  // ===================================
+  // Increase Quantity
+  // ===================================
+  const increaseQuantity =
+    async (cartItemId) => {
+      try {
+        const item =
+          cartItems.find(
+            (item) =>
+              item._id ===
+              cartItemId
+          );
+
+        if (!item) return;
+
+        await axios.put(
+          `http://localhost:5000/api/cart/${cartItemId}`,
+          {
+            quantity:
+              item.qty + 1,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${userInfo.token}`,
+            },
+          }
+        );
+
+        await fetchCart();
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+  // ===================================
+  // Remove Item
+  // ===================================
+  const removeFromCart =
+    async (cartItemId) => {
+      try {
+        await axios.delete(
+          `http://localhost:5000/api/cart/${cartItemId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${userInfo.token}`,
+            },
+          }
+        );
+
+        await fetchCart();
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
   return (
     <CartContext.Provider
@@ -103,10 +234,17 @@ function CartProvider({ children }) {
         cartItems,
 
         addToCart,
+
+        increaseQuantity,
+
         decreaseQuantity,
+
         removeFromCart,
 
+        fetchCart,
+
         shippingAddress,
+
         setShippingAddress,
       }}
     >

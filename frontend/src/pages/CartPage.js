@@ -8,8 +8,8 @@ function CartPage() {
   const {
     cartItems,
     removeFromCart,
-    addToCart,
     decreaseQuantity,
+    increaseQuantity,
   } = useContext(CartContext);
 
   const totalItems =
@@ -127,7 +127,9 @@ function CartPage() {
 
                   <button
                     onClick={() =>
-                      addToCart(item)
+                      increaseQuantity(
+                        item._id
+                      )
                     }
                   >
                     +
