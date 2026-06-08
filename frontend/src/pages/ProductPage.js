@@ -141,9 +141,7 @@ function ProductPage() {
 
             <br />
 
-            <Skeleton
-              count={4}
-            />
+            <Skeleton count={4} />
 
             <br />
 
@@ -181,15 +179,17 @@ function ProductPage() {
     <div className="container">
       <div className="product-page">
         <div className="product-image-container">
-  <img
-    src={product.image}
-    alt={product.name}
-    className="product-main-image"
-  />
-</div>
+          <img
+            src={product.image}
+            alt={product.name}
+            className="product-main-image"
+          />
+        </div>
 
-        <div>
-          <h2>{product.name}</h2>
+        <div className="product-details-card">
+          <h2 className="product-title">
+            {product.name}
+          </h2>
 
           <button
             className="product-wishlist-btn"
@@ -206,64 +206,47 @@ function ProductPage() {
             {product.description}
           </p>
 
-          {product.brand && (
-            <p>
-              <strong>
-                Brand:
-              </strong>{" "}
-              {product.brand}
-            </p>
-          )}
+          <div className="product-meta">
+            {product.brand && (
+              <p>
+                <strong>
+                  Brand:
+                </strong>{" "}
+                {product.brand}
+              </p>
+            )}
 
-          {product.category && (
-            <p>
-              <strong>
-                Category:
-              </strong>{" "}
-              {product.category}
-            </p>
-          )}
-
-          <div
-            style={{
-              margin:
-                "15px 0",
-              fontWeight:
-                "600",
-              fontSize:
-                "16px",
-            }}
-          >
-            {product.countInStock >
-            0 ? (
-              <span
-                style={{
-                  color:
-                    "#16a34a",
-                }}
-              >
-                ✅ In Stock
-              </span>
-            ) : (
-              <span
-                style={{
-                  color:
-                    "#dc2626",
-                }}
-              >
-                ❌ Out Of Stock
-              </span>
+            {product.category && (
+              <p>
+                <strong>
+                  Category:
+                </strong>{" "}
+                {product.category}
+              </p>
             )}
           </div>
 
-          <h3>
-            ₹{" "}
+          <div
+            className={`stock-badge ${
+              product.countInStock > 0
+                ? "in-stock"
+                : "out-stock"
+            }`}
+          >
+            {product.countInStock > 0
+              ? "✅ In Stock"
+              : "❌ Out Of Stock"}
+          </div>
+
+          <h3 className="product-price">
+            ₹
             {product.price.toLocaleString(
               "en-IN"
             )}
           </h3>
 
           <button
+            className="add-cart-btn"
             onClick={
               addToCartHandler
             }
@@ -299,12 +282,8 @@ function ProductPage() {
             {recommendedProducts.map(
               (product) => (
                 <ProductCard
-                  key={
-                    product._id
-                  }
-                  product={
-                    product
-                  }
+                  key={product._id}
+                  product={product}
                 />
               )
             )}
