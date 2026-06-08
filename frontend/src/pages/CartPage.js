@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 
 import { CartContext } from "../context/CartContext";
 
+import CheckoutSteps from "../components/CheckoutSteps";
+
 function CartPage() {
   const {
     cartItems,
@@ -34,6 +36,10 @@ function CartPage() {
   if (cartItems.length === 0) {
     return (
       <div className="container">
+        <CheckoutSteps
+          step1={true}
+        />
+
         <div className="empty-cart">
           <div className="empty-cart-icon">
             🛒
@@ -61,6 +67,10 @@ function CartPage() {
 
   return (
     <div className="container">
+      <CheckoutSteps
+        step1={true}
+      />
+
       <h1 className="cart-title">
         Shopping Cart (
         {totalItems} Items)

@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 
 import { CartContext } from "../context/CartContext";
 
+import CheckoutSteps from "../components/CheckoutSteps";
+
 function ShippingPage() {
   const navigate = useNavigate();
 
@@ -48,50 +50,65 @@ function ShippingPage() {
   };
 
   return (
-    <div className="form-container">
-      <h1>Shipping</h1>
+    <div className="container">
+      <CheckoutSteps
+        step1={true}
+        step2={true}
+      />
 
-      <form onSubmit={submitHandler}>
-        <input
-          type="text"
-          placeholder="Address"
-          value={address}
-          onChange={(e) =>
-            setAddress(e.target.value)
-          }
-        />
+      <div className="form-container">
+        <h1>Shipping</h1>
 
-        <input
-          type="text"
-          placeholder="City"
-          value={city}
-          onChange={(e) =>
-            setCity(e.target.value)
-          }
-        />
+        <form onSubmit={submitHandler}>
+          <input
+            type="text"
+            placeholder="Address"
+            value={address}
+            onChange={(e) =>
+              setAddress(e.target.value)
+            }
+            required
+          />
 
-        <input
-          type="text"
-          placeholder="Postal Code"
-          value={postalCode}
-          onChange={(e) =>
-            setPostalCode(e.target.value)
-          }
-        />
+          <input
+            type="text"
+            placeholder="City"
+            value={city}
+            onChange={(e) =>
+              setCity(e.target.value)
+            }
+            required
+          />
 
-        <input
-          type="text"
-          placeholder="Country"
-          value={country}
-          onChange={(e) =>
-            setCountry(e.target.value)
-          }
-        />
+          <input
+            type="text"
+            placeholder="Postal Code"
+            value={postalCode}
+            onChange={(e) =>
+              setPostalCode(
+                e.target.value
+              )
+            }
+            required
+          />
 
-        <button type="submit">
-          Continue
-        </button>
-      </form>
+          <input
+            type="text"
+            placeholder="Country"
+            value={country}
+            onChange={(e) =>
+              setCountry(
+                e.target.value
+              )
+            }
+            required
+          />
+
+          <button type="submit">
+            Continue
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

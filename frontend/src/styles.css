@@ -2053,3 +2053,39 @@ Needed for absolute suggestion dropdown */
     position: static;
   }
 }
+
+/* =========================
+   Checkout Stepper
+========================= */
+
+.checkout-steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 30px 0 50px;
+  gap: 10px;
+  flex-wrap: nowrap;
+}
+
+.step {
+  padding: 10px 20px;
+  border-radius: 30px;
+  background: #e5e7eb;
+  color: #666;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.step.active {
+  background: #2563eb;
+  color: white;
+}
+
+.line {
+  width: 50px;
+  height: 3px;
+  background: #d1d5db;
+  flex-shrink: 0;
+}

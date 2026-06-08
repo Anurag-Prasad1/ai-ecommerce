@@ -9,6 +9,8 @@ import { CartContext } from "../context/CartContext";
 
 import { AuthContext } from "../context/AuthContext";
 
+import CheckoutSteps from "../components/CheckoutSteps";
+
 function PlaceOrderPage() {
   const {
     cartItems,
@@ -167,6 +169,13 @@ function PlaceOrderPage() {
             "40px auto",
         }}
       >
+        <CheckoutSteps
+          step1={true}
+          step2={true}
+          step3={true}
+          step4={true}
+        />
+
         <div
           style={{
             background:
@@ -248,6 +257,12 @@ function PlaceOrderPage() {
 
   return (
     <div className="container">
+      <CheckoutSteps
+        step1={true}
+        step2={true}
+        step3={true}
+      />
+
       <h1>
         Place Order
       </h1>
