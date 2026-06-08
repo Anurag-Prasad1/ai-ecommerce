@@ -13,6 +13,7 @@ function PlaceOrderPage() {
   const {
     cartItems,
     shippingAddress,
+    fetchCart,
   } = useContext(CartContext);
 
   const { userInfo } =
@@ -24,11 +25,13 @@ function PlaceOrderPage() {
   const [orderSuccess, setOrderSuccess] =
     useState(null);
 
-  const totalPrice = cartItems.reduce(
-    (acc, item) =>
-      acc + item.price * item.qty,
-    0
-  );
+  const totalPrice =
+    cartItems.reduce(
+      (acc, item) =>
+        acc +
+        item.price * item.qty,
+      0
+    );
 
   const paymentHandler =
     async () => {
@@ -66,6 +69,28 @@ function PlaceOrderPage() {
           handler:
             async function () {
               try {
+                const formattedOrderItems =
+                  cartItems.map(
+                    (
+                      item
+                    ) => ({
+                      name:
+                        item.name,
+
+                      qty:
+                        item.qty,
+
+                      image:
+                        item.image,
+
+                      price:
+                        item.price,
+
+                      product:
+                        item.productId,
+                    })
+                  );
+
                 const {
                   data:
                     orderData,
@@ -74,7 +99,7 @@ function PlaceOrderPage() {
                     "http://localhost:5000/api/orders",
                     {
                       orderItems:
-                        cartItems,
+                        formattedOrderItems,
 
                       shippingAddress,
 
@@ -88,6 +113,8 @@ function PlaceOrderPage() {
                     }
                   );
 
+                await fetchCart();
+
                 setOrderSuccess(
                   orderData
                 );
@@ -96,6 +123,10 @@ function PlaceOrderPage() {
               ) {
                 console.error(
                   error
+                );
+
+                alert(
+                  "Order creation failed."
                 );
               }
             },
@@ -187,9 +218,12 @@ function PlaceOrderPage() {
               Total:
             </strong>{" "}
             ₹
-            {totalPrice.toLocaleString(
-              "en-IN"
-            )}
+            {orderSuccess
+              .order
+              ?.totalPrice
+              ?.toLocaleString(
+                "en-IN"
+              )}
           </p>
 
           <button
@@ -274,7 +308,9 @@ function PlaceOrderPage() {
           paymentHandler
         }
         disabled={
-          loading
+          loading ||
+          cartItems.length ===
+            0
         }
       >
         {loading
