@@ -68,6 +68,12 @@ app.use(
   require("./routes/orderRoutes")
 );
 
+// 🔥 Cart Routes (DAY 35 - NEW ADDITION)
+app.use(
+  "/api/cart",
+  require("./routes/cartRoutes")
+);
+
 // 🔥 Upload Routes (DAY 25 - NEW ADDITION)
 app.use(
   "/api/upload",
