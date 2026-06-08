@@ -56,8 +56,15 @@ function Navbar() {
     logout,
   } = useContext(AuthContext);
 
-  const { cartItems } =
+const { cartItems } =
   useContext(CartContext);
+
+const totalCartItems =
+  cartItems.reduce(
+    (acc, item) =>
+      acc + item.qty,
+    0
+  );
 
   useEffect(() => {
     const fetchSuggestions =
@@ -430,11 +437,11 @@ function Navbar() {
   <button className="cart-btn">
     🛒 Cart
 
-    {cartItems.length > 0 && (
-      <span className="cart-badge">
-        {cartItems.length}
-      </span>
-    )}
+    {totalCartItems > 0 && (
+  <span className="cart-badge">
+    {totalCartItems}
+  </span>
+)}
   </button>
 </NavLink>
 

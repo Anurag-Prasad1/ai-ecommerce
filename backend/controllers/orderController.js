@@ -4,6 +4,8 @@ const Product = require("../models/Product");
 
 const User = require("../models/User");
 
+const Cart = require("../models/Cart");
+
 const {
   sendEmail,
 } = require(
@@ -45,6 +47,11 @@ const addOrderItems = async (
 
     const createdOrder =
       await order.save();
+
+    // 🔥 Clear User Cart After Successful Order
+    await Cart.deleteMany({
+      user: req.user._id,
+    });
 
     // 🔥 UPDATE PRODUCT POPULARITY
     for (const item of orderItems) {
