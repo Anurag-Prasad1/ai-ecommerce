@@ -5,6 +5,11 @@ import {
 
 import axios from "axios";
 
+import {
+  FaMapMarkerAlt,
+  FaCreditCard,
+} from "react-icons/fa";
+
 import { CartContext } from "../context/CartContext";
 
 import { AuthContext } from "../context/AuthContext";
@@ -34,6 +39,18 @@ function PlaceOrderPage() {
         item.price * item.qty,
       0
     );
+
+  const shippingPrice =
+    totalPrice > 1000
+      ? 0
+      : 99;
+
+  const taxPrice = 0;
+
+  const finalTotal =
+    totalPrice +
+    shippingPrice +
+    taxPrice;
 
   const paymentHandler =
     async () => {
@@ -105,7 +122,8 @@ function PlaceOrderPage() {
 
                       shippingAddress,
 
-                      totalPrice,
+                      totalPrice:
+                        finalTotal,
                     },
                     {
                       headers:
@@ -252,75 +270,166 @@ function PlaceOrderPage() {
         step3={true}
       />
 
-      <h1>
-        Place Order
+      <h1
+        style={{
+          marginBottom:
+            "30px",
+        }}
+      >
+        Review Your Order
       </h1>
 
-      <h2>
-        Shipping
-      </h2>
-
-      <p>
-        {
-          shippingAddress.address
-        }
-        ,{" "}
-        {
-          shippingAddress.city
-        }
-      </p>
-
-      <h2>
-        Order Items
-      </h2>
-
-      {cartItems.map(
-        (item) => (
-          <div
-            key={
-              item._id
-            }
-            className="cart-item"
-          >
-            <h3>
-              {
-                item.name
-              }
-            </h3>
+      <div className="placeorder-layout">
+        <div className="placeorder-left">
+          <div className="placeorder-card">
+            <h2>
+              <FaMapMarkerAlt />{" "}
+              Shipping Address
+            </h2>
 
             <p>
-              ₹{" "}
-              {item.price.toLocaleString(
-                "en-IN"
-              )}{" "}
-              ×{" "}
-              {item.qty}
+              {
+                shippingAddress.address
+              }
+            </p>
+
+            <p>
+              {
+                shippingAddress.city
+              }
+              ,{" "}
+              {
+                shippingAddress.postalCode
+              }
+            </p>
+
+            <p>
+              {
+                shippingAddress.country
+              }
             </p>
           </div>
-        )
-      )}
 
-      <h2>
-        Total: ₹{" "}
-        {totalPrice.toLocaleString(
-          "en-IN"
-        )}
-      </h2>
+          <div className="placeorder-card">
+            <h2>
+              Order Items
+            </h2>
 
-      <button
-        onClick={
-          paymentHandler
-        }
-        disabled={
-          loading ||
-          cartItems.length ===
-            0
-        }
-      >
-        {loading
-          ? "Processing..."
-          : "Pay Now"}
-      </button>
+            {cartItems.map(
+              (item) => (
+                <div
+                  key={
+                    item._id
+                  }
+                  className="placeorder-item"
+                >
+                  <img
+                    src={
+                      item.image
+                    }
+                    alt={
+                      item.name
+                    }
+                  />
+
+                  <div>
+                    <h4>
+                      {
+                        item.name
+                      }
+                    </h4>
+
+                    <p>
+                      ₹
+                      {item.price.toLocaleString(
+                        "en-IN"
+                      )}{" "}
+                      ×{" "}
+                      {item.qty}
+                    </p>
+                  </div>
+                </div>
+              )
+            )}
+          </div>
+        </div>
+
+        <div className="placeorder-summary">
+          <div className="placeorder-card">
+            <h2>
+              <FaCreditCard />{" "}
+              Order Summary
+            </h2>
+
+            <div className="summary-row">
+              <span>
+                Subtotal
+              </span>
+
+              <span>
+                ₹
+                {totalPrice.toLocaleString(
+                  "en-IN"
+                )}
+              </span>
+            </div>
+
+            <div className="summary-row">
+              <span>
+                Shipping
+              </span>
+
+              <span>
+                {shippingPrice ===
+                0
+                  ? "FREE"
+                  : `₹${shippingPrice}`}
+              </span>
+            </div>
+
+            <div className="summary-row">
+              <span>
+                Tax
+              </span>
+
+              <span>
+                ₹0
+              </span>
+            </div>
+
+            <hr />
+
+            <div className="summary-total">
+              <span>
+                Total
+              </span>
+
+              <span>
+                ₹
+                {finalTotal.toLocaleString(
+                  "en-IN"
+                )}
+              </span>
+            </div>
+
+            <button
+              className="checkout-btn"
+              onClick={
+                paymentHandler
+              }
+              disabled={
+                loading ||
+                cartItems.length ===
+                  0
+              }
+            >
+              {loading
+                ? "Processing..."
+                : "Pay Securely"}
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

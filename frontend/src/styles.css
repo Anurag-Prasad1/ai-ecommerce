@@ -2330,3 +2330,57 @@ Needed for absolute suggestion dropdown */
 
   cursor: not-allowed;
 }
+
+/* ==============================
+   Place Order Premium Layout
+================================= */
+
+.placeorder-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 30px;
+  align-items: start;
+}
+
+.placeorder-card {
+  background: white;
+  padding: 24px;
+  border-radius: 18px;
+  margin-bottom: 25px;
+  box-shadow: 0 5px 15px
+    rgba(0, 0, 0, 0.08);
+}
+
+.placeorder-card h2 {
+  margin-bottom: 20px;
+}
+
+.placeorder-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 12px 0;
+  border-bottom: 1px solid
+    #eee;
+}
+
+.placeorder-item img {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+}
+
+.placeorder-summary {
+  position: sticky;
+  top: 100px;
+}
+
+@media (max-width: 900px) {
+  .placeorder-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .placeorder-summary {
+    position: static;
+  }
+}
