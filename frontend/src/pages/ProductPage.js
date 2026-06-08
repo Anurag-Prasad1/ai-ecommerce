@@ -4,18 +4,28 @@ import {
   useContext,
 } from "react";
 
-import { useParams } from "react-router-dom";
+import {
+  useParams,
+  useNavigate,
+} from "react-router-dom";
 
 import axios from "axios";
+
+import toast from "react-hot-toast";
 
 import { CartContext } from "../context/CartContext";
 
 import { WishlistContext } from "../context/WishlistContext";
 
+import { AuthContext } from "../context/AuthContext";
+
 import ProductCard from "../components/ProductCard";
 
 function ProductPage() {
   const { id } = useParams();
+
+  const navigate =
+    useNavigate();
 
   const [product, setProduct] =
     useState(null);
@@ -36,6 +46,9 @@ function ProductPage() {
   const { addToCart } =
     useContext(CartContext);
 
+  const { userInfo } =
+    useContext(AuthContext);
+
   const {
     toggleWishlist,
     isWishlisted,
@@ -44,37 +57,50 @@ function ProductPage() {
   );
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        setLoading(true);
+    const fetchProduct =
+      async () => {
+        try {
+          setLoading(true);
 
-        const { data } =
-          await axios.get(
-            `http://localhost:5000/api/products/${id}`
+          const { data } =
+            await axios.get(
+              `http://localhost:5000/api/products/${id}`
+            );
+
+          setProduct(data);
+
+          const recommendationData =
+            await axios.get(
+              `http://localhost:5000/api/products/${id}/recommendations`
+            );
+
+          setRecommendedProducts(
+            recommendationData.data
           );
-
-        setProduct(data);
-
-        const recommendationData =
-          await axios.get(
-            `http://localhost:5000/api/products/${id}/recommendations`
-          );
-
-        setRecommendedProducts(
-          recommendationData.data
-        );
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setLoading(false);
+        }
+      };
 
     fetchProduct();
   }, [id]);
 
   const addToCartHandler =
     async () => {
+      if (!userInfo) {
+        toast.error(
+          "Please login to add products to cart"
+        );
+
+        setTimeout(() => {
+          navigate("/login");
+        }, 1500);
+
+        return;
+      }
+
       try {
         setAddingToCart(true);
 
@@ -153,6 +179,39 @@ function ProductPage() {
             </p>
           )}
 
+          {/* Stock Status */}
+          <div
+            style={{
+              margin:
+                "15px 0",
+              fontWeight:
+                "600",
+              fontSize:
+                "16px",
+            }}
+          >
+            {product.countInStock >
+            0 ? (
+              <span
+                style={{
+                  color:
+                    "#16a34a",
+                }}
+              >
+                ✅ In Stock
+              </span>
+            ) : (
+              <span
+                style={{
+                  color:
+                    "#dc2626",
+                }}
+              >
+                ❌ Out Of Stock
+              </span>
+            )}
+          </div>
+
           <h3>
             ₹{" "}
             {product.price.toLocaleString(
@@ -165,10 +224,15 @@ function ProductPage() {
               addToCartHandler
             }
             disabled={
-              addingToCart
+              addingToCart ||
+              product.countInStock ===
+                0
             }
           >
-            {addingToCart
+            {product.countInStock ===
+            0
+              ? "Out Of Stock"
+              : addingToCart
               ? "Adding..."
               : "Add To Cart"}
           </button>
@@ -178,7 +242,12 @@ function ProductPage() {
       {recommendedProducts.length >
         0 && (
         <>
-          <h2>
+          <h2
+            style={{
+              marginTop:
+                "50px",
+            }}
+          >
             Recommended Products
           </h2>
 
@@ -186,8 +255,12 @@ function ProductPage() {
             {recommendedProducts.map(
               (product) => (
                 <ProductCard
-                  key={product._id}
-                  product={product}
+                  key={
+                    product._id
+                  }
+                  product={
+                    product
+                  }
                 />
               )
             )}

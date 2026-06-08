@@ -7,6 +7,8 @@ import {
 
 import axios from "axios";
 
+import toast from "react-hot-toast";
+
 import { AuthContext } from "./AuthContext";
 
 export const CartContext =
@@ -84,8 +86,10 @@ function CartProvider({
     };
 
   useEffect(() => {
-    fetchCart();
-  }, [userInfo]);
+  fetchCart();
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [userInfo]);
 
   // ===================================
   // Shipping Address
@@ -106,7 +110,7 @@ function CartProvider({
     async (product) => {
       try {
         if (!userInfo?.token) {
-          alert(
+          toast.error(
             "Please login first"
           );
           return;
@@ -126,8 +130,16 @@ function CartProvider({
         );
 
         await fetchCart();
+
+        toast.success(
+          `${product.name} added to cart`
+        );
       } catch (error) {
         console.error(error);
+
+        toast.error(
+          "Failed to add product"
+        );
       }
     };
 
@@ -168,8 +180,16 @@ function CartProvider({
         );
 
         await fetchCart();
+
+        toast.success(
+          "Quantity updated"
+        );
       } catch (error) {
         console.error(error);
+
+        toast.error(
+          "Failed to update quantity"
+        );
       }
     };
 
@@ -202,8 +222,16 @@ function CartProvider({
         );
 
         await fetchCart();
+
+        toast.success(
+          "Quantity updated"
+        );
       } catch (error) {
         console.error(error);
+
+        toast.error(
+          "Failed to update quantity"
+        );
       }
     };
 
@@ -223,8 +251,16 @@ function CartProvider({
         );
 
         await fetchCart();
+
+        toast.success(
+          "Product removed from cart"
+        );
       } catch (error) {
         console.error(error);
+
+        toast.error(
+          "Failed to remove product"
+        );
       }
     };
 
