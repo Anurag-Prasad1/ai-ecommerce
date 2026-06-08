@@ -40,7 +40,14 @@ const addToCart = async (req, res) => {
       const updatedItem =
         await existingItem.save();
 
-      return res.json(updatedItem);
+      const populatedItem =
+        await Cart.findById(
+          updatedItem._id
+        ).populate("product");
+
+      return res.json(
+        populatedItem
+      );
     }
 
     const cartItem =
@@ -50,7 +57,14 @@ const addToCart = async (req, res) => {
         quantity: 1,
       });
 
-    res.status(201).json(cartItem);
+    const populatedItem =
+      await Cart.findById(
+        cartItem._id
+      ).populate("product");
+
+    res.status(201).json(
+      populatedItem
+    );
   } catch (error) {
     res.status(500).json({
       message: error.message,
@@ -88,7 +102,14 @@ const updateCartItem = async (
     const updatedItem =
       await cartItem.save();
 
-    res.json(updatedItem);
+    const populatedItem =
+      await Cart.findById(
+        updatedItem._id
+      ).populate("product");
+
+    res.json(
+      populatedItem
+    );
   } catch (error) {
     res.status(500).json({
       message: error.message,
