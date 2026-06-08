@@ -25,6 +25,14 @@ function ProductPage() {
     setRecommendedProducts,
   ] = useState([]);
 
+  const [loading, setLoading] =
+    useState(true);
+
+  const [
+    addingToCart,
+    setAddingToCart,
+  ] = useState(false);
+
   const { addToCart } =
     useContext(CartContext);
 
@@ -38,7 +46,8 @@ function ProductPage() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        // Fetch current product
+        setLoading(true);
+
         const { data } =
           await axios.get(
             `http://localhost:5000/api/products/${id}`
@@ -46,7 +55,6 @@ function ProductPage() {
 
         setProduct(data);
 
-        // Fetch recommended products
         const recommendationData =
           await axios.get(
             `http://localhost:5000/api/products/${id}/recommendations`
@@ -56,15 +64,46 @@ function ProductPage() {
           recommendationData.data
         );
       } catch (error) {
-        console.log(error);
+        console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchProduct();
   }, [id]);
 
+  const addToCartHandler =
+    async () => {
+      try {
+        setAddingToCart(true);
+
+        await addToCart(product);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setAddingToCart(false);
+      }
+    };
+
+  if (loading) {
+    return (
+      <div className="container">
+        <h2>
+          Loading Product...
+        </h2>
+      </div>
+    );
+  }
+
   if (!product) {
-    return <h2>Loading...</h2>;
+    return (
+      <div className="container">
+        <h2>
+          Product Not Found
+        </h2>
+      </div>
+    );
   }
 
   const wishlisted =
@@ -96,6 +135,24 @@ function ProductPage() {
             {product.description}
           </p>
 
+          {product.brand && (
+            <p>
+              <strong>
+                Brand:
+              </strong>{" "}
+              {product.brand}
+            </p>
+          )}
+
+          {product.category && (
+            <p>
+              <strong>
+                Category:
+              </strong>{" "}
+              {product.category}
+            </p>
+          )}
+
           <h3>
             ₹{" "}
             {product.price.toLocaleString(
@@ -104,11 +161,16 @@ function ProductPage() {
           </h3>
 
           <button
-            onClick={() =>
-              addToCart(product)
+            onClick={
+              addToCartHandler
+            }
+            disabled={
+              addingToCart
             }
           >
-            Add to Cart
+            {addingToCart
+              ? "Adding..."
+              : "Add To Cart"}
           </button>
         </div>
       </div>
