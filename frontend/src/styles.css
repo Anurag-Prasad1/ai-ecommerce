@@ -2194,3 +2194,25 @@ Needed for absolute suggestion dropdown */
     transform: scale(1);
   }
 }
+
+/* ==================================
+   PRODUCT IMAGE ZOOM EFFECT
+================================== */
+
+.product-image-container {
+  overflow: hidden;
+  border-radius: 16px;
+  cursor: zoom-in;
+}
+
+.product-main-image {
+  width: 350px;
+  height: 350px;
+  object-fit: contain;
+  transition: transform 0.4s ease;
+}
+
+.product-image-container:hover
+  .product-main-image {
+  transform: scale(1.12);
+}

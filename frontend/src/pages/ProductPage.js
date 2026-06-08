@@ -13,6 +13,9 @@ import axios from "axios";
 
 import toast from "react-hot-toast";
 
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+
 import { CartContext } from "../context/CartContext";
 
 import { WishlistContext } from "../context/WishlistContext";
@@ -115,9 +118,48 @@ function ProductPage() {
   if (loading) {
     return (
       <div className="container">
-        <h2>
-          Loading Product...
-        </h2>
+        <div
+          className="product-page"
+          style={{
+            gap: "40px",
+          }}
+        >
+          <Skeleton
+            height={420}
+            width={420}
+          />
+
+          <div
+            style={{
+              flex: 1,
+            }}
+          >
+            <Skeleton
+              height={40}
+              width="70%"
+            />
+
+            <br />
+
+            <Skeleton
+              count={4}
+            />
+
+            <br />
+
+            <Skeleton
+              height={30}
+              width="30%"
+            />
+
+            <br />
+
+            <Skeleton
+              height={50}
+              width={180}
+            />
+          </div>
+        </div>
       </div>
     );
   }
@@ -138,10 +180,13 @@ function ProductPage() {
   return (
     <div className="container">
       <div className="product-page">
-        <img
-          src={product.image}
-          alt={product.name}
-        />
+        <div className="product-image-container">
+  <img
+    src={product.image}
+    alt={product.name}
+    className="product-main-image"
+  />
+</div>
 
         <div>
           <h2>{product.name}</h2>
@@ -179,7 +224,6 @@ function ProductPage() {
             </p>
           )}
 
-          {/* Stock Status */}
           <div
             style={{
               margin:
