@@ -2804,3 +2804,29 @@ Needed for absolute suggestion dropdown */
     align-self: flex-start;
   }
 }
+
+.order-item-image-box {
+  width: 140px;
+
+  height: 140px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background: white;
+
+  border-radius: 16px;
+
+  border: 1px solid #e5e7eb;
+}
+
+.order-item-image {
+  width: 110px;
+
+  height: 110px;
+
+  object-fit: contain;
+}

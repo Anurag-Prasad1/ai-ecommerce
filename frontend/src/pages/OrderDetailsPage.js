@@ -189,10 +189,13 @@ function OrderDetailsPage() {
                 key={index}
                 className="order-product-row"
               >
-                <img
-                  src={item.image}
-                  alt={item.name}
-                />
+                <div className="order-item-image-box">
+  <img
+    src={item.image}
+    alt={item.name}
+    className="order-item-image"
+  />
+</div>
 
                 <div>
                   <h4>
