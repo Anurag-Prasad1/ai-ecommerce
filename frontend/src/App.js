@@ -28,6 +28,8 @@ import PlaceOrderPage from "./pages/PlaceOrderPage";
 
 import MyOrdersPage from "./pages/MyOrdersPage";
 
+import OrderDetailsPage from "./pages/OrderDetailsPage";
+
 import AdminDashboardPage from "./pages/AdminDashboardPage";
 
 import ProductEditPage from "./pages/ProductEditPage";
@@ -122,6 +124,15 @@ function App() {
           element={
             <ProtectedRoute>
               <MyOrdersPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/order/:id"
+          element={
+            <ProtectedRoute>
+              <OrderDetailsPage />
             </ProtectedRoute>
           }
         />

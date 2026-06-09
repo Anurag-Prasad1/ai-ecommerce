@@ -161,8 +161,52 @@ const getMyOrders = async (
   }
 };
 
+const getOrderById = async (
+  req,
+  res
+) => {
+  try {
+    const order =
+      await Order.findById(
+        req.params.id
+      );
+
+    if (!order) {
+      return res
+        .status(404)
+        .json({
+          message:
+            "Order not found",
+        });
+    }
+
+    if (
+      order.user.toString() !==
+      req.user._id.toString()
+    ) {
+      return res
+        .status(401)
+        .json({
+          message:
+            "Not authorized",
+        });
+    }
+
+    res.json(order);
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      message:
+        "Failed to fetch order",
+    });
+  }
+};
+
 module.exports = {
   addOrderItems,
 
   getMyOrders,
+
+  getOrderById,
 };

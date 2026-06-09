@@ -2,6 +2,7 @@ import {
   useEffect,
   useState,
   useContext,
+  useMemo,
 } from "react";
 
 import axios from "axios";
@@ -11,7 +12,13 @@ import {
   FaClock,
   FaCopy,
   FaBoxOpen,
+  FaSearch,
+  FaEye,
+  FaShoppingBag,
+  FaRupeeSign,
 } from "react-icons/fa";
+
+import { Link } from "react-router-dom";
 
 import { AuthContext } from "../context/AuthContext";
 
@@ -21,6 +28,12 @@ function MyOrdersPage() {
 
   const [loading, setLoading] =
     useState(true);
+
+  const [searchTerm, setSearchTerm] =
+    useState("");
+
+  const [filter, setFilter] =
+    useState("all");
 
   const { userInfo } =
     useContext(AuthContext);
@@ -51,7 +64,9 @@ function MyOrdersPage() {
         }
       };
 
-    fetchOrders();
+    if (userInfo?.token) {
+      fetchOrders();
+    }
   }, [userInfo]);
 
   const copyOrderId =
@@ -69,10 +84,65 @@ function MyOrdersPage() {
       }
     };
 
+  const filteredOrders =
+    useMemo(() => {
+      return orders.filter(
+        (order) => {
+          const matchesSearch =
+            order._id
+              .toLowerCase()
+              .includes(
+                searchTerm.toLowerCase()
+              );
+
+          const matchesFilter =
+            filter === "all"
+              ? true
+              : filter === "paid"
+              ? order.isPaid
+              : !order.isPaid;
+
+          return (
+            matchesSearch &&
+            matchesFilter
+          );
+        }
+      );
+    }, [
+      orders,
+      searchTerm,
+      filter,
+    ]);
+
+  const totalOrders =
+    orders.length;
+
+  const totalSpend =
+    orders.reduce(
+      (acc, order) =>
+        acc + order.totalPrice,
+      0
+    );
+
+  const paidOrders =
+    orders.filter(
+      (order) => order.isPaid
+    ).length;
+
+  const averageOrderValue =
+    totalOrders > 0
+      ? Math.round(
+          totalSpend /
+            totalOrders
+        )
+      : 0;
+
   if (loading) {
     return (
       <div className="container">
-        <h1>My Orders</h1>
+        <h1>
+          My Orders
+        </h1>
 
         <p>
           Loading orders...
@@ -94,25 +164,121 @@ function MyOrdersPage() {
         </p>
       </div>
 
-      {orders.length === 0 ? (
+      {/* Stats */}
+      <div className="orders-stats">
+        <div className="stat-card">
+          <FaShoppingBag />
+
+          <h3>
+            {totalOrders}
+          </h3>
+
+          <p>
+            Total Orders
+          </p>
+        </div>
+
+        <div className="stat-card">
+          <FaRupeeSign />
+
+          <h3>
+            ₹
+            {totalSpend.toLocaleString(
+              "en-IN"
+            )}
+          </h3>
+
+          <p>
+            Total Spend
+          </p>
+        </div>
+
+        <div className="stat-card">
+          <FaCheckCircle />
+
+          <h3>
+            {paidOrders}
+          </h3>
+
+          <p>
+            Paid Orders
+          </p>
+        </div>
+
+        <div className="stat-card">
+          <FaBoxOpen />
+
+          <h3>
+            ₹
+            {averageOrderValue.toLocaleString(
+              "en-IN"
+            )}
+          </h3>
+
+          <p>
+            Avg Order Value
+          </p>
+        </div>
+      </div>
+
+      {/* Search & Filter */}
+      <div className="orders-toolbar">
+        <div className="orders-search">
+          <FaSearch />
+
+          <input
+            type="text"
+            placeholder="Search Order ID..."
+            value={searchTerm}
+            onChange={(e) =>
+              setSearchTerm(
+                e.target.value
+              )
+            }
+          />
+        </div>
+
+        <select
+          value={filter}
+          onChange={(e) =>
+            setFilter(
+              e.target.value
+            )
+          }
+        >
+          <option value="all">
+            All Orders
+          </option>
+
+          <option value="paid">
+            Paid Orders
+          </option>
+
+          <option value="pending">
+            Pending Orders
+          </option>
+        </select>
+      </div>
+
+      {filteredOrders.length ===
+      0 ? (
         <div className="empty-orders">
           <FaBoxOpen
             size={80}
           />
 
           <h2>
-            No Orders Yet
+            No Orders Found
           </h2>
 
           <p>
-            Looks like you
-            haven't placed
-            any orders yet.
+            Try changing your
+            search or filter.
           </p>
         </div>
       ) : (
         <div className="orders-grid">
-          {orders.map(
+          {filteredOrders.map(
             (order) => (
               <div
                 key={
@@ -229,6 +395,23 @@ function MyOrdersPage() {
                       )}
                   </div>
                 )}
+
+                <div
+                  style={{
+                    marginTop:
+                      "20px",
+                  }}
+                >
+                  <Link
+                    to={`/order/${order._id}`}
+                  >
+                    <button className="view-order-btn">
+                      <FaEye />
+                      &nbsp;
+                      View Details
+                    </button>
+                  </Link>
+                </div>
               </div>
             )
           )}
