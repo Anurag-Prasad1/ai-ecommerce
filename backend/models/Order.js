@@ -11,11 +11,18 @@ const orderSchema = mongoose.Schema(
     orderItems: [
       {
         name: String,
+
         qty: Number,
+
         image: String,
+
         price: Number,
+
         product: {
-          type: mongoose.Schema.Types.ObjectId,
+          type:
+            mongoose.Schema.Types
+              .ObjectId,
+
           ref: "Product",
         },
       },
@@ -23,29 +30,51 @@ const orderSchema = mongoose.Schema(
 
     shippingAddress: {
       address: String,
+
       city: String,
+
       postalCode: String,
+
       country: String,
     },
 
     totalPrice: {
       type: Number,
+
       required: true,
     },
 
     isPaid: {
       type: Boolean,
+
       default: false,
     },
 
     paidAt: Date,
+
+    orderStatus: {
+      type: String,
+
+      enum: [
+        "Processing",
+        "Shipped",
+        "Delivered",
+        "Cancelled",
+      ],
+
+      default:
+        "Processing",
+    },
+
+    deliveredAt: Date,
   },
   {
     timestamps: true,
   }
 );
 
-module.exports = mongoose.model(
-  "Order",
-  orderSchema
-);
+module.exports =
+  mongoose.model(
+    "Order",
+    orderSchema
+  );

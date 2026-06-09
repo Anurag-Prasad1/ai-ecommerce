@@ -6,6 +6,7 @@ const {
   addOrderItems,
   getMyOrders,
   getOrderById,
+  updateOrderStatus,
 } = require("../controllers/orderController");
 
 const {
@@ -28,6 +29,19 @@ router.get(
   "/:id",
   protect,
   getOrderById
+);
+
+/*
+  Future Admin Route
+  Used for:
+  Processing → Shipped
+  Shipped → Delivered
+  Delivered → Completed
+*/
+router.put(
+  "/:id/status",
+  protect,
+  updateOrderStatus
 );
 
 module.exports = router;

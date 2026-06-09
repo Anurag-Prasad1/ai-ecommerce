@@ -43,17 +43,20 @@ const addOrderItems = async (
 
         paidAt:
           Date.now(),
+
+        orderStatus:
+          "Processing",
       });
 
     const createdOrder =
       await order.save();
 
-    // 🔥 Clear User Cart After Successful Order
+    // Clear Cart
     await Cart.deleteMany({
       user: req.user._id,
     });
 
-    // 🔥 UPDATE PRODUCT POPULARITY
+    // Update Product Popularity
     for (const item of orderItems) {
       const product =
         await Product.findById(
@@ -71,7 +74,6 @@ const addOrderItems = async (
 
     let emailSent = false;
 
-    // 📧 SEND ORDER CONFIRMATION EMAIL
     try {
       const user =
         await User.findById(
@@ -114,8 +116,6 @@ const addOrderItems = async (
         "❌ Email Error:",
         emailError.message
       );
-
-      // Order should still succeed
     }
 
     res.status(201).json({
@@ -148,6 +148,8 @@ const getMyOrders = async (
       await Order.find({
         user:
           req.user._id,
+      }).sort({
+        createdAt: -1,
       });
 
     res.json(orders);
@@ -203,10 +205,57 @@ const getOrderById = async (
   }
 };
 
+const updateOrderStatus =
+  async (req, res) => {
+    try {
+      const order =
+        await Order.findById(
+          req.params.id
+        );
+
+      if (!order) {
+        return res
+          .status(404)
+          .json({
+            message:
+              "Order not found",
+          });
+      }
+
+      order.orderStatus =
+        req.body.orderStatus;
+
+      if (
+        req.body
+          .orderStatus ===
+        "Delivered"
+      ) {
+        order.deliveredAt =
+          Date.now();
+      }
+
+      const updatedOrder =
+        await order.save();
+
+      res.json(
+        updatedOrder
+      );
+    } catch (error) {
+      console.error(error);
+
+      res.status(500).json({
+        message:
+          "Failed to update order status",
+      });
+    }
+  };
+
 module.exports = {
   addOrderItems,
 
   getMyOrders,
 
   getOrderById,
+
+  updateOrderStatus,
 };
