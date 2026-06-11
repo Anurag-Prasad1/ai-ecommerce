@@ -3223,3 +3223,304 @@ Needed for absolute suggestion dropdown */
     grid-template-columns: 1fr;
   }
 }
+
+/* ==========================================
+   ADMIN DASHBOARD STYLES
+========================================== */
+
+.admin-dashboard {
+  padding-top: 130px;
+  padding-bottom: 40px;
+}
+
+.admin-dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.admin-dashboard-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 8px;
+}
+
+.admin-dashboard-header p {
+  color: #6b7280;
+}
+
+.admin-create-btn {
+  background: linear-gradient(
+    135deg,
+    #2563eb,
+    #4f46e5
+  );
+
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 20px;
+  font-weight: 600;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  transition: 0.3s;
+}
+
+.admin-create-btn:hover {
+  transform: translateY(-2px);
+}
+
+.admin-kpi-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(220px, 1fr)
+    );
+
+  gap: 20px;
+
+  margin-bottom: 30px;
+}
+
+.admin-kpi-card {
+  background: white;
+
+  border-radius: 18px;
+
+  padding: 24px;
+
+  box-shadow:
+    0 10px 30px
+    rgba(0, 0, 0, 0.08);
+
+  transition: 0.3s;
+}
+
+.admin-kpi-card:hover {
+  transform: translateY(-4px);
+}
+
+.admin-kpi-icon {
+  font-size: 1.8rem;
+  color: #2563eb;
+  margin-bottom: 12px;
+}
+
+.admin-kpi-card h3 {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.admin-kpi-card p {
+  color: #6b7280;
+}
+
+.admin-toolbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+.admin-search-input,
+.admin-category-filter {
+  padding: 12px 14px;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 12px;
+
+  font-size: 0.95rem;
+
+  min-width: 180px;
+}
+
+.admin-search-input {
+  min-width: 280px;
+  flex: 1;
+}
+
+.admin-table-wrapper {
+  background: white;
+
+  border-radius: 20px;
+
+  overflow-x: auto;
+
+  box-shadow:
+    0 10px 30px
+    rgba(0, 0, 0, 0.08);
+}
+
+.admin-product-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-product-table th {
+  background: #f8fafc;
+
+  padding: 18px;
+
+  text-align: left;
+
+  font-weight: 700;
+}
+
+.admin-product-table td {
+  padding: 18px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.admin-product-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.admin-product-image {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+}
+
+.admin-product-image-wrapper {
+  width: 80px;
+  height: 80px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 12px;
+
+  padding: 6px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+}
+
+.admin-product-info h4 {
+  margin-bottom: 4px;
+}
+
+.admin-product-info span {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.admin-category-badge {
+  background: #eff6ff;
+  color: #2563eb;
+
+  padding: 6px 12px;
+
+  border-radius: 999px;
+
+  font-size: 0.85rem;
+
+  font-weight: 600;
+}
+
+.admin-stock-badge {
+  padding: 6px 12px;
+
+  border-radius: 999px;
+
+  font-size: 0.85rem;
+
+  font-weight: 600;
+}
+
+.admin-stock-good {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.admin-stock-low {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.admin-stock-out {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.admin-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.admin-edit-btn,
+.admin-delete-btn {
+  width: 38px;
+  height: 38px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: 0.3s;
+}
+
+.admin-edit-btn {
+  background: #2563eb;
+  color: white;
+}
+
+.admin-delete-btn {
+  background: #ef4444;
+  color: white;
+}
+
+.admin-edit-btn:hover,
+.admin-delete-btn:hover {
+  transform: scale(1.05);
+}
+
+.admin-empty-state {
+  text-align: center;
+  padding: 60px;
+}
+
+.admin-empty-state h3 {
+  margin-top: 15px;
+}
+
+.admin-empty-state p {
+  color: #6b7280;
+}
+
+@media (max-width: 768px) {
+  .admin-dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .admin-search-input {
+    width: 100%;
+  }
+
+  .admin-toolbar {
+    flex-direction: column;
+  }
+}
