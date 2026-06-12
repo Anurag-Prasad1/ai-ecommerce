@@ -199,6 +199,11 @@ body {
 
   text-align: center;
 
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease;
@@ -208,11 +213,16 @@ body {
 }
 
 .product-card h3 {
-  min-height: 60px;
+  height: 110px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-size: 20px;
+  line-height: 1.4;
+
+  overflow: hidden;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
 }
 
 .product-card img {
@@ -886,20 +896,25 @@ Needed for absolute suggestion dropdown */
   transform: scale(1.08);
 }
 
-.product-card h3 {
-  font-size: 22px;
+.product-card p {
+  font-size: 28px;
+
   font-weight: 700;
+
+  color: #111;
+
+  margin: 12px 0;
 }
 
-.product-card p {
-  font-size: 24px;
-  font-weight: 700;
-  color: #111;
+.product-card > a {
+  margin-top: auto;
 }
 
 .product-card > a > button {
   width: 100%;
+  height: 48px;
   font-weight: 600;
+  border-radius: 10px;
 }
 
 /* ==================================
@@ -954,7 +969,11 @@ Needed for absolute suggestion dropdown */
 }
 
 .product-rating {
-  margin-top: 10px;
+  height: 32px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   color: #f5a623;
 
@@ -964,13 +983,19 @@ Needed for absolute suggestion dropdown */
 }
 
 .delivery-tag {
-  margin-top: 10px;
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   font-size: 14px;
 
   color: #28a745;
 
   font-weight: 600;
+
+  margin-bottom: 12px;
 }
 
 /* ==================================
