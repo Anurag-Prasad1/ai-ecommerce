@@ -36,20 +36,65 @@ function AdminDashboardPage() {
   const [sortOption, setSortOption] =
   useState("newest");
 
+  const [pageNumber, setPageNumber] =
+  useState(1);
+
+  const [pages, setPages] =
+  useState(1);
+
   const { userInfo } =
     useContext(AuthContext);
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      const { data } = await axios.get(
-        "http://localhost:5000/api/products?limit=1000"
+  const fetchProducts = async () => {
+    let sortQuery = "-createdAt";
+
+    switch (sortOption) {
+      case "price-low":
+        sortQuery = "price";
+        break;
+
+      case "price-high":
+        sortQuery = "-price";
+        break;
+
+      case "name-asc":
+        sortQuery = "name";
+        break;
+
+      case "name-desc":
+        sortQuery = "-name";
+        break;
+
+      case "oldest":
+        sortQuery = "createdAt";
+        break;
+
+      default:
+        sortQuery = "-createdAt";
+    }
+
+    const { data } =
+      await axios.get(
+        `http://localhost:5000/api/products?pageNumber=${pageNumber}&limit=10&keyword=${searchTerm}&category=${
+          selectedCategory === "All"
+            ? ""
+            : selectedCategory
+        }&sort=${sortQuery}`
       );
 
-      setProducts(data.products);
-    };
+    setProducts(data.products);
 
-    fetchProducts();
-  }, []);
+    setPages(data.pages);
+  };
+
+  fetchProducts();
+}, [
+  pageNumber,
+  searchTerm,
+  selectedCategory,
+  sortOption,
+]);
 
   const createProductHandler =
   async () => {
@@ -150,66 +195,8 @@ function AdminDashboardPage() {
     ];
   }, [products]);
 
-  const filteredProducts = [...products]
-  .filter((product) => {
-    const matchesSearch =
-      product.name
-        ?.toLowerCase()
-        .includes(
-          searchTerm.toLowerCase()
-        );
-
-    const matchesCategory =
-      selectedCategory ===
-        "All" ||
-      product.category ===
-        selectedCategory;
-
-    return (
-      matchesSearch &&
-      matchesCategory
-    );
-  })
-  .sort((a, b) => {
-    switch (sortOption) {
-      case "price-low":
-        return a.price - b.price;
-
-      case "price-high":
-        return b.price - a.price;
-
-      case "name-asc":
-        return a.name.localeCompare(
-          b.name
-        );
-
-      case "name-desc":
-        return b.name.localeCompare(
-          a.name
-        );
-
-      case "oldest":
-        return (
-          new Date(
-            a.createdAt
-          ) -
-          new Date(
-            b.createdAt
-          )
-        );
-
-      case "newest":
-      default:
-        return (
-          new Date(
-            b.createdAt
-          ) -
-          new Date(
-            a.createdAt
-          )
-        );
-    }
-  });
+  const filteredProducts =
+  products;
 
   const totalInventory =
     products.reduce(
@@ -358,21 +345,25 @@ function AdminDashboardPage() {
     type="text"
     placeholder="Search products..."
     value={searchTerm}
-    onChange={(e) =>
-      setSearchTerm(
-        e.target.value
-      )
-    }
+    onChange={(e) => {
+  setSearchTerm(
+    e.target.value
+  );
+
+  setPageNumber(1);
+}}
     className="admin-search-input"
   />
 
   <select
     value={selectedCategory}
-    onChange={(e) =>
-      setSelectedCategory(
-        e.target.value
-      )
-    }
+    onChange={(e) => {
+  setSelectedCategory(
+    e.target.value
+  );
+
+  setPageNumber(1);
+}}
     className="admin-category-filter"
   >
     {categories.map(
@@ -391,11 +382,13 @@ function AdminDashboardPage() {
 
   <select
     value={sortOption}
-    onChange={(e) =>
-      setSortOption(
-        e.target.value
-      )
-    }
+    onChange={(e) => {
+  setSortOption(
+    e.target.value
+  );
+
+  setPageNumber(1);
+}}
     className="admin-category-filter"
   >
     <option value="newest">
@@ -570,6 +563,25 @@ function AdminDashboardPage() {
           </tbody>
         </table>
       </div>
+      <div className="admin-pagination">
+  {[...Array(pages).keys()].map(
+    (page) => (
+      <button
+        key={page + 1}
+        className={
+          pageNumber === page + 1
+            ? "admin-page-btn active"
+            : "admin-page-btn"
+        }
+        onClick={() =>
+          setPageNumber(page + 1)
+        }
+      >
+        {page + 1}
+      </button>
+    )
+  )}
+</div>
     </div>
   );
 }

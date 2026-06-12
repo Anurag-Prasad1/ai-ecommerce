@@ -3524,3 +3524,29 @@ Needed for absolute suggestion dropdown */
     flex-direction: column;
   }
 }
+
+.admin-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.admin-page-btn {
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: #e5e7eb;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.admin-page-btn:hover {
+  background: #d1d5db;
+}
+
+.admin-page-btn.active {
+  background: #2563eb;
+  color: white;
+}
