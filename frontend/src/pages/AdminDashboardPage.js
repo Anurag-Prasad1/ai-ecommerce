@@ -52,22 +52,39 @@ function AdminDashboardPage() {
   }, []);
 
   const createProductHandler =
-    async () => {
-      const { data } = await axios.post(
-        "http://localhost:5000/api/products",
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${userInfo.token}`,
-          },
-        }
-      );
+  async () => {
+    try {
+      const { data } =
+        await axios.post(
+          "http://localhost:5000/api/products",
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${userInfo.token}`,
+            },
+          }
+        );
 
       setProducts((prev) => [
         ...prev,
         data,
       ]);
-    };
+
+      Swal.fire({
+        title: "Success!",
+        text: "Product created successfully.",
+        icon: "success",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: "Failed to create product.",
+        icon: "error",
+      });
+    }
+  };
 
   const deleteHandler = async (id) => {
   const result = await Swal.fire({
