@@ -130,29 +130,30 @@ function RegisterPage() {
   };
 
   return (
+  <div
+    style={{
+      minHeight: "100vh",
+      display: "flex",
+      justifyContent:
+        "center",
+      alignItems:
+        "flex-start",
+      padding:
+        "140px 20px 40px",
+    }}
+  >
     <div
       style={{
-        minHeight: "85vh",
-        display: "flex",
-        justifyContent:
-          "center",
-        alignItems:
-          "center",
-        padding: "20px",
+        width: "460px",
+        background:
+          "#ffffff",
+        borderRadius:
+          "18px",
+        padding: "35px",
+        boxShadow:
+          "0 15px 40px rgba(0,0,0,0.15)",
       }}
     >
-      <div
-        style={{
-          width: "460px",
-          background:
-            "#ffffff",
-          borderRadius:
-            "18px",
-          padding: "35px",
-          boxShadow:
-            "0 12px 35px rgba(0,0,0,0.15)",
-        }}
-      >
         <div
           style={{
             textAlign:

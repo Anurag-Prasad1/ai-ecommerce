@@ -86,11 +86,12 @@ function LoginPage() {
   return (
     <div
       style={{
-        minHeight: "80vh",
+        minHeight: "100vh",
         display: "flex",
         justifyContent: "center",
-        alignItems: "center",
-        padding: "20px",
+        alignItems: "flex-start",
+        padding:
+          "140px 20px 40px",
       }}
     >
       <div
@@ -100,7 +101,7 @@ function LoginPage() {
           padding: "35px",
           borderRadius: "16px",
           boxShadow:
-            "0 10px 30px rgba(0,0,0,0.12)",
+            "0 15px 40px rgba(0,0,0,0.12)",
         }}
       >
         <h1
@@ -143,7 +144,9 @@ function LoginPage() {
             placeholder="Enter Email"
             value={email}
             onChange={(e) =>
-              setEmail(e.target.value)
+              setEmail(
+                e.target.value
+              )
             }
             style={{
               width: "100%",
