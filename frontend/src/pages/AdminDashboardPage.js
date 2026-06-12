@@ -21,6 +21,8 @@ import {
 
 import { AuthContext } from "../context/AuthContext";
 
+import Swal from "sweetalert2";
+
 function AdminDashboardPage() {
   const [products, setProducts] =
     useState([]);
@@ -68,28 +70,53 @@ function AdminDashboardPage() {
     };
 
   const deleteHandler = async (id) => {
-    if (
-      window.confirm(
-        "Are you sure you want to delete this product?"
-      )
-    ) {
-      await axios.delete(
-        `http://localhost:5000/api/products/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${userInfo.token}`,
-          },
-        }
-      );
+  const result = await Swal.fire({
+    title: "Delete Product?",
+    text: "This action cannot be undone.",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#2563eb",
+    cancelButtonColor: "#ef4444",
+    confirmButtonText: "Yes, Delete",
+    cancelButtonText: "Cancel",
+  });
 
-      setProducts((prev) =>
-        prev.filter(
-          (product) =>
-            product._id !== id
-        )
-      );
-    }
-  };
+  if (!result.isConfirmed) {
+    return;
+  }
+
+  try {
+    await axios.delete(
+      `http://localhost:5000/api/products/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      }
+    );
+
+    setProducts((prev) =>
+      prev.filter(
+        (product) =>
+          product._id !== id
+      )
+    );
+
+    Swal.fire({
+      title: "Deleted!",
+      text: "Product removed successfully.",
+      icon: "success",
+      timer: 1500,
+      showConfirmButton: false,
+    });
+  } catch (error) {
+    Swal.fire({
+      title: "Error!",
+      text: "Failed to delete product.",
+      icon: "error",
+    });
+  }
+};
 
   const categories = useMemo(() => {
     const uniqueCategories =
