@@ -16,7 +16,6 @@ import API_URL from "../config";
 
 import {
   FaCheckCircle,
-  FaClock,
   FaBox,
   FaMapMarkerAlt,
   FaTruck,
