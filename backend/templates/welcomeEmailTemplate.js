@@ -1,5 +1,4 @@
-const welcomeEmailTemplate =
-  (name) => `
+const welcomeEmailTemplate = (name) => `
 <!DOCTYPE html>
 <html>
 
@@ -69,13 +68,14 @@ margin-top:20px;
 >
 
 <a
-href="http://localhost:3000"
+href="${process.env.FRONTEND_URL}"
 style="
 background:#2563eb;
 color:white;
 padding:12px 20px;
 text-decoration:none;
 border-radius:6px;
+display:inline-block;
 "
 >
 Start Shopping
@@ -104,5 +104,4 @@ NovaCart © 2026
 </html>
 `;
 
-module.exports =
-  welcomeEmailTemplate;
+module.exports = welcomeEmailTemplate;
