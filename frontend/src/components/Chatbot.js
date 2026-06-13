@@ -3,7 +3,7 @@ import {
 } from "react";
 
 import axios from "axios";
-
+import API_URL from "../config";
 import ReactMarkdown
   from "react-markdown";
 
@@ -40,7 +40,7 @@ function Chatbot() {
 
       const { data } =
         await axios.post(
-          "http://localhost:5000/api/chatbot",
+          `${API_URL}/api/chatbot`,
           {
             message,
           }

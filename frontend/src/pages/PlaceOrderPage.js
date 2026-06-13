@@ -5,6 +5,8 @@ import {
 
 import axios from "axios";
 
+import API_URL from "../config";
+
 import {
   FaMapMarkerAlt,
   FaCreditCard,
@@ -59,7 +61,7 @@ function PlaceOrderPage() {
 
         const { data } =
           await axios.post(
-            "http://localhost:5000/api/payments/create-order",
+            `${API_URL}/api/payments/create-order`,
             {
               amount:
                 totalPrice,
@@ -115,7 +117,7 @@ function PlaceOrderPage() {
                     orderData,
                 } =
                   await axios.post(
-                    "http://localhost:5000/api/orders",
+                    `${API_URL}/api/orders`,
                     {
                       orderItems:
                         formattedOrderItems,

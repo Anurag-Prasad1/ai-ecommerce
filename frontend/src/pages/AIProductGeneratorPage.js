@@ -2,6 +2,8 @@ import { useState } from "react";
 
 import axios from "axios";
 
+import API_URL from "../config";
+
 import AIPageHeader from "../components/ai/AIPageHeader";
 
 import AIResultCard from "../components/ai/AIResultCard";
@@ -90,7 +92,7 @@ function AIProductGeneratorPage() {
 
         const { data } =
           await axios.post(
-            "http://localhost:5000/api/ai/generate-description",
+            `${API_URL}/api/ai/generate-description`,
             {
               name,
               category,

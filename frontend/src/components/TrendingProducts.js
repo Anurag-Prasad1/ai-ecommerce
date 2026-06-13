@@ -5,6 +5,8 @@ import {
 
 import axios from "axios";
 
+import API_URL from "../config";
+
 import ProductCard from "./ProductCard";
 
 function TrendingProducts() {
@@ -19,7 +21,7 @@ function TrendingProducts() {
 
         const { data } =
           await axios.get(
-            "http://localhost:5000/api/products/trending/products"
+            `${API_URL}/api/products/trending/products`
           );
 
         setProducts(data);

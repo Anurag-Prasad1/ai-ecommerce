@@ -2,6 +2,8 @@ import { useState, useContext } from "react";
 
 import axios from "axios";
 
+import API_URL from "../config";
+
 import { AuthContext } from "../context/AuthContext";
 
 import {
@@ -51,7 +53,7 @@ function LoginPage() {
     try {
       const { data } =
         await axios.post(
-          "http://localhost:5000/api/users/login",
+          `${API_URL}/api/users/login`,
           {
             email,
             password,

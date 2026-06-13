@@ -2,6 +2,8 @@ import { useState } from "react";
 
 import axios from "axios";
 
+import API_URL from "../config";
+
 import { FaRobot } from "react-icons/fa";
 
 import AIPageHeader from "../components/ai/AIPageHeader";
@@ -44,7 +46,7 @@ function AISmartBuyingAssistantPage() {
 
         const { data } =
           await axios.post(
-            "http://localhost:5000/api/ai/buying-assistant",
+            `${API_URL}/api/ai/buying-assistant`,
             {
               query,
             }

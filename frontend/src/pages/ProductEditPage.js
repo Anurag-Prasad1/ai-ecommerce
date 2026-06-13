@@ -14,6 +14,8 @@ import {
 
 import axios from "axios";
 
+import API_URL from "../config";
+
 import {
   useParams,
   useNavigate,
@@ -61,7 +63,7 @@ function ProductEditPage() {
     const fetchProduct = async () => {
   try {
     const { data } = await axios.get(
-      `http://localhost:5000/api/products/${id}`
+      `${API_URL}/api/products/${id}`
     );
 
     setName(data.name);
@@ -113,13 +115,13 @@ function ProductEditPage() {
 
     const { data } =
       await axios.post(
-        "http://localhost:5000/api/upload",
+        `${API_URL}/api/upload`,
         formData,
         config
       );
 
     setImage(
-      `http://localhost:5000${data}`
+      `${API_URL}${data}`
     );
 
     Swal.fire({
@@ -154,7 +156,7 @@ function ProductEditPage() {
     setLoading(true);
 
     await axios.put(
-      `http://localhost:5000/api/products/${id}`,
+      `${API_URL}/api/products/${id}`,
       {
         name,
         price,

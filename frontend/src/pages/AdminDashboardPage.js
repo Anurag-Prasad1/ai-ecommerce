@@ -7,6 +7,8 @@ import {
 
 import axios from "axios";
 
+import API_URL from "../config";
+
 import { Link } from "react-router-dom";
 
 import {
@@ -76,7 +78,7 @@ function AdminDashboardPage() {
 
     const { data } =
       await axios.get(
-        `http://localhost:5000/api/products?pageNumber=${pageNumber}&limit=10&keyword=${searchTerm}&category=${
+        `${API_URL}/api/products?pageNumber=${pageNumber}&limit=10&keyword=${searchTerm}&category=${
           selectedCategory === "All"
             ? ""
             : selectedCategory
@@ -101,7 +103,7 @@ function AdminDashboardPage() {
     try {
       const { data } =
         await axios.post(
-          "http://localhost:5000/api/products",
+          `${API_URL}/api/products`,
           {},
           {
             headers: {
@@ -149,7 +151,7 @@ function AdminDashboardPage() {
 
   try {
     await axios.delete(
-      `http://localhost:5000/api/products/${id}`,
+      `${API_URL}/api/products/${id}`,
       {
         headers: {
           Authorization: `Bearer ${userInfo.token}`,

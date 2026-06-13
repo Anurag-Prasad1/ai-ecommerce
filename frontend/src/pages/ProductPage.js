@@ -11,6 +11,8 @@ import {
 
 import axios from "axios";
 
+import API_URL from "../config";
+
 import toast from "react-hot-toast";
 
 import Skeleton from "react-loading-skeleton";
@@ -67,14 +69,14 @@ function ProductPage() {
 
           const { data } =
             await axios.get(
-              `http://localhost:5000/api/products/${id}`
+              `${API_URL}/api/products/${id}`
             );
 
           setProduct(data);
 
           const recommendationData =
             await axios.get(
-              `http://localhost:5000/api/products/${id}/recommendations`
+              `${API_URL}/api/products/${id}/recommendations`
             );
 
           setRecommendedProducts(

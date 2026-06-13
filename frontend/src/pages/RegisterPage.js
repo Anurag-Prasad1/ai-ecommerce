@@ -2,6 +2,8 @@ import { useState } from "react";
 
 import axios from "axios";
 
+import API_URL from "../config";
+
 import {
   useNavigate,
   Link,
@@ -78,7 +80,7 @@ function RegisterPage() {
 
       const { data } =
         await axios.post(
-          "http://localhost:5000/api/users/register",
+          `${API_URL}/api/users/register`,
           {
             name,
             email,

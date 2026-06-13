@@ -7,6 +7,8 @@ import {
 
 import axios from "axios";
 
+import API_URL from "../config";
+
 import toast from "react-hot-toast";
 
 import { AuthContext } from "./AuthContext";
@@ -50,7 +52,7 @@ function CartProvider({
       try {
         const { data } =
           await axios.get(
-            "http://localhost:5000/api/cart",
+            `${API_URL}/api/cart`,
             {
               headers: {
                 Authorization: `Bearer ${userInfo.token}`,
@@ -117,7 +119,7 @@ function CartProvider({
         }
 
         await axios.post(
-          "http://localhost:5000/api/cart",
+          `${API_URL}/api/cart`,
           {
             productId:
               product._id,
@@ -167,7 +169,7 @@ function CartProvider({
         }
 
         await axios.put(
-          `http://localhost:5000/api/cart/${cartItemId}`,
+          `${API_URL}/api/cart/${cartItemId}`,
           {
             quantity:
               item.qty - 1,
@@ -209,7 +211,7 @@ function CartProvider({
         if (!item) return;
 
         await axios.put(
-          `http://localhost:5000/api/cart/${cartItemId}`,
+          `${API_URL}/api/cart/${cartItemId}`,
           {
             quantity:
               item.qty + 1,
@@ -242,7 +244,7 @@ function CartProvider({
     async (cartItemId) => {
       try {
         await axios.delete(
-          `http://localhost:5000/api/cart/${cartItemId}`,
+          `${API_URL}/api/cart/${cartItemId}`,
           {
             headers: {
               Authorization: `Bearer ${userInfo.token}`,

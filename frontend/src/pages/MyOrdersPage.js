@@ -7,6 +7,8 @@ import {
 
 import axios from "axios";
 
+import API_URL from "../config";
+
 import {
   FaCheckCircle,
   FaClock,
@@ -44,7 +46,7 @@ function MyOrdersPage() {
         try {
           const { data } =
             await axios.get(
-              "http://localhost:5000/api/orders/myorders",
+              `${API_URL}/api/orders/myorders`,
               {
                 headers: {
                   Authorization: `Bearer ${userInfo.token}`,

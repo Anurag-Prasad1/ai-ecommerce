@@ -7,6 +7,8 @@ import {
   FaExchangeAlt,
 } from "react-icons/fa";
 
+import API_URL from "../config";
+
 import AIPageHeader from "../components/ai/AIPageHeader";
 
 import AIResultCard from "../components/ai/AIResultCard";
@@ -121,7 +123,7 @@ function AIComparisonPage() {
 
         const { data } =
           await axios.post(
-            "http://localhost:5000/api/ai/compare-products",
+            `${API_URL}/api/ai/compare-products`,
             {
               productA,
               productB,

@@ -8,6 +8,8 @@ import {
 
 import ProductCard from "./ProductCard";
 
+import API_URL from "../config";
+
 function ProductList() {
   const [products, setProducts] =
     useState([]);
@@ -51,7 +53,7 @@ function ProductList() {
       async () => {
         const { data } =
           await axios.get(
-            `http://localhost:5000/api/products?keyword=${
+            `${API_URL}/api/products?keyword=${
               keyword || ""
             }&category=${
               category || ""

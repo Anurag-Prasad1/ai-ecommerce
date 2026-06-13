@@ -15,6 +15,8 @@ import {
 
 import axios from "axios";
 
+import API_URL from "../config";
+
 import { AuthContext } from "../context/AuthContext";
 
 function Navbar() {
@@ -81,7 +83,7 @@ const totalCartItems =
         try {
           const { data } =
             await axios.get(
-              `http://localhost:5000/api/products/search/suggestions?keyword=${keyword}`
+              `${API_URL}/api/products/search/suggestions?keyword=${keyword}`
             );
 
           setSuggestions(data);
