@@ -12,6 +12,17 @@ const transporter =
 
     secure: false,
 
+    requireTLS: true,
+
+    connectionTimeout:
+      30000,
+
+    greetingTimeout:
+      30000,
+
+    socketTimeout:
+      30000,
+
     auth: {
       user:
         process.env.BREVO_SMTP_USER,
@@ -26,7 +37,7 @@ transporter.verify(
   (error, success) => {
     if (error) {
       console.error(
-        "SMTP VERIFY ERROR:",
+        "❌ SMTP VERIFY ERROR:",
         error
       );
     } else {
